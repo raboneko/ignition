@@ -29,49 +29,49 @@ pkg.initGettext();
 pkg.initFormat();
 
 export const IgnitionApplication = GObject.registerClass(
-    class IgnitionApplication extends Adw.Application {
-        constructor() {
-            super({application_id: 'io.github.flattool.Ignition', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
+	class IgnitionApplication extends Adw.Application {
+		constructor() {
+			super({application_id: 'io.github.flattool.Ignition', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
-            const quit_action = new Gio.SimpleAction({name: 'quit'});
-                quit_action.connect('activate', action => {
-                this.quit();
-            });
-            this.add_action(quit_action);
-            this.set_accels_for_action('app.quit', ['<primary>q']);
+			const quit_action = new Gio.SimpleAction({name: 'quit'});
+				quit_action.connect('activate', action => {
+				this.quit();
+			});
+			this.add_action(quit_action);
+			this.set_accels_for_action('app.quit', ['<primary>q']);
 
-            const show_about_action = new Gio.SimpleAction({name: 'about'});
-            show_about_action.connect('activate', action => {
-                let aboutParams = {
-                    application_name: 'ignition',
-                    application_icon: 'io.github.flattool.Ignition',
-                    developer_name: 'Heliguy',
-                    version: '0.1.0',
-                    developers: [
-                        'Heliguy'
-                    ],
-                    // Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-                    translator_credits: _("translator-credits"),
-                    copyright: '© 2024 Heliguy'
-                };
-                const aboutDialog = new Adw.AboutDialog(aboutParams);
-                aboutDialog.present(this.active_window);
-            });
-            this.add_action(show_about_action);
-        }
+			const show_about_action = new Gio.SimpleAction({name: 'about'});
+			show_about_action.connect('activate', action => {
+				let aboutParams = {
+					application_name: 'ignition',
+					application_icon: 'io.github.flattool.Ignition',
+					developer_name: 'Heliguy',
+					version: '0.1.0',
+					developers: [
+						'Heliguy'
+					],
+					// Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+					translator_credits: _("translator-credits"),
+					copyright: '© 2024 Heliguy'
+				};
+				const aboutDialog = new Adw.AboutDialog(aboutParams);
+				aboutDialog.present(this.active_window);
+			});
+			this.add_action(show_about_action);
+		}
 
-        vfunc_activate() {
-            let {active_window} = this;
+		vfunc_activate() {
+			let {active_window} = this;
 
-            if (!active_window)
-                active_window = new IgnitionWindow(this);
+			if (!active_window)
+				active_window = new IgnitionWindow(this);
 
-            active_window.present();
-        }
-    }
+			active_window.present();
+		}
+	}
 );
 
 export function main(argv) {
-    const application = new IgnitionApplication();
-    return application.runAsync(argv);
+	const application = new IgnitionApplication();
+	return application.runAsync(argv);
 }

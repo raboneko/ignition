@@ -23,12 +23,12 @@ import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
 export const IgnitionWindow = GObject.registerClass({
-    GTypeName: 'IgnitionWindow',
-    Template: 'resource:///io/github/flattool/Ignition/gtk/window.ui',
-    InternalChildren: ['label'],
+	GTypeName: 'IgnitionWindow',
+	Template: 'resource:///io/github/flattool/Ignition/gtk/window.ui',
+	InternalChildren: ['label'],
 }, class IgnitionWindow extends Adw.ApplicationWindow {
-    constructor(application) {
-        super({ application });
-    }
+	constructor(application) {
+		super({ application });
+	}
 });
 
