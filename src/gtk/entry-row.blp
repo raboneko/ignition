@@ -1,0 +1,16 @@
+
+using Gtk 4.0;
+using Adw 1;
+
+template $EntryRow: Adw.ActionRow {
+	activatable: true;
+
+	[prefix]
+	Image {
+		icon-name: "ignition:paper-symbolic";
+	}
+	[suffix]
+	Image {
+		icon-name: "ignition:right-large-symbolic";
+	}
+}

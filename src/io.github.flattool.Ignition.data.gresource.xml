@@ -3,8 +3,10 @@
   <gresource prefix="/io/github/flattool/Ignition">
     <file preprocess="xml-stripblanks">gtk/window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
+    <file preprocess="xml-stripblanks">gtk/entry-row.ui</file>
   </gresource>
   <gresource prefix="/io/github/flattool/Ignition/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="ignition:paper-symbolic.svg">../data/icons/paper-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="ignition:right-large-symbolic.svg">../data/icons/right-large-symbolic.svg</file>
   </gresource>
 </gresources>
