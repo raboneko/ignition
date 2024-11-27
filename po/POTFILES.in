@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/io.github.flattool.Ignition.desktop.in
+data/io.github.flattool.Ignition.metainfo.xml.in
+data/io.github.flattool.Ignition.gschema.xml
+src/main.js
+src/window.js
+src/window.blp

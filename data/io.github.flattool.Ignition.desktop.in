@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=ignition
+Exec=io.github.flattool.Ignition
+Icon=io.github.flattool.Ignition
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

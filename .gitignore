@@ -1,0 +1,6 @@
+/subprojects/blueprint-compiler
+.DS_Store
+.flatpak
+.flatpak-builder
+.idea
+.vscode

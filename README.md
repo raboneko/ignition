@@ -1,2 +1,3 @@
 # ignition
-Manage your startup apps and scripts on Freedesktop Linux distros
+
+A description of this project.
