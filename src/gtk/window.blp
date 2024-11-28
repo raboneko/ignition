@@ -29,7 +29,7 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 			SearchBar search_bar {
 				key-capture-widget: template;
 				search-mode-enabled: bind search_button.active bidirectional;
-				sensitive: bind search_button.sensitive;
+				sensitive: bind search_button.sensitive bidirectional;
 				SearchEntry search_entry {
 					hexpand: true;
 					placeholder-text: _("Search entries");

@@ -6,8 +6,10 @@ template $EntryRow: Adw.ActionRow {
 	activatable: true;
 
 	[prefix]
-	Image {
-		icon-name: "ignition:paper-symbolic";
+	Image prefix_icon {
+		styles ["icon-dropshadow"]
+		icon-name: "ignition:application-x-executable-symbolic";
+		icon-size: large;
 	}
 	[suffix]
 	Image {

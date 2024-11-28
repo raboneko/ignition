@@ -20,6 +20,10 @@ export class AutostartEntry {
 		return KeyFileUtils.get_boolean_safe(this.keyfile, "Desktop Entry", "Terminal", false);
 	}
 
+	get icon() {
+		return KeyFileUtils.get_string_safe(this.keyfile, false, "Desktop Entry", "Icon", "");
+	}
+
 	set name(value) {
 		this.keyfile.set_locale_string("Desktop Entry", "Name", null, value);
 	}

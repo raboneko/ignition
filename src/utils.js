@@ -81,7 +81,7 @@ export class IconUtils {
 export class Signal {
 	emit() {
 		for (const func of this.connections) {
-			func();
+			func(this.object);
 		}
 	}
 
@@ -96,3 +96,17 @@ export class Signal {
 		this.object = object;
 	}
 }
+
+
+
+export const run_async = (to_run, when_done) => {
+	GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+		const should_continue = to_run();
+		if (should_continue) {
+			return GLib.SOURCE_CONTINUE;
+		}
+
+		when_done();
+		return GLib.SOURCE_REMOVE;
+	});
+};

@@ -24,7 +24,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
-import { SharedVars } from './utils.js';
+import { SharedVars, run_async } from './utils.js';
 import { AutostartEntry } from './autostart_entry.js';
 import { EntryRow } from './entry_row.js';
 
@@ -32,6 +32,7 @@ export const IgnitionWindow = GObject.registerClass({
 	GTypeName: 'IgnitionWindow',
 	Template: 'resource:///io/github/flattool/Ignition/gtk/window.ui',
 	InternalChildren: [
+		"search_button",
 		"search_bar",
 			"search_entry",
 		"toast_overlay",
@@ -48,44 +49,58 @@ export const IgnitionWindow = GObject.registerClass({
 	],
 }, class IgnitionWindow extends Adw.ApplicationWindow {
 	on_first_run() {
+		this.settings.set_boolean("first-run", false);
 		this._stack.visible_child = this._first_run_status;
+		this._stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
 		this._get_started_button.connect("clicked", () => {
 			this.setup();
-			print("setup done")
 		})
 	}
 
-	async setup() {
-		// Display loading status immediately
+	setup() {
 		this._stack.visible_child = this._loading_status;
 		this._stack.transition_type = Gtk.StackTransitionType.NONE;
-		this.unreliablePromise().then(
-			(result) => { print(result); }
-		).catch((error) => { print(error); })
+		this.load_autostart_entries();
 	}
 
-	unreliablePromise() {
-		return new Promise((resolve, reject) => {
-			GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 1, () => {
-				if (Math.random() >= 0.5) {
-					resolve('success');
-				} else {
-					reject(Error('failure'));
+	load_autostart_entries() {
+		const enumerator = SharedVars.autostart_dir.enumerate_children('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+		run_async(
+			() => {
+				const file = enumerator.next_file(null);
+				if (file === null) {
+					// stop the loop when there are no more files
+					return false;
 				}
-				return GLib.SOURCE_REMOVE;
-			});
-		});
+				const path = SharedVars.autostart_path + file.get_name();
+				const entry = new AutostartEntry(path);
+				const row = new EntryRow(entry, { title: "Test" });
+				row.connect("activated", () => { print(entry.name) });
+				this.rows.push(row);
+				this._entries_group.add(row);
+				return true; // continue the loop
+			},
+			this.on_load_finish.bind(this),
+		);
+	}
+
+	on_load_finish() {
+		if (this.rows.length > 0 ) {
+			this._stack.set_visible_child(this._entries_page);
+			this._search_button.sensitive = true;
+		} else {
+			this._stack.set_visible_child(this._no_entries_status);
+		}
 	}
 
 	settings;
 	rows = [];
 
-
 	constructor(application) {
 		super({ application });
 		this.settings = Gio.Settings.new("io.github.flattool.Ignition");
+
 		if (this.settings.get_boolean("first-run")) {
-			this._stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
 			this.on_first_run();
 		} else {
 			this.setup();
