@@ -97,6 +97,11 @@ export const IgnitionWindow = GObject.registerClass({
 		}
 	}
 
+	on_new_entry() {
+		this.properties_dialog.load_properties(new AutostartEntry(""));
+		this.properties_dialog.present(this);
+	}
+
 	settings;
 	rows = [];
 	properties_dialog = new PropertiesDialog();
@@ -110,6 +115,9 @@ export const IgnitionWindow = GObject.registerClass({
 		} else {
 			this.setup();
 		}
+
+		this._no_entries_new_button.connect("clicked", this.on_new_entry.bind(this));
+		this._group_new_button.connect("clicked", this.on_new_entry.bind(this));
 	}
 });
 

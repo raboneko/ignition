@@ -44,8 +44,6 @@ export const PropertiesDialog = GObject.registerClass({
 		this._icon_row.text = entry.icon;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
-		print("Entry connections:")
-		print(this.entry.signals.file_saved.connections);
 	}
 
 	on_apply() {

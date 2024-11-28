@@ -1,7 +1,7 @@
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
-import { KeyFileUtils, Signal } from './utils.js';
+import { KeyFileUtils, Signal, SharedVars } from './utils.js';
 
 export class AutostartEntry {
 	get name() {
@@ -53,6 +53,9 @@ export class AutostartEntry {
 	}
 
 	save() {
+		if (!Gio.File.new_for_path(this.path).query_exists(null)) {
+			this.path = SharedVars.autostart_path + this.name + ".desktop";
+		}
 		try {
 			// Add key values that might be missing, but won't be edited
 			this.keyfile.set_int64("Desktop Entry", "X-GNOME-Autostart-Delay", 60);
@@ -69,7 +72,6 @@ export class AutostartEntry {
 
 	path;
 	keyfile = new GLib.KeyFile({});
-	file;
 	locale = "en_US";
 	signals = {
 		file_saved: new Signal(this),
@@ -80,10 +82,16 @@ export class AutostartEntry {
 
 	constructor(path) {
 		this.path = path;
-		this.file = Gio.File.new_for_path(path);
-		if (this.file.query_exists(null)) {
+		if (Gio.File.new_for_path(path).query_exists(null)) {
 			try {
 				this.keyfile.load_from_file(this.path, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
+
+				// This will error if the Type key isn't found,
+				//    and will raise a new error if the type
+				//    isn't "Application" (needed for executing)
+				if (this.keyfile.get_string("Desktop Entry", "Type") !== "Application") {
+					throw new Error("Desktop Entry is not of type Application");
+				}
 				try {
 					this.locale = this.keyfile.get_locale_for_key("Desktop Entry", "Name", null) || "en_US";
 				} catch (error) {
