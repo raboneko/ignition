@@ -1,0 +1,60 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PropertiesDialog: Adw.Dialog {
+	Adw.ToastOverlay {
+		Adw.NavigationView {
+			Adw.NavigationPage details_page {
+				title: _("Edit Details");
+				Adw.ToolbarView {
+					[top]
+					Adw.HeaderBar {
+						show-start-title-buttons: false;
+						show-end-title-buttons: false;
+						[start]
+						Button cancel_button {
+							label: _("Cancel");
+						}
+						[end]
+						Button apply_button {
+							label: _("Apply");
+						}
+					}
+					Adw.PreferencesPage {
+						Adw.PreferencesGroup {
+							title: _("Details");
+							description: _("Edit details about this entry.");
+
+							Adw.EntryRow name_row {
+								title: _("Name");
+							}
+							Adw.EntryRow comment_row {
+								title: _("Comment");
+							}
+							Adw.EntryRow exec_row {
+								title: _("Command or Script");
+							}
+							Adw.SwitchRow terminal_row {
+								title: _("Show Terminal");
+								subtitle: _("Show a terminal for this process to run in.");
+							}
+						}
+						Adw.PreferencesGroup {
+							separate-rows: true;
+
+							Adw.SwitchRow enabled_row {
+								title: _("Enable");
+								subtitle: _("Enable this entry to be started when you log in.");
+							}
+							Adw.ButtonRow trash_row {
+								title: _("Move to Trash");
+								start-icon-name: "ignition:user-trash-symbolic";
+							}
+						}
+					}
+				}
+			}
+			// $AppChooserPage app_chooser_page {};
+		}
+	}
+}

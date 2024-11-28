@@ -6,5 +6,6 @@
     <file>autostart_entry.js</file>
     <file>entry_row.js</file>
     <file>utils.js</file>
+    <file>properties_dialog.js</file>
   </gresource>
 </gresources>

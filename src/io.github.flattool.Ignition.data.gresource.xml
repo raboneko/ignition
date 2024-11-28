@@ -12,5 +12,6 @@
     <file preprocess="xml-stripblanks" alias="ignition:list-add-symbolic.svg">../data/icons/list-add-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="ignition:system-search-symbolic.svg">../data/icons/system-search-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="ignition:application-x-executable-symbolic.svg">../data/icons/application-x-executable-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="ignition:user-trash-symbolic.svg">../data/icons/user-trash-symbolic.svg</file>
   </gresource>
 </gresources>
