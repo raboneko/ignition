@@ -22,6 +22,7 @@ export const EntryRow = GObject.registerClass({
 		this._prefix_icon.set_from_paintable(
 			IconUtils.get_paintable_for_path(icon_key)
 			|| IconUtils.get_paintable_for_name(icon_key)
+			|| IconUtils.get_paintable_for_name("ignition:application-x-executable-symbolic")
 		);
 
 		this.title = this.entry.name || "No Name Set";

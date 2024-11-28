@@ -73,7 +73,10 @@ export class IconUtils {
 	}
 
 	static get_paintable_for_name(name) {
-		return this.host_icon_theme.lookup_icon(name, null, 512, 1, null, 0);
+		if (this.host_icon_theme.has_icon(name)) {
+			return this.host_icon_theme.lookup_icon(name, null, 512, 1, null, 0);
+		}
+		return null;
 	}
 }
 
