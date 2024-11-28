@@ -48,6 +48,10 @@ export class AutostartEntry {
 		this.keyfile.set_boolean("Desktop Entry", "Hidden", ! value);
 	}
 
+	set icon(value) {
+		this.keyfile.set_string("Desktop Entry", "Icon", value);
+	}
+
 	save() {
 		try {
 			// Add key values that might be missing, but won't be edited
