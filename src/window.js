@@ -27,6 +27,7 @@ import Adw from 'gi://Adw';
 import { SharedVars, run_async } from './utils.js';
 import { AutostartEntry } from './autostart_entry.js';
 import { EntryRow } from './entry_row.js';
+import { PropertiesDialog } from './properties_dialog.js';
 
 export const IgnitionWindow = GObject.registerClass({
 	GTypeName: 'IgnitionWindow',
@@ -75,7 +76,10 @@ export const IgnitionWindow = GObject.registerClass({
 				const path = SharedVars.autostart_path + file.get_name();
 				const entry = new AutostartEntry(path);
 				const row = new EntryRow(entry, { title: "Test" });
-				row.connect("activated", () => { print(entry.name) });
+				row.connect("activated", () => {
+					this.properties_dialog.load_properties(entry);
+					this.properties_dialog.present(this);
+				});
 				this.rows.push(row);
 				this._entries_group.add(row);
 				return true; // continue the loop
@@ -95,6 +99,7 @@ export const IgnitionWindow = GObject.registerClass({
 
 	settings;
 	rows = [];
+	properties_dialog = new PropertiesDialog();
 
 	constructor(application) {
 		super({ application });

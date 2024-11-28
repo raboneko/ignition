@@ -8,6 +8,7 @@ const keyfile_tryer = (func) => {
 	try {
 		return func() || null;
 	} catch (error) {
+		print(error);
 		return null;
 	}
 }
