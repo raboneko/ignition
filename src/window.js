@@ -19,16 +19,56 @@
  */
 
 import GObject from 'gi://GObject';
+import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
+
+import { SharedVars } from './utils.js';
 
 export const IgnitionWindow = GObject.registerClass({
 	GTypeName: 'IgnitionWindow',
 	Template: 'resource:///io/github/flattool/Ignition/gtk/window.ui',
-	InternalChildren: [],
+	InternalChildren: [
+		"search_bar",
+			"search_entry",
+		"toast_overlay",
+			"stack",
+				"first_run_status",
+					"get_started_button",
+				"loading_status",
+				"no_entries_status",
+					"no_entries_new_button",
+				"no_results_status",
+				"entries_page",
+					"entries_group",
+						"group_new_button",
+	],
 }, class IgnitionWindow extends Adw.ApplicationWindow {
+	on_first_run() {
+		this._stack.visible_child = this._first_run_status;
+		this._get_started_button.connect("clicked", () => {
+			this.setup();
+		})
+	}
+
+	setup() {
+		print(SharedVars.autostart_dir);
+		this._stack.visible_child = this._loading_status;
+		this._stack.transition_type = Gtk.StackTransitionType.NONE;
+	}
+
+	settings;
+	entries = [];
+
 	constructor(application) {
 		super({ application });
+		this.settings = Gio.Settings.new("io.github.flattool.Ignition");
+		if (this.settings.get_boolean("first-run")) {
+			this._stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
+			this.on_first_run();
+		} else {
+			this.setup();
+		}
 	}
 });
 

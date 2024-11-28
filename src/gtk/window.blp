@@ -13,6 +13,7 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 			ToggleButton search_button {
 				icon-name: "ignition:system-search-symbolic";
 				tooltip-text: _("Search");
+				sensitive: false;
 			}
 			[end]
 			MenuButton {
@@ -28,6 +29,7 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 			SearchBar search_bar {
 				key-capture-widget: template;
 				search-mode-enabled: bind search_button.active bidirectional;
+				sensitive: bind search_button.sensitive;
 				SearchEntry search_entry {
 					hexpand: true;
 					placeholder-text: _("Search entries");
@@ -37,6 +39,13 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 
 		content: Adw.ToastOverlay toast_overlay {
 			Stack stack {
+				Adw.StatusPage loading_status {
+					paintable: Adw.SpinnerPaintable {
+						widget: loading_status;
+					};
+					title: _("Preparing");
+					description: _("This should only take a moment.");
+				}
 				Adw.StatusPage first_run_status {
 					icon-name: "io.github.flattool.Ignition";
 					title: _("Welcome to Ignition!");
@@ -46,13 +55,6 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 						styles ["suggested-action", "pill"]
 						label: _("Get Started");
 					};
-				}
-				Adw.StatusPage loading_status {
-					paintable: Adw.SpinnerPaintable {
-						widget: loading_status;
-					};
-					title: _("Preparing");
-					description: _("This should only take a moment.");
 				}
 				Adw.StatusPage no_entries_status {
 					icon-name: "ignition:info-outline-symbolic";
@@ -67,12 +69,12 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 						}
 					};
 				}
-				Adw.StatusPage no_results {
+				Adw.StatusPage no_results_status {
 					icon-name: "ignition:system-search-symbolic";
 					title: _("No Results Found");
 					description: _("Try a different search.");
 				}
-				Adw.PreferencesPage entries_view {
+				Adw.PreferencesPage entries_page {
 					Adw.PreferencesGroup entries_group {
 						title: _("Startup Applications and Scripts");
 						description: _("Startup apps and scripts are automatically started when you log in.");

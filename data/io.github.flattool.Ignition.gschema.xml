@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="ignition">
 	<schema id="io.github.flattool.Ignition" path="/io/github/flattool/Ignition/">
-		<key name="sidebar-shown" type="b">
+		<key name="first-run" type="b">
 			<default>true</default>
 		</key>
 	</schema>
