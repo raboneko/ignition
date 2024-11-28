@@ -93,6 +93,12 @@ export class Signal {
 		this.connections.push(func);
 	}
 
+	disconnect(func) {
+		this.connections = this.connections.filter((connection) => {
+			return connection !== func;
+		})
+	}
+
 	object;
 	connections = [];
 

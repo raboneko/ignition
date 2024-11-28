@@ -23,13 +23,20 @@ export const PropertiesDialog = GObject.registerClass({
 	],
 }, class PropertiesDialog extends Adw.Dialog {
 	load_properties(entry) {
+		if (entry && this.entry) {
+			this.entry.signals.file_saved.disconnect(this.on_file_saved);
+			this.entry.signals.file_save_failed.disconnect(this.on_file_save_failed);
+		}
 		this.entry = entry;
-		this.entry.signals.file_saved.connect(() => {
+		this.on_file_saved = () => {
 			this.close();
-		});
-		this.entry.signals.file_save_failed.connect((error) => {
+		};
+		this.on_file_save_failed = (error) => {
 			print(error);
-		});
+		};
+
+		this.entry.signals.file_saved.connect(this.on_file_saved);
+		this.entry.signals.file_save_failed.connect(this.on_file_save_failed);
 
 		this._enabled_row.active = entry.enabled;
 		this._name_row.text = entry.name;
@@ -37,6 +44,8 @@ export const PropertiesDialog = GObject.registerClass({
 		this._icon_row.text = entry.icon;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
+		print("Entry connections:")
+		print(this.entry.signals.file_saved.connections);
 	}
 
 	on_apply() {
@@ -53,6 +62,8 @@ export const PropertiesDialog = GObject.registerClass({
 	}
 
 	entry; // AutostartEntry
+	on_file_saved;
+	on_file_save_failed;
 
 	constructor(...args) {
 		super(...args);
