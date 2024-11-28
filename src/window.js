@@ -44,9 +44,10 @@ export const IgnitionWindow = GObject.registerClass({
 				"no_entries_status",
 					"no_entries_new_button",
 				"no_results_status",
-				"entries_page",
+				"entries_clamp",
 					"entries_group",
 						"group_new_button",
+					"entries_list_box",
 	],
 }, class IgnitionWindow extends Adw.ApplicationWindow {
 	on_first_run() {
@@ -81,7 +82,7 @@ export const IgnitionWindow = GObject.registerClass({
 					this.properties_dialog.present(this);
 				});
 				this.rows.push(row);
-				this._entries_group.add(row);
+				this._entries_list_box.append(row);
 				return true; // continue the loop
 			},
 			this.on_load_finish.bind(this),
@@ -90,7 +91,7 @@ export const IgnitionWindow = GObject.registerClass({
 
 	on_load_finish() {
 		if (this.rows.length > 0 ) {
-			this._stack.set_visible_child(this._entries_page);
+			this._stack.set_visible_child(this._entries_clamp);
 			this._search_button.sensitive = true;
 		} else {
 			this._stack.set_visible_child(this._no_entries_status);

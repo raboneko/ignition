@@ -18,6 +18,7 @@ template $PropertiesDialog: Adw.Dialog {
 						[end]
 						Button apply_button {
 							label: _("Apply");
+							styles ["suggested-action"]
 						}
 					}
 					ScrolledWindow {
@@ -52,6 +53,14 @@ template $PropertiesDialog: Adw.Dialog {
 									}
 									Adw.EntryRow exec_row {
 										title: _("Command or Script");
+										[suffix]
+										MenuButton choose_button {
+											popover: choose_menu;
+											icon-name: "ignition:folder-open-symbolic";
+											tooltip-text: _("Choose an App or Script");
+											valign: center;
+											styles ["flat"]
+										}
 									}
 									Adw.SwitchRow terminal_row {
 										title: _("Show Terminal");
@@ -62,6 +71,7 @@ template $PropertiesDialog: Adw.Dialog {
 									Adw.ButtonRow trash_row {
 										title: _("Move to Trash");
 										start-icon-name: "ignition:user-trash-symbolic";
+										styles ["destructive-action"]
 									}
 								}
 							}
@@ -70,6 +80,24 @@ template $PropertiesDialog: Adw.Dialog {
 				}
 			}
 			// $AppChooserPage app_chooser_page {};
+		}
+	}
+}
+
+Popover choose_menu {
+	styles ["menu"]
+	ListBox choose_list_box {
+		ListBoxRow choose_app {
+			Label {
+				label: _("Choose an App");
+				halign: start;
+			}
+		}
+		ListBoxRow choose_script {
+			Label {
+				label: _("Choose a Script");
+				halign: start;
+			}
 		}
 	}
 }
