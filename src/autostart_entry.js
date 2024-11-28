@@ -20,6 +20,10 @@ export class AutostartEntry {
 		return KeyFileUtils.get_boolean_safe(this.keyfile, "Desktop Entry", "Terminal", false);
 	}
 
+	get enabled() {
+		return ! KeyFileUtils.get_boolean_safe(this.keyfile, "Desktop Entry", "Hidden", false);
+	}
+
 	get icon() {
 		return KeyFileUtils.get_string_safe(this.keyfile, false, "Desktop Entry", "Icon", "");
 	}
@@ -34,6 +38,10 @@ export class AutostartEntry {
 
 	set terminal(value) {
 		this.keyfile.set_boolean("Desktop Entry", "Terminal", value);
+	}
+
+	set enabled(value) {
+		this.keyfile.set_boolean("Desktop Entry", "Hidden", ! value);
 	}
 
 	save() {
