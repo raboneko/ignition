@@ -1,6 +1,7 @@
-import GLib from 'gi://GLib'
+import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
 
-import { KeyFileUtils, Signal } from './utils';
+import { KeyFileUtils, Signal } from './utils.js';
 
 export class AutostartEntry {
 	get name() {
@@ -59,9 +60,9 @@ export class AutostartEntry {
 	constructor(path) {
 		this.path = path;
 		this.file = Gio.File.new_for_path(path);
-		if (this.file.query_exists()) {
+		if (this.file.query_exists(null)) {
 			try {
-				this.keyfile.load_from_file(this.file, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
+				this.keyfile.load_from_file(this.path, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
 			} catch (error) {
 				print("\nERROR! loading keyfile file:");
 				print(error);

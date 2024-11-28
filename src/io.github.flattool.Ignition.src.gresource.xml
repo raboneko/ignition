@@ -3,6 +3,7 @@
   <gresource prefix="/io/github/flattool/Ignition/js">
     <file>main.js</file>
     <file>window.js</file>
+    <file>autostart_entry.js</file>
     <file>entry_row.js</file>
     <file>utils.js</file>
   </gresource>

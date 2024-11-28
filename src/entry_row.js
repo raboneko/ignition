@@ -3,7 +3,7 @@ import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
 export const EntryRow = GObject.registerClass({
-	GTypeName: 'IgnitionWindow',
+	GTypeName: 'EntryRow',
 	Template: 'resource:///io/github/flattool/Ignition/gtk/entry-row.ui',
 	InternalChildren: ['label'],
 }, class EntryRow extends Adw.ActionRow {

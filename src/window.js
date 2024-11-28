@@ -19,11 +19,14 @@
  */
 
 import GObject from 'gi://GObject';
+import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
 import { SharedVars } from './utils.js';
+import { AutostartEntry } from './autostart_entry.js';
+import { EntryRow } from './entry_row.js';
 
 export const IgnitionWindow = GObject.registerClass({
 	GTypeName: 'IgnitionWindow',
@@ -48,17 +51,35 @@ export const IgnitionWindow = GObject.registerClass({
 		this._stack.visible_child = this._first_run_status;
 		this._get_started_button.connect("clicked", () => {
 			this.setup();
+			print("setup done")
 		})
 	}
 
-	setup() {
-		print(SharedVars.autostart_dir);
+	async setup() {
+		// Display loading status immediately
 		this._stack.visible_child = this._loading_status;
 		this._stack.transition_type = Gtk.StackTransitionType.NONE;
+		this.unreliablePromise().then(
+			(result) => { print(result); }
+		).catch((error) => { print(error); })
+	}
+
+	unreliablePromise() {
+		return new Promise((resolve, reject) => {
+			GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 1, () => {
+				if (Math.random() >= 0.5) {
+					resolve('success');
+				} else {
+					reject(Error('failure'));
+				}
+				return GLib.SOURCE_REMOVE;
+			});
+		});
 	}
 
 	settings;
-	entries = [];
+	rows = [];
+
 
 	constructor(application) {
 		super({ application });
