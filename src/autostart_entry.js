@@ -29,11 +29,15 @@ export class AutostartEntry {
 	}
 
 	set name(value) {
-		this.keyfile.set_locale_string("Desktop Entry", "Name", null, value);
+		this.keyfile.set_locale_string("Desktop Entry", "Name", this.locale, value);
 	}
 
 	set comment(value) {
-		this.keyfile.set_locale_string("Desktop Entry", "Comment", null, value);
+		this.keyfile.set_locale_string("Desktop Entry", "Comment", this.locale, value);
+	}
+
+	set exec(value) {
+		this.keyfile.set_string("Desktop Entry", "Exec", value);
 	}
 
 	set terminal(value) {
@@ -47,21 +51,22 @@ export class AutostartEntry {
 	save() {
 		try {
 			// Add key values that might be missing, but won't be edited
-			this.entry.keyfile.set_int64("Desktop Entry", "X-GNOME-Autostart-Delay", 60);
-			this.entry.keyfile.set_string("Desktop Entry", "Type", "Application");
+			this.keyfile.set_int64("Desktop Entry", "X-GNOME-Autostart-Delay", 60);
+			this.keyfile.set_string("Desktop Entry", "Type", "Application");
 
 			this.keyfile.save_to_file(this.path);
 			this.signals.file_saved.emit();
 		} catch (error) {
 			print("\nERROR! Could not save entry's keyfile:");
 			print(error);
-			this.signals.file_trash_failed.emit();
+			this.signals.file_trash_failed.emit(error);
 		}
 	}
 
 	path;
 	keyfile = new GLib.KeyFile({});
 	file;
+	locale = "en_US";
 	signals = {
 		file_saved: new Signal(this),
 		file_save_failed: new Signal(this),
@@ -75,6 +80,11 @@ export class AutostartEntry {
 		if (this.file.query_exists(null)) {
 			try {
 				this.keyfile.load_from_file(this.path, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
+				try {
+					this.locale = this.keyfile.get_locale_for_key("Desktop Entry", "Name", null) || "en_US";
+				} catch (error) {
+					print(error);
+				}
 			} catch (error) {
 				print("\nERROR! loading keyfile file:");
 				print(error);
