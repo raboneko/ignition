@@ -24,6 +24,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
 import { IgnitionWindow } from './window.js';
+import { SharedVars } from './utils.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -66,6 +67,7 @@ export const IgnitionApplication = GObject.registerClass(
 			if (!active_window)
 				active_window = new IgnitionWindow(this);
 
+			SharedVars.main_window = active_window;
 			active_window.present();
 		}
 	}
