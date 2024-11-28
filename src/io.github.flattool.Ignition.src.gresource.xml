@@ -7,5 +7,6 @@
     <file>entry_row.js</file>
     <file>utils.js</file>
     <file>properties_dialog.js</file>
+    <file>app_chooser_page.js</file>
   </gresource>
 </gresources>

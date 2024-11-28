@@ -3,6 +3,8 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
+import { AppChooserPage } from './app_chooser_page.js';
+
 export const PropertiesDialog = GObject.registerClass({
 	GTypeName: 'PropertiesDialog',
 	Template: 'resource:///io/github/flattool/Ignition/gtk/properties-dialog.ui',
@@ -19,7 +21,7 @@ export const PropertiesDialog = GObject.registerClass({
 					"exec_row",
 					"terminal_row",
 					"trash_row",
-				// "app_chooser_page",
+				"app_chooser_page",
 	],
 }, class PropertiesDialog extends Adw.Dialog {
 	load_properties(entry) {
