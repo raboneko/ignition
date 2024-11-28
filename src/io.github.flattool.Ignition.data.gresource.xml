@@ -8,5 +8,8 @@
   <gresource prefix="/io/github/flattool/Ignition/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="ignition:paper-symbolic.svg">../data/icons/paper-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="ignition:right-large-symbolic.svg">../data/icons/right-large-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="ignition:info-outline-symbolic.svg">../data/icons/info-outline-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="ignition:list-add-symbolic.svg">../data/icons/list-add-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="ignition:system-search-symbolic.svg">../data/icons/system-search-symbolic.svg</file>
   </gresource>
 </gresources>

@@ -9,6 +9,11 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 	content: Adw.ToolbarView {
 		[top]
 		Adw.HeaderBar {
+			[start]
+			ToggleButton search_button {
+				icon-name: "ignition:system-search-symbolic";
+				tooltip-text: _("Search");
+			}
 			[end]
 			MenuButton {
 				primary: true;
@@ -18,12 +23,70 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 			}
 		}
 
-		content: Label label {
-			label: _('Hello, World!');
+		[top]
+		Adw.Clamp {
+			SearchBar search_bar {
+				key-capture-widget: template;
+				search-mode-enabled: bind search_button.active bidirectional;
+				SearchEntry search_entry {
+					hexpand: true;
+					placeholder-text: _("Search entries");
+				}
+			}
+		}
 
-			styles [
-				"title-1",
-			]
+		content: Adw.ToastOverlay toast_overlay {
+			Stack stack {
+				Adw.StatusPage first_run_status {
+					icon-name: "io.github.flattool.Ignition";
+					title: _("Welcome to Ignition!");
+					description: _("Ignition lets you start any app or script when you log in to your computer.");
+					child: Button get_started_button {
+						halign: center;
+						styles ["suggested-action", "pill"]
+						label: _("Get Started");
+					};
+				}
+				Adw.StatusPage loading_status {
+					paintable: Adw.SpinnerPaintable {
+						widget: loading_status;
+					};
+					title: _("Preparing");
+					description: _("This should only take a moment.");
+				}
+				Adw.StatusPage no_entries_status {
+					icon-name: "ignition:info-outline-symbolic";
+					title: _("No Entries Found");
+					description: _("Add an app or script to run it at login.");
+					child: Button no_entries_new_button {
+						halign: center;
+						styles ["suggested-action", "pill"]
+						Adw.ButtonContent {
+							icon-name: "ignition:list-add-symbolic";
+							label: _("New Entry");
+						}
+					};
+				}
+				Adw.StatusPage no_results {
+					icon-name: "ignition:system-search-symbolic";
+					title: _("No Results Found");
+					description: _("Try a different search.");
+				}
+				Adw.PreferencesPage entries_view {
+					Adw.PreferencesGroup entries_group {
+						title: _("Startup Applications and Scripts");
+						description: _("Startup apps and scripts are automatically started when you log in.");
+						header-suffix: Button group_new_button {
+							valign: center;
+							styles ["flat"]
+							Adw.ButtonContent {
+								icon-name: "ignition:list-add-symbolic";
+								label: _("New");
+							}
+						};
+					}
+				}
+			}
 		};
 	};
 }
