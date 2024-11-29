@@ -35,11 +35,20 @@ export const IgnitionApplication = GObject.registerClass(
 			super({application_id: 'io.github.flattool.Ignition', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
 			const quit_action = new Gio.SimpleAction({name: 'quit'});
-				quit_action.connect('activate', action => {
+			quit_action.connect('activate', action => {
 				this.quit();
 			});
 			this.add_action(quit_action);
 			this.set_accels_for_action('app.quit', ['<primary>q']);
+
+			const open_folder_action = new Gio.SimpleAction({name: 'open-folder'});
+			open_folder_action.connect('activate', action => {
+				new Gtk.FileLauncher({
+					file: SharedVars.autostart_dir
+				}).launch(null, null, null)
+			})
+			this.add_action(open_folder_action);
+			this.set_accels_for_action('app.open-folder', ['<primary>o']);
 
 			const show_about_action = new Gio.SimpleAction({name: 'about'});
 			show_about_action.connect('activate', action => {

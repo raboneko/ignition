@@ -108,9 +108,16 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 menu primary_menu {
 	section {
 		item {
-			label: _('_Preferences');
-			action: 'app.preferences';
+			label: _('_Open Autostart Folder');
+			action: 'app.open-folder';
 		}
+	}
+
+	section {
+		// item {
+		// 	label: _('_Preferences');
+		// 	action: 'app.preferences';
+		// }
 
 		item {
 			label: _('_Keyboard Shortcuts');
