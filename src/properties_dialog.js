@@ -58,7 +58,7 @@ export const PropertiesDialog = GObject.registerClass({
 		if (this.entry === undefined) {
 			return;
 		}
-		if (this.invalid_entries.length > 0) {
+		if (this.invalid_entries.size > 0) {
 			this._toast_overlay.add_toast(new Adw.Toast({
 				title: _("Please fill in all details"),
 			}));
@@ -75,11 +75,11 @@ export const PropertiesDialog = GObject.registerClass({
 
 	validate_text(row) {
 		if (row.text.length > 0) {
-			this.invalid_entries.remove_by_value(row, 1);
+			this.invalid_entries.delete(row, 1);
 		} else {
-			this.invalid_entries.push(row);
+			this.invalid_entries.add(row);
 		}
-		if (this.invalid_entries.length === 0) {
+		if (this.invalid_entries.size === 0) {
 			this._apply_button.sensitive = true;
 			this._apply_button.tooltip_text = "";
 		} else {
@@ -92,7 +92,7 @@ export const PropertiesDialog = GObject.registerClass({
 	entry; // AutostartEntry
 	on_file_saved;
 	on_file_save_failed;
-	invalid_entries = [];
+	invalid_entries = new Set();
 
 	constructor(...args) {
 		super(...args);

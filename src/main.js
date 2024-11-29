@@ -23,20 +23,6 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
-Array.prototype.remove_by_value = function(val, total_to_remove=Infinity) {
-	let total_removed = 0;
-	for (let i = 0; i < this.length; i += 1) {
-		if (this[i] === val) {
-			this.splice(i, 1);
-			total_removed += 1;
-			if (total_removed >= total_to_remove) {
-				return;
-			}
-			i -= 1;
-		}
-	}
-}
-
 import { IgnitionWindow } from './window.js';
 import { SharedVars } from './utils.js';
 
