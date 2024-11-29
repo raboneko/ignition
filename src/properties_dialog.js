@@ -67,7 +67,7 @@ export const PropertiesDialog = GObject.registerClass({
 
 	validate_text(row) {
 		if (row.text.length > 0) {
-			this.invalid_entries.remove_by_value(row);
+			this.invalid_entries.remove_by_value(row, 1);
 		} else {
 			this.invalid_entries.push(row);
 			this._apply_button.set_sensitive(false);
@@ -89,15 +89,6 @@ export const PropertiesDialog = GObject.registerClass({
 
 	constructor(...args) {
 		super(...args);
-
-		this.invalid_entries.remove_by_value = function(val) {
-			for (let i = 0; i < this.length; i += 1) {
-				if (this[i] === val) {
-					this.splice(i, 1);
-					i -= 1;
-				}
-			}
-		}
 
 		this._name_row.connect("changed", this.validate_text.bind(this));
 		this._comment_row.connect("changed", this.validate_text.bind(this));
