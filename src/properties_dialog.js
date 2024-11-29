@@ -38,7 +38,9 @@ export const PropertiesDialog = GObject.registerClass({
 			this.close();
 		};
 		this.on_file_save_failed = (error) => {
-			print(error);
+			this._toast_overlay.add_toast(new Adw.Toast({
+				title: _("Could not save file"),
+			}));
 		};
 
 		this.entry.signals.file_saved.connect(this.on_file_saved);
@@ -56,6 +58,12 @@ export const PropertiesDialog = GObject.registerClass({
 		if (this.entry === undefined) {
 			return;
 		}
+		if (this.invalid_entries.length > 0) {
+			this._toast_overlay.add_toast(new Adw.Toast({
+				title: _("Please fill in all details"),
+			}));
+			return;
+		}
 		this.entry.enabled = this._enabled_row.active;
 		this.entry.name = this._name_row.text;
 		this.entry.comment = this._comment_row.text;
@@ -70,14 +78,13 @@ export const PropertiesDialog = GObject.registerClass({
 			this.invalid_entries.remove_by_value(row, 1);
 		} else {
 			this.invalid_entries.push(row);
-			this._apply_button.set_sensitive(false);
 		}
 		if (this.invalid_entries.length === 0) {
 			this._apply_button.sensitive = true;
 			this._apply_button.tooltip_text = "";
 		} else {
 			this._apply_button.sensitive = false;
-			this._apply_button.tooltip_text = _("Please fill in all details.");
+			this._apply_button.tooltip_text = _("Please fill in all details");
 		}
 		
 	}
