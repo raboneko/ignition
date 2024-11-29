@@ -65,12 +65,44 @@ export const PropertiesDialog = GObject.registerClass({
 		this.entry.save();
 	}
 
+	validate_text(row) {
+		if (row.text.length > 0) {
+			this.invalid_entries.remove_by_value(row);
+		} else {
+			this.invalid_entries.push(row);
+			this._apply_button.set_sensitive(false);
+		}
+		if (this.invalid_entries.length === 0) {
+			this._apply_button.sensitive = true;
+			this._apply_button.tooltip_text = "";
+		} else {
+			this._apply_button.sensitive = false;
+			this._apply_button.tooltip_text = _("Please fill in all details.");
+		}
+		
+	}
+
 	entry; // AutostartEntry
 	on_file_saved;
 	on_file_save_failed;
+	invalid_entries = [];
 
 	constructor(...args) {
 		super(...args);
+
+		this.invalid_entries.remove_by_value = function(val) {
+			for (let i = 0; i < this.length; i += 1) {
+				if (this[i] === val) {
+					this.splice(i, 1);
+					i -= 1;
+				}
+			}
+		}
+
+		this._name_row.connect("changed", this.validate_text.bind(this));
+		this._comment_row.connect("changed", this.validate_text.bind(this));
+		this._icon_row.connect("changed", this.validate_text.bind(this));
+		this._exec_row.connect("changed", this.validate_text.bind(this));
 
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
