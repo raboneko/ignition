@@ -76,12 +76,17 @@ export const AppChooserPage = GObject.registerClass({
 				// Skip this iteration if the file is not a .desktop file
 				return true;
 			}
-			const kf = new GLib.KeyFile();
-			kf.load_from_file(
-				`${path}/${info.get_name()}`,
-				GLib.KeyFileFlags.KEEP_TRANSLATIONS,
-			)
-			apps.push(kf);
+			try {
+				const kf = new GLib.KeyFile();
+				kf.load_from_file(
+					`${path}/${info.get_name()}`,
+					GLib.KeyFileFlags.KEEP_TRANSLATIONS,
+				)
+				apps.push(kf);
+			} catch (error) {
+				// Skip desktop entries that couldn't be loaded
+				return true;
+			}
 			return true;
 		}
 		run_async(iteration, () => {
