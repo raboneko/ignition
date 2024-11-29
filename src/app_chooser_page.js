@@ -89,9 +89,10 @@ export const AppChooserPage = GObject.registerClass({
 			}
 			return true;
 		}
-		run_async(iteration, () => {
-			callback(apps);
-		});
+		run_async(
+			iteration,
+			() => { callback(apps) },
+		);
 	}
 
 	constructor(...args) {

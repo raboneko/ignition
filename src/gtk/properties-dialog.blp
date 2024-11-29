@@ -4,7 +4,6 @@ using Adw 1;
 template $PropertiesDialog: Adw.Dialog {
 	Adw.ToastOverlay toast_overlay {
 		Adw.NavigationView navigation_view {
-			$AppChooserPage app_chooser_page {}
 			Adw.NavigationPage details_page {
 				title: _("Edit Details");
 				Adw.ToolbarView {
@@ -80,6 +79,7 @@ template $PropertiesDialog: Adw.Dialog {
 					}
 				}
 			}
+			$AppChooserPage app_chooser_page {}
 		}
 	}
 }

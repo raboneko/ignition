@@ -22,6 +22,10 @@ export const PropertiesDialog = GObject.registerClass({
 					"terminal_row",
 					"trash_row",
 				"app_chooser_page",
+		"choose_menu",
+			"choose_list_box",
+				"choose_app",
+				"choose_script",
 	],
 }, class PropertiesDialog extends Adw.Dialog {
 	load_properties(entry) {
@@ -46,9 +50,6 @@ export const PropertiesDialog = GObject.registerClass({
 		this._icon_row.text = entry.icon;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
-		this._app_chooser_page.get_host_apps((apps) => {
-			print(apps);
-		});
 	}
 
 	on_apply() {
@@ -73,5 +74,16 @@ export const PropertiesDialog = GObject.registerClass({
 
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
+		this._choose_list_box.connect("row-activated", (_, row) => {
+			this._choose_menu.popdown();
+			switch (row) {
+				case this._choose_app: {
+					this._navigation_view.push(this._app_chooser_page);
+				} break;
+				case this._choose_script: {
+					print("choose script");
+				} break;
+			}
+		});
 	}
 });
