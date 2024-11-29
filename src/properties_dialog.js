@@ -46,6 +46,9 @@ export const PropertiesDialog = GObject.registerClass({
 		this._icon_row.text = entry.icon;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
+		this._app_chooser_page.get_host_apps((apps) => {
+			print(apps);
+		});
 	}
 
 	on_apply() {
