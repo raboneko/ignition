@@ -4,6 +4,8 @@ import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
 import { AppChooserPage } from './app_chooser_page.js';
+import { new_error_toast } from './error_toast.js';
+import { SharedVars } from './utils.js';
 
 export const PropertiesDialog = GObject.registerClass({
 	GTypeName: 'PropertiesDialog',
@@ -34,13 +36,18 @@ export const PropertiesDialog = GObject.registerClass({
 			this.entry.signals.file_save_failed.disconnect(this.on_file_save_failed);
 		}
 		this.entry = entry;
-		this.on_file_saved = () => {
-			this.close();
-		};
 		this.on_file_save_failed = (error) => {
-			this._toast_overlay.add_toast(new Adw.Toast({
-				title: _("Could not save file"),
-			}));
+			this._toast_overlay.add_toast(
+				new_error_toast(this, _("Could not apply details"), `${error}`)
+			);
+		};
+		this.on_file_saved = () => {
+			SharedVars.main_window._toast_overlay.add_toast(
+				new Adw.Toast({
+					title: _(`Details applied for ${this._name_row.text}`)
+				})
+			);
+			this.close();
 		};
 
 		this.entry.signals.file_saved.connect(this.on_file_saved);

@@ -82,9 +82,9 @@ export class IconUtils {
 
 
 export class Signal {
-	emit() {
+	emit(argument) {
 		for (const func of this.connections) {
-			func(this.object);
+			func(argument);
 		}
 	}
 
@@ -98,12 +98,7 @@ export class Signal {
 		})
 	}
 
-	object;
 	connections = [];
-
-	constructor(object) {
-		this.object = object;
-	}
 }
 
 

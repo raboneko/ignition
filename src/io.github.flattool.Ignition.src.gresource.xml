@@ -8,5 +8,6 @@
     <file>utils.js</file>
     <file>properties_dialog.js</file>
     <file>app_chooser_page.js</file>
+    <file>error_toast.js</file>
   </gresource>
 </gresources>

@@ -64,9 +64,7 @@ export class AutostartEntry {
 			this.keyfile.save_to_file(this.path);
 			this.signals.file_saved.emit();
 		} catch (error) {
-			print("\nERROR! Could not save entry's keyfile:");
-			print(error);
-			this.signals.file_trash_failed.emit(error);
+			this.signals.file_save_failed.emit(error);
 		}
 	}
 
@@ -74,10 +72,10 @@ export class AutostartEntry {
 	keyfile = new GLib.KeyFile({});
 	locale = "en_US";
 	signals = {
-		file_saved: new Signal(this),
-		file_save_failed: new Signal(this),
-		file_trashed: new Signal(this),
-		file_trash_failed: new Signal(this),
+		file_saved: new Signal(),
+		file_save_failed: new Signal(),
+		file_trashed: new Signal(),
+		file_trash_failed: new Signal(),
 	};
 
 	constructor(path) {
