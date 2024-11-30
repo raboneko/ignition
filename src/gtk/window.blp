@@ -74,47 +74,31 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 					title: _("No Results Found");
 					description: _("Try a different search.");
 				}
-				Adw.Clamp entries_clamp {
-					margin-start:  12;
-					margin-end:    12;
-					margin-top:    12;
-					margin-bottom: 12;
-					Box {
-						orientation: vertical;
-						Adw.PreferencesGroup entries_group {
-							title: _("Startup Applications and Scripts");
-							description: _("Startup apps and scripts are automatically started when you log in.");
-							header-suffix: Button group_new_button {
-								valign: center;
-								styles ["flat"]
-								Adw.ButtonContent {
-									icon-name: "ignition:list-add-symbolic";
-									label: _("New");
-								}
-							};
-						}
-						ListBox entries_list_box {
-							styles ["boxed-list"]
-							selection-mode: none;
-							valign: start;
-						}
-						Adw.PreferencesGroup disabled_group {
-							margin-top: 24;
-							title: _("Disabled Entries");
-							description: _("These apps and scripts won't be started when you log in.");
-							header-suffix: Button enable_all_button {
-								valign: center;
-								styles ["flat"]
-								Adw.ButtonContent {
-									icon-name: "ignition:list-add-symbolic";
-									label: _("Enable All");
-								}
-							};
-						}
-						ListBox disabled_list_box {
-							styles ["boxed-list"]
-							selection-mode: none;
-							valign: start;
+				ScrolledWindow entries_scrolled_window {
+					Adw.Clamp {
+						margin-start:  12;
+						margin-end:    12;
+						margin-top:    12;
+						margin-bottom: 12;
+						Box {
+							orientation: vertical;
+							Adw.PreferencesGroup entries_group {
+								title: _("Startup Applications and Scripts");
+								description: _("Startup apps and scripts are automatically started when you log in.");
+								header-suffix: Button group_new_button {
+									valign: center;
+									styles ["flat"]
+									Adw.ButtonContent {
+										icon-name: "ignition:list-add-symbolic";
+										label: _("New");
+									}
+								};
+							}
+							ListBox entries_list_box {
+								styles ["boxed-list"]
+								selection-mode: none;
+								valign: start;
+							}
 						}
 					}
 				}

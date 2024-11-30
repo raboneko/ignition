@@ -27,11 +27,15 @@ export const EntryRow = GObject.registerClass({
 
 		this.title = this.entry.name || "No Name Set";
 		this.subtitle = this.entry.comment || "No comment set.";
-		this._enabled_label.label = (
-			this.entry.enabled
-			? _("Enabled")
-			: _("Disabled")
-		);
+		if (this.entry.enabled) {
+			this._enabled_label.label = _("Enabled");
+			this._enabled_label.remove_css_class("warning");
+			this._prefix_icon.opacity = 1;
+		} else {
+			this._enabled_label.label = _("Disabled");
+			this._enabled_label.add_css_class("warning");
+			this._prefix_icon.opacity = 0.4;
+		}
 	}
 
 	constructor(entry, ...args) {

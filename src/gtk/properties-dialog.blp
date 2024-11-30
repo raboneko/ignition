@@ -27,7 +27,7 @@ template $PropertiesDialog: Adw.Dialog {
 						Adw.Clamp {
 							margin-start:  12;
 							margin-end:    12;
-							margin-top:    12;
+							margin-top: 6;
 							margin-bottom: 2;
 							Box {
 								spacing: 12;
@@ -35,14 +35,15 @@ template $PropertiesDialog: Adw.Dialog {
 
 								Box {
 									spacing: 12;
+									margin-start: 6;
 									Image icon {
-										margin-bottom: 12;
-										margin-start: 12;
 										valign: center;
 										pixel-size: 45;
 										styles ["icon-dropshadow"]
 									}
 									Adw.PreferencesGroup {
+										margin-top: 10;
+										margin-bottom: 0;
 										valign: center;
 										title: _("Details");
 										description: _("Edit details about this entry.");

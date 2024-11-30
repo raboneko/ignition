@@ -56,6 +56,7 @@ export const PropertiesDialog = GObject.registerClass({
 			SharedVars.main_window._toast_overlay.add_toast(new Adw.Toast({
 				title: _(`Details applied for ${this._name_row.text}`)
 			}));
+			SharedVars.main_window._entries_list_box.invalidate_sort();
 			this.close();
 		};
 		this.on_file_save_failed = (error) => {
