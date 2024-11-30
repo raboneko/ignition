@@ -119,6 +119,7 @@ export const IgnitionWindow = GObject.registerClass({
 		this._search_button.active = false;
 		this._entries_list_box.remove_all();
 		this.rows.length = 0;
+		this.properties_dialog.close();
 		this.setup();
 		this._toast_overlay.add_toast(new Adw.Toast({
 			title: _("Reloaded due to a change in the folder")
