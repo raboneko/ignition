@@ -63,17 +63,17 @@ export class IconUtils {
 		return host_icon_theme;
 	}
 
-	static get_paintable_for_path(path) {
+	static get_paintable_for_path(path, size=512) {
 		const file = Gio.File.new_for_path(path);
 		if (file.query_exists(null)) {
-			return Gtk.IconPaintable.new_for_file(image_file, 512, 1);
+			return Gtk.IconPaintable.new_for_file(image_file, size, 1);
 		}
 		return null;
 	}
 
-	static get_paintable_for_name(name) {
+	static get_paintable_for_name(name, size=512) {
 		if (this.host_icon_theme.has_icon(name)) {
-			return this.host_icon_theme.lookup_icon(name, null, 512, 1, null, 0);
+			return this.host_icon_theme.lookup_icon(name, null, size, 1, null, 0);
 		}
 		return null;
 	}

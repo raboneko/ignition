@@ -28,14 +28,27 @@ template $PropertiesDialog: Adw.Dialog {
 							margin-start:  12;
 							margin-end:    12;
 							margin-top:    12;
-							margin-bottom: 12;
+							margin-bottom: 2;
 							Box {
 								spacing: 12;
 								orientation: vertical;
 
+								Box {
+									spacing: 12;
+									Image icon {
+										margin-bottom: 12;
+										margin-start: 12;
+										valign: center;
+										pixel-size: 45;
+										styles ["icon-dropshadow"]
+									}
+									Adw.PreferencesGroup {
+										valign: center;
+										title: _("Details");
+										description: _("Edit details about this entry.");
+									}
+								}
 								Adw.PreferencesGroup {
-									title: _("Details");
-									description: _("Edit details about this entry.");
 									Adw.SwitchRow enabled_row {
 										title: _("Enable");
 										subtitle: _("Enable this entry to be started when you log in.");
@@ -67,11 +80,25 @@ template $PropertiesDialog: Adw.Dialog {
 										subtitle: _("Show a terminal for this process to run in.");
 									}
 								}
-								Adw.PreferencesGroup trash_group {
-									Adw.ButtonRow trash_row {
-										title: _("Move to Trash");
-										start-icon-name: "ignition:user-trash-symbolic";
-										styles ["destructive-action"]
+								Box {
+									homogeneous: true;
+									hexpand: true;
+									halign: fill;
+									spacing: 12;
+									Adw.PreferencesGroup clear_icon_button {
+										margin-bottom: 10;
+										Adw.ButtonRow {
+											start-icon-name: "ignition:eraser3-symbolic";
+											title: _("Clear Icon");
+										}
+									}
+									Adw.PreferencesGroup trash_group {
+										margin-bottom: 10;
+										Adw.ButtonRow trash_row {
+											title: _("Move to Trash");
+											start-icon-name: "ignition:user-trash-symbolic";
+											styles ["destructive-action"]
+										}
 									}
 								}
 							}

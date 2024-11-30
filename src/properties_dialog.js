@@ -5,7 +5,7 @@ import Adw from 'gi://Adw';
 
 import { AppChooserPage } from './app_chooser_page.js';
 import { new_error_toast } from './error_toast.js';
-import { SharedVars } from './utils.js';
+import { IconUtils, SharedVars } from './utils.js';
 
 export const PropertiesDialog = GObject.registerClass({
 	GTypeName: 'PropertiesDialog',
@@ -16,6 +16,8 @@ export const PropertiesDialog = GObject.registerClass({
 				"details_page",
 					"cancel_button",
 					"apply_button",
+					"icon",
+					"clear_icon_button",
 					"list_box",
 						"enabled_row",
 						"name_row",
@@ -75,6 +77,24 @@ export const PropertiesDialog = GObject.registerClass({
 		this._comment_row.text = entry.comment;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
+
+		const paintable = (
+			IconUtils.get_paintable_for_name(entry.icon, 45)
+			|| IconUtils.get_paintable_for_path(entry.icon, 45)
+		);
+		if (paintable !== null) {
+			this._icon.set_from_paintable(paintable);
+			this._clear_icon_button.visible = true;
+		} else {
+			this._icon.icon_name = "ignition:application-x-executable-symbolic";
+			this._clear_icon_button.visible = false;
+		}
+
+		this._details_page.title = (
+			entry.name !== ""
+			? _("%s Details").format(entry.name)
+			: _("Details")
+		);
 
 		for (const row of this._list_box) {
 			if (row.constructor !== Adw.EntryRow) {
