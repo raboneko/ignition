@@ -97,7 +97,11 @@ export const IgnitionWindow = GObject.registerClass({
 				this._entries_list_box.append(row);
 				return true; // continue the loop
 			},
-			this.on_load_finish.bind(this),
+			() => {
+				this.properties_dialog._app_chooser_page.get_host_apps(
+					this.on_load_finish.bind(this)
+				)
+			}
 		);
 	}
 

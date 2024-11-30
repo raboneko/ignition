@@ -4,7 +4,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
-import { IconUtils, run_async } from './utils.js';
+import { IconUtils, KeyFileUtils, run_async } from './utils.js';
 
 export const AppChooserPage = GObject.registerClass({
 	GTypeName: 'AppChooserPage',
@@ -83,6 +83,15 @@ export const AppChooserPage = GObject.registerClass({
 					GLib.KeyFileFlags.KEEP_TRANSLATIONS,
 				)
 				apps.push(kf);
+				const row = new Adw.ActionRow({
+					title: GLib.markup_escape_text(KeyFileUtils.get_string_safe(
+						kf, true, "Desktop Entry", "Name", ""
+					), -1),
+					subtitle: GLib.markup_escape_text(KeyFileUtils.get_string_safe(
+						kf, true, "Desktop Entry", "Comment", ""
+					), -1),
+				});
+				this._apps_list_box.append(row);
 			} catch (error) {
 				// Skip desktop entries that couldn't be loaded
 				return true;
@@ -91,7 +100,7 @@ export const AppChooserPage = GObject.registerClass({
 		}
 		run_async(
 			iteration,
-			() => { callback(apps) },
+			() => { callback() },
 		);
 	}
 
