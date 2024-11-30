@@ -97,10 +97,17 @@ export const PropertiesDialog = GObject.registerClass({
 		
 	}
 
+	present(keyfile, parent_window) {
+		this.is_open = true;
+		this.load_properties(keyfile);
+		super.present(parent_window);
+	}
+
 	entry; // AutostartEntry
 	on_file_saved;
 	on_file_save_failed;
 	invalid_entries = new Set();
+	is_open = false;
 
 	constructor(...args) {
 		super(...args);
@@ -109,6 +116,10 @@ export const PropertiesDialog = GObject.registerClass({
 		this._comment_row.connect("changed", this.validate_text.bind(this));
 		this._icon_row.connect("changed", this.validate_text.bind(this));
 		this._exec_row.connect("changed", this.validate_text.bind(this));
+		this.connect("closed", () => {
+			this._navigation_view.pop_to_page(this._details_page);
+			this.is_open = false;
+		})
 
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));

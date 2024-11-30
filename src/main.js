@@ -87,6 +87,18 @@ export const IgnitionApplication = GObject.registerClass(
 				aboutDialog.present(this.active_window);
 			});
 			this.add_action(show_about_action);
+
+			const search_action = new Gio.SimpleAction({name: 'search'});
+			search_action.connect('activate', action => {
+				const dialog = this.active_window.properties_dialog
+				if (dialog.is_open && dialog._app_chooser_page._search_button.sensitive) {
+					dialog._app_chooser_page._search_button.active = !dialog._app_chooser_page._search_button.active;
+				} else if (!dialog.is_open && this.active_window._search_button.sensitive) {
+					this.active_window._search_button.active = !this.active_window._search_button.active;
+				}
+			});
+			this.add_action(search_action);
+			this.set_accels_for_action('app.search', ['<primary>f']);
 		}
 
 		vfunc_activate() {

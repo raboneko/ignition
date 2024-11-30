@@ -97,5 +97,12 @@ export const AppChooserPage = GObject.registerClass({
 
 	constructor(...args) {
 		super(...args);
+		this.connect("showing", () => {
+			this._search_button.sensitive = true;
+		});
+		this.connect("hidden", () => {
+			this._search_button.active = false;
+			this._search_button.sensitive = false;
+		});
 	}
 });

@@ -10,6 +10,7 @@ template $AppChooserPage: Adw.NavigationPage {
 			show-end-title-buttons: false;
 			[start]
 			ToggleButton search_button {
+				sensitive: false;
 				icon-name: "ignition:system-search-symbolic";
 				tooltip-text: _("Search");
 			}
@@ -18,9 +19,11 @@ template $AppChooserPage: Adw.NavigationPage {
 		Adw.Clamp {
 			SearchBar search_bar {
 				search-mode-enabled: bind search_button.active bidirectional;
+				sensitive: bind search_button.sensitive bidirectional;
 				key-capture-widget: template;
 				SearchEntry search_entry {
 					hexpand: true;
+					placeholder-text: _("Search apps");
 				}
 			}
 		}

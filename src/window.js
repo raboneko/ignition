@@ -79,8 +79,7 @@ export const IgnitionWindow = GObject.registerClass({
 				const entry = new AutostartEntry(path);
 				const row = new EntryRow(entry, { title: "Test" });
 				row.connect("activated", () => {
-					this.properties_dialog.load_properties(entry);
-					this.properties_dialog.present(this);
+					this.properties_dialog.present(entry, this);
 				});
 				this.rows.push(row);
 				this._entries_list_box.append(row);
@@ -101,8 +100,7 @@ export const IgnitionWindow = GObject.registerClass({
 	}
 
 	on_new_entry() {
-		this.properties_dialog.load_properties(new AutostartEntry(""));
-		this.properties_dialog.present(this);
+		this.properties_dialog.present(new AutostartEntry(""), this);
 	}
 
 	settings;
