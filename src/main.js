@@ -25,6 +25,7 @@ import Adw from 'gi://Adw?version=1';
 
 import { IgnitionWindow } from './window.js';
 import { SharedVars } from './utils.js';
+import { new_error_toast } from './error_toast.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -43,10 +44,28 @@ export const IgnitionApplication = GObject.registerClass(
 
 			const open_folder_action = new Gio.SimpleAction({name: 'open-folder'});
 			open_folder_action.connect('activate', action => {
-				new Gtk.FileLauncher({
-					file: SharedVars.autostart_dir
-				}).launch(null, null, null)
-			})
+				const launcher = new Gtk.FileLauncher({
+					file: SharedVars.autostart_dir,
+				});
+				launcher.launch(this.active_window, null, (lnch, result) => {
+					try {
+						const did_open = launcher.launch_finish(result);
+						this.active_window._toast_overlay.add_toast(
+							new Adw.Toast({
+								title: _("Opened folder")
+							})
+						)
+					} catch (error) {
+						this.active_window._toast_overlay.add_toast(
+							new_error_toast(
+								this.active_window,
+								_("Could not open folder"),
+								`Path: ${SharedVars.autostart_dir}\n${error}`
+							)
+						);
+					}
+				});
+			});
 			this.add_action(open_folder_action);
 			this.set_accels_for_action('app.open-folder', ['<primary>o']);
 
