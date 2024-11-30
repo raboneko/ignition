@@ -9,5 +9,6 @@
     <file>properties_dialog.js</file>
     <file>app_chooser_page.js</file>
     <file>error_toast.js</file>
+    <file>file_watcher.js</file>
   </gresource>
 </gresources>

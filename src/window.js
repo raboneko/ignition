@@ -28,6 +28,7 @@ import { SharedVars, run_async } from './utils.js';
 import { AutostartEntry } from './autostart_entry.js';
 import { EntryRow } from './entry_row.js';
 import { PropertiesDialog } from './properties_dialog.js';
+import { DirWatcher } from './file_watcher.js';
 
 export const IgnitionWindow = GObject.registerClass({
 	GTypeName: 'IgnitionWindow',
@@ -96,6 +97,7 @@ export const IgnitionWindow = GObject.registerClass({
 		} else {
 			this._stack.set_visible_child(this._no_entries_status);
 		}
+		this.is_loading = false;
 	}
 
 	on_new_entry() {
@@ -106,10 +108,14 @@ export const IgnitionWindow = GObject.registerClass({
 	settings;
 	rows = [];
 	properties_dialog = new PropertiesDialog();
+	is_loading = true;
+	file_watch = new DirWatcher(SharedVars.autostart_dir, 500);
 
 	constructor(application) {
 		super({ application });
 		this.settings = Gio.Settings.new("io.github.flattool.Ignition");
+
+		this.file_watch.event.connect(() => {print("event!")})
 
 		if (this.settings.get_boolean("first-run")) {
 			this.on_first_run();
@@ -119,6 +125,30 @@ export const IgnitionWindow = GObject.registerClass({
 
 		this._no_entries_new_button.connect("clicked", this.on_new_entry.bind(this));
 		this._group_new_button.connect("clicked", this.on_new_entry.bind(this));
+		this._entries_list_box.set_sort_func((row1, row2) => {
+			return row1.title.toLowerCase() > row2.title.toLowerCase();
+		});
+		this._search_entry.connect("search-changed", (entry) => {
+			let total_visible = 0;
+			const text = entry.text.toLowerCase();
+			for (const row of this.rows) {
+				if (
+					row.title.toLowerCase().includes(text)
+					|| row.subtitle.toLowerCase().includes(text)
+				) {
+					row.visible = true;
+					total_visible += 1;
+				} else {
+					row.visible = false;
+				}
+			}
+			if (total_visible === 0) {
+				this._stack.visible_child = this._no_results_status
+			} else if (this.rows.length === 0) {
+				this._stack.visible_child = this._no_entries_status
+			} else {
+				this._stack.visible_child = this._entries_clamp
+			}
+		});
 	}
 });
-
