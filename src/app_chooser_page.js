@@ -5,6 +5,7 @@ import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
 import { IconUtils, KeyFileUtils, run_async } from './utils.js';
+import { AppRow } from './app_row.js';
 
 export const AppChooserPage = GObject.registerClass({
 	GTypeName: 'AppChooserPage',
@@ -49,11 +50,11 @@ export const AppChooserPage = GObject.registerClass({
 				}
 			);
 		}
-		const apps = [];
 		if (dirs_with_enumerators.length === 0) {
-			callback(apps);
+			callback();
 			return;
 		}
+		this._apps_list_box.remove_all();
 		let index = 0;
 		let dir_with_enumerator = dirs_with_enumerators[index];
 		const iteration = () => {
@@ -82,15 +83,7 @@ export const AppChooserPage = GObject.registerClass({
 					`${path}/${info.get_name()}`,
 					GLib.KeyFileFlags.KEEP_TRANSLATIONS,
 				)
-				apps.push(kf);
-				const row = new Adw.ActionRow({
-					title: GLib.markup_escape_text(KeyFileUtils.get_string_safe(
-						kf, true, "Desktop Entry", "Name", ""
-					), -1),
-					subtitle: GLib.markup_escape_text(KeyFileUtils.get_string_safe(
-						kf, true, "Desktop Entry", "Comment", ""
-					), -1),
-				});
+				const row = new AppRow(kf);
 				this._apps_list_box.append(row);
 			} catch (error) {
 				// Skip desktop entries that couldn't be loaded

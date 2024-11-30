@@ -12,8 +12,6 @@ export const AppRow = GObject.registerClass({
 		"prefix_icon",
 	],
 }, class AppRow extends Adw.ActionRow {
-	keyfile;
-
 	load_details() {
 		const icon_key = KeyFileUtils.get_string_safe(this.keyfile, false, "Desktop Entry", "Icon", " ");
 		// This handles desktop entries that set their icon from a path
@@ -32,9 +30,12 @@ export const AppRow = GObject.registerClass({
 		)
 	}
 
+	keyfile;
+
 	constructor(keyfile, ...args) {
 		super(...args);
 		this.keyfile = keyfile;
+
 		// Skip apps that are hidden or otherwise not shown
 		if (
 			KeyFileUtils.get_boolean_safe(this.keyfile, "Desktop Entry", "Hidden", false)
@@ -42,6 +43,7 @@ export const AppRow = GObject.registerClass({
 		) {
 			throw new Error("App is hidden");
 		}
+
 		this.load_details();
 	}
 });
