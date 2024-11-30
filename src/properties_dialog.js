@@ -23,7 +23,8 @@ export const PropertiesDialog = GObject.registerClass({
 						"icon_row",
 						"exec_row",
 						"terminal_row",
-						"trash_row",
+						"trash_group",
+							"trash_row",
 				"app_chooser_page",
 		"choose_menu",
 			"choose_list_box",
@@ -33,10 +34,10 @@ export const PropertiesDialog = GObject.registerClass({
 }, class PropertiesDialog extends Adw.Dialog {
 	load_properties(entry) {
 		if (Gio.File.new_for_path(entry.path).query_exists(null)) {
-			this._trash_row.sensitive = true;
+			this._trash_group.visible = true;
 			this._trash_row.tooltip_text = "";
 		} else {
-			this._trash_row.sensitive = false;
+			this._trash_group.visible = false;
 			this._trash_row.tooltip_text = _("This is a new file")
 		}
 		if (entry && this.entry) {
