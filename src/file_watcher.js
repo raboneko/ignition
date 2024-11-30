@@ -12,8 +12,14 @@ export class DirWatcher {
 	monitor;
 	event = new Signal();
 	last_event = 0; // This will become the new Date.now upon event
+	rate_limit_ms;
+
+	sleep() {
+		this.last_event = Date.now();
+	}
 
 	constructor(file, rate_limit_ms) {
+		this.rate_limit_ms = rate_limit_ms;
 		this.monitor = file.monitor_directory(Gio.FileMonitorFlags.NONE, null);
 		this.monitor.connect("changed", () => {
 			const now = Date.now();

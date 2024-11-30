@@ -77,6 +77,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this.entry.icon = this._icon_row.text;
 		this.entry.exec = this._exec_row.text;
 		this.entry.terminal = this._terminal_row.active;
+		SharedVars.main_window.dir_watch.sleep();
 		this.entry.save();
 	}
 

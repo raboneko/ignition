@@ -109,13 +109,13 @@ export const IgnitionWindow = GObject.registerClass({
 	rows = [];
 	properties_dialog = new PropertiesDialog();
 	is_loading = true;
-	file_watch = new DirWatcher(SharedVars.autostart_dir, 500);
+	dir_watch = new DirWatcher(SharedVars.autostart_dir, 500);
 
 	constructor(application) {
 		super({ application });
 		this.settings = Gio.Settings.new("io.github.flattool.Ignition");
 
-		this.file_watch.event.connect(() => {print("event!")})
+		this.dir_watch.event.connect(() => {print("event!")})
 
 		if (this.settings.get_boolean("first-run")) {
 			this.on_first_run();
