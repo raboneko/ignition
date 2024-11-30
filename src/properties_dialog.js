@@ -33,7 +33,8 @@ export const PropertiesDialog = GObject.registerClass({
 	],
 }, class PropertiesDialog extends Adw.Dialog {
 	load_properties(entry) {
-		if (Gio.File.new_for_path(entry.path).query_exists(null)) {
+		this.is_new_file = Gio.File.new_for_path(entry.path).query_exists(null);
+		if (this.is_new_file) {
 			this._trash_group.visible = true;
 			this._trash_row.tooltip_text = "";
 		} else {
@@ -102,7 +103,9 @@ export const PropertiesDialog = GObject.registerClass({
 		this.entry.icon = this._icon_row.text;
 		this.entry.exec = this._exec_row.text;
 		this.entry.terminal = this._terminal_row.active;
-		SharedVars.main_window.dir_watch.sleep();
+		if (this.is_new_file) {
+			SharedVars.main_window.dir_watch.sleep();
+		}
 		this.entry.save();
 	}
 
@@ -135,6 +138,7 @@ export const PropertiesDialog = GObject.registerClass({
 	on_file_trash_failed;
 	invalid_entries = new Set();
 	is_open = false;
+	is_new_file = false;
 
 	// Last error toast, if any. This will be dismissed on close
 	//   to prevent it from showing again on a new open event
