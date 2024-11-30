@@ -27,19 +27,26 @@ template $AppChooserPage: Adw.NavigationPage {
 				}
 			}
 		}
-		ScrolledWindow {
-			propagate-natural-height: true;
-			propagate-natural-width: true;
-			Adw.Clamp {
-				margin-start:  12;
-				margin-end:    12;
-				margin-top:    12;
-				margin-bottom: 12;
-				ListBox apps_list_box {
-					styles ["boxed-list"]
-					selection-mode: none;
-					valign: start;
+		Stack stack {
+			ScrolledWindow scrolled_window {
+				propagate-natural-height: true;
+				propagate-natural-width: true;
+				Adw.Clamp clamp {
+					margin-start:  12;
+					margin-end:    12;
+					margin-top:    12;
+					margin-bottom: 12;
+					ListBox apps_list_box {
+						styles ["boxed-list"]
+						selection-mode: none;
+						valign: start;
+					}
 				}
+			}
+			Adw.StatusPage no_results_status {
+				icon-name: "ignition:system-search-symbolic";
+				title: _("No Results Found");
+				description: _("Try a different search.");
 			}
 		}
 	}
