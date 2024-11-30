@@ -10,7 +10,7 @@ export const EntryRow = GObject.registerClass({
 	Template: 'resource:///io/github/flattool/Ignition/gtk/entry-row.ui',
 	InternalChildren: [
 		"prefix_icon",
-		"switch",
+		"enabled_label",
 	],
 }, class EntryRow extends Adw.ActionRow {
 	entry; // AutostartEntry
@@ -27,7 +27,11 @@ export const EntryRow = GObject.registerClass({
 
 		this.title = this.entry.name || "No Name Set";
 		this.subtitle = this.entry.comment || "No comment set.";
-		this._switch.active = this.entry.enabled;
+		this._enabled_label.label = (
+			this.entry.enabled
+			? _("Enabled")
+			: _("Disabled")
+		);
 	}
 
 	constructor(entry, ...args) {
@@ -35,7 +39,6 @@ export const EntryRow = GObject.registerClass({
 
 		this.entry = entry;
 		this.entry.signals.file_saved.connect(this.load_details.bind(this));
-
 		this.load_details();
 	}
 });

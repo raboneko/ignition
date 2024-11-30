@@ -10,10 +10,13 @@ template $EntryRow: Adw.ActionRow {
 		icon-size: large;
 	}
 	[suffix]
-	Switch switch {
-		valign: center;
-		margin-end: 12;
-		sensitive: false;
+	Label enabled_label {
+		wrap: true;
+		wrap-mode: word_char;
+		natural-wrap-mode: none;
+		margin-end: 9;
+		label: "Not known";
+		styles ["subtitle"]
 	}
 	[suffix]
 	Image {
