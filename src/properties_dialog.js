@@ -190,6 +190,28 @@ export const PropertiesDialog = GObject.registerClass({
 			this.is_open = false;
 		});
 
+		this._app_chooser_page.signals.app_chosen.connect((entry) => {
+			this._navigation_view.pop_to_page(this._details_page);
+			this._enabled_row.active = entry.enabled;
+			this._name_row.text = entry.name;
+			this._comment_row.text = entry.comment;
+			this._exec_row.text = entry.exec;
+			this._terminal_row.active = false;
+			this.icon_cleared = false;
+			this._clear_icon_group.visible = true;
+			const paintable = (
+				IconUtils.get_paintable_for_name(entry.icon, 45)
+				|| IconUtils.get_paintable_for_path(entry.icon, 45)
+			);
+			if (paintable !== null) {
+				this._icon.set_from_paintable(paintable);
+				this._clear_icon_group.visible = true;
+			} else {
+				this._icon.icon_name = "ignition:application-x-executable-symbolic";
+				this._clear_icon_group.visible = false;
+			}
+		});
+
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
 		this._clear_icon_row.connect("activated", () => {

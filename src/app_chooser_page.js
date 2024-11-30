@@ -4,8 +4,9 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
-import { IconUtils, KeyFileUtils, run_async } from './utils.js';
+import { IconUtils, KeyFileUtils, run_async, Signal } from './utils.js';
 import { AppRow } from './app_row.js';
+import { AutostartEntry } from './autostart_entry.js';
 
 const host_app_dirs = [
 	Gio.File.new_for_path( // distro apps 1
@@ -83,12 +84,16 @@ export const AppChooserPage = GObject.registerClass({
 				return true;
 			}
 			try {
+				const entry = new AutostartEntry(`${path}/${info.get_name()}`);
 				const kf = new GLib.KeyFile();
 				kf.load_from_file(
 					`${path}/${info.get_name()}`,
 					GLib.KeyFileFlags.KEEP_TRANSLATIONS,
-				)
+				);
 				const row = new AppRow(kf);
+				row.connect('activated', () => {
+					this.signals.app_chosen.emit(entry);
+				});
 				this._apps_list_box.append(row);
 			} catch (error) {
 				// Skip desktop entries that couldn't be loaded
@@ -100,6 +105,11 @@ export const AppChooserPage = GObject.registerClass({
 			iteration,
 			() => { callback() },
 		);
+	}
+
+	signals = {
+		app_chosen: new Signal(),
+		loading_failed: new Signal(),
 	}
 
 	constructor(...args) {
