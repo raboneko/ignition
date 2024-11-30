@@ -107,8 +107,6 @@ export class AutostartEntry {
 			} catch (error) {
 				// Not having a name set is fine
 			}
-		} else {
-			throw new Error("File does not exist");
 		}
 	}
 }

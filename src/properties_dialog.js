@@ -48,10 +48,9 @@ export const PropertiesDialog = GObject.registerClass({
 		}
 		this.entry = entry;
 		this.on_file_saved = () => {
-			this.last_toast = new Adw.Toast({
+			SharedVars.main_window._toast_overlay.add_toast(new Adw.Toast({
 				title: _(`Details applied for ${this._name_row.text}`)
-			});
-			SharedVars.main_window._toast_overlay.add_toast(last_toast);
+			}));
 			this.close();
 		};
 		this.on_file_save_failed = (error) => {
