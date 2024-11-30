@@ -52,16 +52,16 @@ export const IgnitionApplication = GObject.registerClass(
 						const did_open = launcher.launch_finish(result);
 						this.active_window._toast_overlay.add_toast(
 							new Adw.Toast({
-								title: _("Opened folder")
-							})
-						)
+								title: _("Opened folder"),
+							}),
+						);
 					} catch (error) {
 						this.active_window._toast_overlay.add_toast(
 							new_error_toast(
 								this.active_window,
 								_("Could not open folder"),
-								`Path: ${SharedVars.autostart_dir}\n${error}`
-							)
+								`Path: ${SharedVars.autostart_dir}\n${error}`,
+							),
 						);
 					}
 				});
