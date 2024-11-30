@@ -127,9 +127,13 @@ export const PropertiesDialog = GObject.registerClass({
 		super(...args);
 
 		this._name_row.connect("changed", this.validate_text.bind(this));
+		this._name_row.connect("entry-activated", this.on_apply.bind(this));
 		this._comment_row.connect("changed", this.validate_text.bind(this));
+		this._comment_row.connect("entry-activated", this.on_apply.bind(this));
 		this._icon_row.connect("changed", this.validate_text.bind(this));
+		this._icon_row.connect("entry-activated", this.on_apply.bind(this));
 		this._exec_row.connect("changed", this.validate_text.bind(this));
+		this._exec_row.connect("entry-activated", this.on_apply.bind(this));
 		this.connect("closed", () => {
 			this._navigation_view.pop_to_page(this._details_page);
 			this.is_open = false;
