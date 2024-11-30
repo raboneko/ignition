@@ -41,7 +41,10 @@ template $PropertiesDialog: Adw.Dialog {
 										subtitle: _("Enable this entry to be started when you log in.");
 									}
 								}
-								Adw.PreferencesGroup {
+								ListBox list_box {
+									valign: start;
+									selection-mode: none;
+									styles ["boxed-list"]
 									Adw.EntryRow name_row {
 										title: _("Name");
 									}

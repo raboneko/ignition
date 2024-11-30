@@ -16,13 +16,14 @@ export const PropertiesDialog = GObject.registerClass({
 				"details_page",
 					"cancel_button",
 					"apply_button",
-					"enabled_row",
-					"name_row",
-					"comment_row",
-					"icon_row",
-					"exec_row",
-					"terminal_row",
-					"trash_row",
+					"list_box",
+						"enabled_row",
+						"name_row",
+						"comment_row",
+						"icon_row",
+						"exec_row",
+						"terminal_row",
+						"trash_row",
 				"app_chooser_page",
 		"choose_menu",
 			"choose_list_box",
@@ -31,6 +32,13 @@ export const PropertiesDialog = GObject.registerClass({
 	],
 }, class PropertiesDialog extends Adw.Dialog {
 	load_properties(entry) {
+		if (Gio.File.new_for_path(entry.path).query_exists(null)) {
+			this._trash_row.sensitive = true;
+			this._trash_row.tooltip_text = "";
+		} else {
+			this._trash_row.sensitive = false;
+			this._trash_row.tooltip_text = _("This is a new file")
+		}
 		if (entry && this.entry) {
 			this.entry.signals.file_saved.disconnect(this.on_file_saved);
 			this.entry.signals.file_save_failed.disconnect(this.on_file_save_failed);
@@ -39,25 +47,22 @@ export const PropertiesDialog = GObject.registerClass({
 		}
 		this.entry = entry;
 		this.on_file_saved = () => {
-			SharedVars.main_window._toast_overlay.add_toast(
-				new Adw.Toast({
-					title: _(`Details applied for ${this._name_row.text}`)
-				})
-			);
+			this.last_toast = new Adw.Toast({
+				title: _(`Details applied for ${this._name_row.text}`)
+			});
+			SharedVars.main_window._toast_overlay.add_toast(last_toast);
 			this.close();
 		};
 		this.on_file_save_failed = (error) => {
-			this._toast_overlay.add_toast(
-				new_error_toast(this, _("Could not apply details"), `${error}`)
-			);
+			this.last_toast = new_error_toast(this, _("Could not apply details"), `${error}`);
+			this._toast_overlay.add_toast(this.last_toast);
 		};
 		this.on_file_trashed = () => {
 			this.close();
 		};
 		this.on_file_trash_failed = (error) => {
-			this._toast_overlay.add_toast(
-				new_error_toast(this, _("Could not trash entry"), `${error}`)
-			);
+			this.last_toast = new_error_toast(this, _("Could not trash entry"), `${error}`);
+			this._toast_overlay.add_toast(this.last_toast);
 		};
 
 		this.entry.signals.file_saved.connect(this.on_file_saved);
@@ -71,6 +76,13 @@ export const PropertiesDialog = GObject.registerClass({
 		this._icon_row.text = entry.icon;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
+
+		for (const row of this._list_box) {
+			if (row.constructor !== Adw.EntryRow) {
+				continue;
+			}
+			this.validate_text(row);
+		}
 	}
 
 	on_apply() {
@@ -78,9 +90,10 @@ export const PropertiesDialog = GObject.registerClass({
 			return;
 		}
 		if (this.invalid_entries.size > 0) {
-			this._toast_overlay.add_toast(new Adw.Toast({
+			this.last_toast = new Adw.Toast({
 				title: _("Please fill in all details"),
-			}));
+			});
+			this._toast_overlay.add_toast(this.last_toast);
 			return;
 		}
 		this.entry.enabled = this._enabled_row.active;
@@ -109,9 +122,9 @@ export const PropertiesDialog = GObject.registerClass({
 		
 	}
 
-	present(keyfile, parent_window) {
+	present(entry, parent_window) {
 		this.is_open = true;
-		this.load_properties(keyfile);
+		this.load_properties(entry);
 		super.present(parent_window);
 	}
 
@@ -122,6 +135,10 @@ export const PropertiesDialog = GObject.registerClass({
 	on_file_trash_failed;
 	invalid_entries = new Set();
 	is_open = false;
+
+	// Last error toast, if any. This will be dismissed on close
+	//   to prevent it from showing again on a new open event
+	last_toast = null;
 
 	constructor(...args) {
 		super(...args);
@@ -134,15 +151,19 @@ export const PropertiesDialog = GObject.registerClass({
 		this._icon_row.connect("entry-activated", this.on_apply.bind(this));
 		this._exec_row.connect("changed", this.validate_text.bind(this));
 		this._exec_row.connect("entry-activated", this.on_apply.bind(this));
+
 		this.connect("closed", () => {
 			this._navigation_view.pop_to_page(this._details_page);
+			this.invalid_entries.clear();
+			if (this.last_toast !== null) {
+				this.last_toast.dismiss();
+			}
 			this.is_open = false;
-		})
+		});
 
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
 		this._trash_row.connect("activated", () => {
-			print('hi')
 			this.entry.trash();
 		});
 		this._choose_list_box.connect("row-activated", (_, row) => {
