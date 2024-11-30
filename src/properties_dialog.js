@@ -20,7 +20,6 @@ export const PropertiesDialog = GObject.registerClass({
 						"enabled_row",
 						"name_row",
 						"comment_row",
-						"icon_row",
 						"exec_row",
 						"terminal_row",
 						"trash_group",
@@ -74,7 +73,6 @@ export const PropertiesDialog = GObject.registerClass({
 		this._enabled_row.active = entry.enabled;
 		this._name_row.text = entry.name;
 		this._comment_row.text = entry.comment;
-		this._icon_row.text = entry.icon;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
 
@@ -100,7 +98,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this.entry.enabled = this._enabled_row.active;
 		this.entry.name = this._name_row.text;
 		this.entry.comment = this._comment_row.text;
-		this.entry.icon = this._icon_row.text;
+		// this.entry.icon = this._icon_row.text;
 		this.entry.exec = this._exec_row.text;
 		this.entry.terminal = this._terminal_row.active;
 		if (this.is_new_file) {
@@ -151,8 +149,6 @@ export const PropertiesDialog = GObject.registerClass({
 		this._name_row.connect("entry-activated", this.on_apply.bind(this));
 		this._comment_row.connect("changed", this.validate_text.bind(this));
 		this._comment_row.connect("entry-activated", this.on_apply.bind(this));
-		this._icon_row.connect("changed", this.validate_text.bind(this));
-		this._icon_row.connect("entry-activated", this.on_apply.bind(this));
 		this._exec_row.connect("changed", this.validate_text.bind(this));
 		this._exec_row.connect("entry-activated", this.on_apply.bind(this));
 

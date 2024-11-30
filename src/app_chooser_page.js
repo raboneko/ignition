@@ -138,7 +138,7 @@ export const AppChooserPage = GObject.registerClass({
 				total_visible > 0
 				? this._scrolled_window
 				: this._no_results_status
-			)
+			);
 		});
 	}
 });
