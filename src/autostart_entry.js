@@ -93,24 +93,22 @@ export class AutostartEntry {
 	constructor(path) {
 		this.path = path;
 		if (Gio.File.new_for_path(path).query_exists(null)) {
-			try {
-				this.keyfile.load_from_file(this.path, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
+			// This will error if the file cannot be interpreted as a keyfile
+			this.keyfile.load_from_file(this.path, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
 
-				// This will error if the Type key isn't found,
-				//    and will raise a new error if the type
-				//    isn't "Application" (needed for executing)
-				if (this.keyfile.get_string("Desktop Entry", "Type") !== "Application") {
-					throw new Error("Desktop Entry is not of type Application");
-				}
-				try {
-					this.locale = this.keyfile.get_locale_for_key("Desktop Entry", "Name", null) || "en_US";
-				} catch (error) {
-					print(error);
-				}
-			} catch (error) {
-				print("\nERROR! loading keyfile file:");
-				print(error);
+			// This will error if the Type key isn't found,
+			//    and will raise a new error if the type
+			//    isn't "Application" (needed for executing)
+			if (this.keyfile.get_string("Desktop Entry", "Type") !== "Application") {
+				throw new Error("Desktop Entry is not of type Application");
 			}
+			try {
+				this.locale = this.keyfile.get_locale_for_key("Desktop Entry", "Name", null) || "en_US";
+			} catch (error) {
+				// Not having a name set is fine
+			}
+		} else {
+			throw new Error("File does not exist");
 		}
 	}
 }

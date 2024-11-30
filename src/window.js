@@ -67,7 +67,11 @@ export const IgnitionWindow = GObject.registerClass({
 	}
 
 	load_autostart_entries() {
-		const enumerator = SharedVars.autostart_dir.enumerate_children('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+		const enumerator = SharedVars.autostart_dir.enumerate_children(
+			'standard::*',
+			Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+			null
+		);
 		run_async(
 			() => {
 				const file = enumerator.next_file(null);
@@ -76,7 +80,15 @@ export const IgnitionWindow = GObject.registerClass({
 					return false;
 				}
 				const path = SharedVars.autostart_path + file.get_name();
-				const entry = new AutostartEntry(path);
+				let entry;
+				try {
+					entry = new AutostartEntry(path);
+				} catch (error) {
+					print("\n\nError loading autostart entry from file:");
+					print("  path:", path);
+					print("  error:", error, "\n\n");
+					return true; // skip this iteration
+				}
 				const row = new EntryRow(entry, { title: "Test" });
 				row.connect("activated", () => {
 					this.properties_dialog.present(entry, this);
@@ -96,7 +108,17 @@ export const IgnitionWindow = GObject.registerClass({
 		} else {
 			this._stack.set_visible_child(this._no_entries_status);
 		}
-		this.is_loading = false;
+	}
+
+	reload() {
+		this._search_button.sensitive = false;
+		this._search_button.active = false;
+		this._entries_list_box.remove_all();
+		this.rows.length = 0;
+		this.setup();
+		this._toast_overlay.add_toast(new Adw.Toast({
+			title: _("Reloaded due to a change in the folder")
+		}));
 	}
 
 	on_new_entry() {
@@ -106,14 +128,13 @@ export const IgnitionWindow = GObject.registerClass({
 	settings;
 	rows = [];
 	properties_dialog = new PropertiesDialog();
-	is_loading = true;
 	dir_watch = new DirWatcher(SharedVars.autostart_dir, 500);
 
 	constructor(application) {
 		super({ application });
 		this.settings = Gio.Settings.new("io.github.flattool.Ignition");
 
-		this.dir_watch.event.connect(() => {print("event!")})
+		this.dir_watch.event.connect(this.reload.bind(this));
 
 		if (this.settings.get_boolean("first-run")) {
 			this.on_first_run();
