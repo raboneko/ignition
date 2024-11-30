@@ -106,5 +106,11 @@ export const AppChooserPage = GObject.registerClass({
 			this._search_button.active = false;
 			this._search_button.sensitive = false;
 		});
+		this._apps_list_box.set_sort_func((row1, row2) => {
+			return (
+				(row1.title || row1.subtitle).toLowerCase()
+				> (row2.title || row2.subtitle).toLowerCase()
+			)
+		})
 	}
 });
