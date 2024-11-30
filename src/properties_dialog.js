@@ -17,13 +17,14 @@ export const PropertiesDialog = GObject.registerClass({
 					"cancel_button",
 					"apply_button",
 					"icon",
-					"clear_icon_button",
+					"enabled_row",
 					"list_box",
-						"enabled_row",
 						"name_row",
 						"comment_row",
 						"exec_row",
 						"terminal_row",
+						"clear_icon_group",
+							"clear_icon_row",
 						"trash_group",
 							"trash_row",
 				"app_chooser_page",
@@ -34,6 +35,8 @@ export const PropertiesDialog = GObject.registerClass({
 	],
 }, class PropertiesDialog extends Adw.Dialog {
 	load_properties(entry) {
+		this.icon_cleared = false;
+		this._clear_icon_row.sensitive = true;
 		this.is_new_file = Gio.File.new_for_path(entry.path).query_exists(null);
 		if (this.is_new_file) {
 			this._trash_group.visible = true;
@@ -84,10 +87,10 @@ export const PropertiesDialog = GObject.registerClass({
 		);
 		if (paintable !== null) {
 			this._icon.set_from_paintable(paintable);
-			this._clear_icon_button.visible = true;
+			this._clear_icon_group.visible = true;
 		} else {
 			this._icon.icon_name = "ignition:application-x-executable-symbolic";
-			this._clear_icon_button.visible = false;
+			this._clear_icon_group.visible = false;
 		}
 
 		this._details_page.title = (
@@ -124,6 +127,9 @@ export const PropertiesDialog = GObject.registerClass({
 		if (this.is_new_file) {
 			SharedVars.main_window.dir_watch.sleep();
 		}
+		if (this.icon_cleared) {
+			this.entry.icon = "";
+		}
 		this.entry.save();
 	}
 
@@ -147,6 +153,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this.is_open = true;
 		this.load_properties(entry);
 		super.present(parent_window);
+		this._enabled_row.grab_focus();
 	}
 
 	entry; // AutostartEntry
@@ -157,6 +164,7 @@ export const PropertiesDialog = GObject.registerClass({
 	invalid_entries = new Set();
 	is_open = false;
 	is_new_file = false;
+	icon_cleared = false;
 
 	// Last error toast, if any. This will be dismissed on close
 	//   to prevent it from showing again on a new open event
@@ -183,6 +191,12 @@ export const PropertiesDialog = GObject.registerClass({
 
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
+		this._clear_icon_row.connect("activated", () => {
+			this.icon_cleared = true;
+			this._clear_icon_row.sensitive = false;
+			this._icon.icon_name = "ignition:application-x-executable-symbolic";
+			this._enabled_row.grab_focus();
+		});
 		this._trash_row.connect("activated", () => {
 			this.entry.trash();
 		});
