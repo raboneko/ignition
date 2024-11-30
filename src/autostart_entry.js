@@ -68,6 +68,18 @@ export class AutostartEntry {
 		}
 	}
 
+	trash() {
+		Gio.File.new_for_path(this.path).trash_async(
+			GLib.PRIORITY_DEFAULT_IDLE, null,
+			(file, result) => {try {
+				const did_trash = file.trash_finish(result);
+				this.signals.file_trashed.emit(null);
+			} catch (error) {
+				this.signals.file_trash_failed.emit(error);
+			}},
+		);
+	}
+
 	path;
 	keyfile = new GLib.KeyFile({});
 	locale = "en_US";

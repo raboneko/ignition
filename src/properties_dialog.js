@@ -34,13 +34,10 @@ export const PropertiesDialog = GObject.registerClass({
 		if (entry && this.entry) {
 			this.entry.signals.file_saved.disconnect(this.on_file_saved);
 			this.entry.signals.file_save_failed.disconnect(this.on_file_save_failed);
+			this.entry.signals.file_trashed.disconnect(this.on_file_trashed);
+			this.entry.signals.file_trash_failed.disconnect(this.on_file_trash_failed);
 		}
 		this.entry = entry;
-		this.on_file_save_failed = (error) => {
-			this._toast_overlay.add_toast(
-				new_error_toast(this, _("Could not apply details"), `${error}`)
-			);
-		};
 		this.on_file_saved = () => {
 			SharedVars.main_window._toast_overlay.add_toast(
 				new Adw.Toast({
@@ -49,9 +46,24 @@ export const PropertiesDialog = GObject.registerClass({
 			);
 			this.close();
 		};
+		this.on_file_save_failed = (error) => {
+			this._toast_overlay.add_toast(
+				new_error_toast(this, _("Could not apply details"), `${error}`)
+			);
+		};
+		this.on_file_trashed = () => {
+			this.close();
+		};
+		this.on_file_trash_failed = (error) => {
+			this._toast_overlay.add_toast(
+				new_error_toast(this, _("Could not trash entry"), `${error}`)
+			);
+		};
 
 		this.entry.signals.file_saved.connect(this.on_file_saved);
 		this.entry.signals.file_save_failed.connect(this.on_file_save_failed);
+		this.entry.signals.file_trashed.connect(this.on_file_trashed);
+		this.entry.signals.file_trash_failed.connect(this.on_file_trash_failed);
 
 		this._enabled_row.active = entry.enabled;
 		this._name_row.text = entry.name;
@@ -106,6 +118,8 @@ export const PropertiesDialog = GObject.registerClass({
 	entry; // AutostartEntry
 	on_file_saved;
 	on_file_save_failed;
+	on_file_trashed;
+	on_file_trash_failed;
 	invalid_entries = new Set();
 	is_open = false;
 
@@ -123,6 +137,10 @@ export const PropertiesDialog = GObject.registerClass({
 
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
+		this._trash_row.connect("activated", () => {
+			print('hi')
+			this.entry.trash();
+		});
 		this._choose_list_box.connect("row-activated", (_, row) => {
 			this._choose_menu.popdown();
 			switch (row) {
