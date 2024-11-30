@@ -6,6 +6,7 @@
     <file preprocess="xml-stripblanks">gtk/entry-row.ui</file>
     <file preprocess="xml-stripblanks">gtk/properties-dialog.ui</file>
     <file preprocess="xml-stripblanks">gtk/app-chooser-page.ui</file>
+    <file preprocess="xml-stripblanks">gtk/app-row.ui</file>
   </gresource>
   <gresource prefix="/io/github/flattool/Ignition/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="ignition:paper-symbolic.svg">../data/icons/paper-symbolic.svg</file>
