@@ -98,6 +98,24 @@ template $IgnitionWindow: Adw.ApplicationWindow {
 							selection-mode: none;
 							valign: start;
 						}
+						Adw.PreferencesGroup disabled_group {
+							margin-top: 24;
+							title: _("Disabled Entries");
+							description: _("These apps and scripts won't be started when you log in.");
+							header-suffix: Button enable_all_button {
+								valign: center;
+								styles ["flat"]
+								Adw.ButtonContent {
+									icon-name: "ignition:list-add-symbolic";
+									label: _("Enable All");
+								}
+							};
+						}
+						ListBox disabled_list_box {
+							styles ["boxed-list"]
+							selection-mode: none;
+							valign: start;
+						}
 					}
 				}
 			}

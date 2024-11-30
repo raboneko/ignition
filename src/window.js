@@ -49,6 +49,9 @@ export const IgnitionWindow = GObject.registerClass({
 					"entries_group",
 						"group_new_button",
 					"entries_list_box",
+					"disabled_group",
+						"enable_all_button",
+					"disabled_list_box",
 	],
 }, class IgnitionWindow extends Adw.ApplicationWindow {
 	on_first_run() {
@@ -93,8 +96,11 @@ export const IgnitionWindow = GObject.registerClass({
 				row.connect("activated", () => {
 					this.properties_dialog.present(entry, this);
 				});
-				this.rows.push(row);
-				this._entries_list_box.append(row);
+				this.enabled_rows.push(row);
+				(entry.enabled
+					? this._entries_list_box
+					: this._disabled_list_box
+				).append(row);
 				return true; // continue the loop
 			},
 			() => {
@@ -106,7 +112,7 @@ export const IgnitionWindow = GObject.registerClass({
 	}
 
 	on_load_finish() {
-		if (this.rows.length > 0 ) {
+		if (this.enabled_rows.length > 0 || this.disabled_rows.length > 0) {
 			this._stack.set_visible_child(this._entries_clamp);
 			this._search_button.sensitive = true;
 		} else {
@@ -118,7 +124,9 @@ export const IgnitionWindow = GObject.registerClass({
 		this._search_button.sensitive = false;
 		this._search_button.active = false;
 		this._entries_list_box.remove_all();
-		this.rows.length = 0;
+		this._disabled_list_box.remove_all();
+		this.enabled_rows.length = 0;
+		this.disabled_rows.length = 0;
 		this.properties_dialog.close();
 		this.setup();
 		this._toast_overlay.add_toast(new Adw.Toast({
@@ -131,7 +139,8 @@ export const IgnitionWindow = GObject.registerClass({
 	}
 
 	settings;
-	rows = [];
+	enabled_rows = [];
+	disabled_rows = [];
 	properties_dialog = new PropertiesDialog();
 	dir_watch = new DirWatcher(SharedVars.autostart_dir, 500);
 
@@ -155,7 +164,7 @@ export const IgnitionWindow = GObject.registerClass({
 		this._search_entry.connect("search-changed", (entry) => {
 			let total_visible = 0;
 			const text = entry.text.toLowerCase();
-			for (const row of this.rows) {
+			for (const row of this.enabled_rows) {
 				if (
 					row.title.toLowerCase().includes(text)
 					|| row.subtitle.toLowerCase().includes(text)
@@ -168,7 +177,7 @@ export const IgnitionWindow = GObject.registerClass({
 			}
 			if (total_visible === 0) {
 				this._stack.visible_child = this._no_results_status
-			} else if (this.rows.length === 0) {
+			} else if (this.enabled_rows.length === 0 && this.disabled_rows.length === 0) {
 				this._stack.visible_child = this._no_entries_status
 			} else {
 				this._stack.visible_child = this._entries_clamp
