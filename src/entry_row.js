@@ -13,10 +13,9 @@ export const EntryRow = GObject.registerClass({
 		"enabled_label",
 	],
 }, class EntryRow extends Adw.ActionRow {
-	entry; // AutostartEntry
-
-	load_details() {
-		const icon_key = this.entry.icon
+	load_details(entry) {
+		this.entry = entry;
+		const icon_key = entry.icon
 		// This handles desktop entries that set their icon from a path
 		//   Snap applications do this, so it's quite needed
 		this._prefix_icon.set_from_paintable(
@@ -25,9 +24,9 @@ export const EntryRow = GObject.registerClass({
 			|| IconUtils.get_paintable_for_name("ignition:application-x-executable-symbolic")
 		);
 
-		this.title = this.entry.name || "No Name Set";
-		this.subtitle = this.entry.comment || "No comment set.";
-		if (this.entry.enabled) {
+		this.title = entry.name || "No Name Set";
+		this.subtitle = entry.comment || "No comment set.";
+		if (entry.enabled) {
 			this._enabled_label.label = _("Enabled");
 			this._enabled_label.remove_css_class("warning");
 			this._prefix_icon.opacity = 1;
@@ -38,11 +37,12 @@ export const EntryRow = GObject.registerClass({
 		}
 	}
 
+	entry; // Autostart Entry
+
 	constructor(entry, ...args) {
 		super(...args);
 
-		this.entry = entry;
-		this.entry.signals.file_saved.connect(this.load_details.bind(this));
-		this.load_details();
+		entry.signals.file_saved.connect(this.load_details.bind(this));
+		this.load_details(entry);
 	}
 });

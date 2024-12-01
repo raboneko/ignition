@@ -62,7 +62,7 @@ export class AutostartEntry {
 			this.keyfile.set_string("Desktop Entry", "Type", "Application");
 
 			this.keyfile.save_to_file(this.path);
-			this.signals.file_saved.emit();
+			this.signals.file_saved.emit(this);
 		} catch (error) {
 			this.signals.file_save_failed.emit(error);
 		}

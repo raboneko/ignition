@@ -196,27 +196,12 @@ export const PropertiesDialog = GObject.registerClass({
 		});
 
 		this._app_chooser_page.signals.app_chosen.connect((entry) => {
-			this.icon_cleared = false;
-			this.icon_value = entry.icon;
-			this._title_group.title = entry.name || _("Details");
+			entry.path = this.entry.path;
+			entry.signals.file_saved.connections = this.entry.signals.file_saved.connections;
+			this.entry.signals.file_saved.connections = [];
+			this.entry = entry;
+			this.load_properties(entry);
 			this._navigation_view.pop_to_page(this._details_page);
-			this._enabled_row.active = entry.enabled;
-			this._name_row.text = entry.name;
-			this._comment_row.text = entry.comment;
-			this._exec_row.text = entry.exec;
-			this._terminal_row.active = false;
-			this._clear_icon_group.visible = true;
-			const paintable = (
-				IconUtils.get_paintable_for_name(entry.icon, 45)
-				|| IconUtils.get_paintable_for_path(entry.icon, 45)
-			);
-			if (paintable !== null) {
-				this._icon.set_from_paintable(paintable);
-				this._clear_icon_group.visible = true;
-			} else {
-				this._icon.icon_name = "ignition:application-x-executable-symbolic";
-				this._clear_icon_group.visible = false;
-			}
 		});
 
 		this._cancel_button.connect("clicked", () => { this.close() });

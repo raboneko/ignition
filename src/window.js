@@ -91,7 +91,7 @@ export const IgnitionWindow = GObject.registerClass({
 				}
 				const row = new EntryRow(entry, { title: "Test" });
 				row.connect("activated", () => {
-					this.properties_dialog.present(entry, this);
+					this.properties_dialog.present(row.entry, this);
 				});
 				this.entry_rows.push(row);
 				this._entries_list_box.append(row);
