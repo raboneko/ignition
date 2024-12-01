@@ -81,6 +81,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this._comment_row.text = entry.comment;
 		this._exec_row.text = entry.exec;
 		this._terminal_row.active = entry.terminal;
+		this.icon_value = this.entry.icon;
 
 		const paintable = (
 			IconUtils.get_paintable_for_name(entry.icon, 45)
@@ -122,9 +123,10 @@ export const PropertiesDialog = GObject.registerClass({
 		this.entry.enabled = this._enabled_row.active;
 		this.entry.name = this._name_row.text;
 		this.entry.comment = this._comment_row.text;
-		// this.entry.icon = this._icon_row.text;
+		this.entry.icon = this.icon_value;
 		this.entry.exec = this._exec_row.text;
 		this.entry.terminal = this._terminal_row.active;
+		print(this.icon_value)
 		if (this.is_new_file) {
 			SharedVars.main_window.dir_watch.sleep();
 		}
@@ -166,6 +168,7 @@ export const PropertiesDialog = GObject.registerClass({
 	is_open = false;
 	is_new_file = false;
 	icon_cleared = false;
+	icon_value = "";
 
 	// Last error toast, if any. This will be dismissed on close
 	//   to prevent it from showing again on a new open event
@@ -191,13 +194,15 @@ export const PropertiesDialog = GObject.registerClass({
 		});
 
 		this._app_chooser_page.signals.app_chosen.connect((entry) => {
+			this.icon_cleared = false;
+			this.icon_value = entry.icon;
+			print(this.icon_value)
 			this._navigation_view.pop_to_page(this._details_page);
 			this._enabled_row.active = entry.enabled;
 			this._name_row.text = entry.name;
 			this._comment_row.text = entry.comment;
 			this._exec_row.text = entry.exec;
 			this._terminal_row.active = false;
-			this.icon_cleared = false;
 			this._clear_icon_group.visible = true;
 			const paintable = (
 				IconUtils.get_paintable_for_name(entry.icon, 45)
