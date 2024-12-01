@@ -84,7 +84,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this._terminal_row.active = entry.terminal;
 		this.icon_value = this.entry.icon;
 
-		this._title_group.title = entry.name || _("Details");
+		this._title_group.title = this._name_row.text || _("Details");
 		const paintable = (
 			IconUtils.get_paintable_for_name(entry.icon, 45)
 			|| IconUtils.get_paintable_for_path(entry.icon, 45)
@@ -161,6 +161,13 @@ export const PropertiesDialog = GObject.registerClass({
 		this._enabled_row.grab_focus();
 	}
 
+	clear_icon() {
+		this.icon_cleared = true;
+		this._clear_icon_row.sensitive = false;
+		this._icon.icon_name = "ignition:application-x-executable-symbolic";
+		this._enabled_row.grab_focus();
+	}
+
 	entry; // AutostartEntry
 	on_file_saved;
 	on_file_save_failed;
@@ -179,7 +186,10 @@ export const PropertiesDialog = GObject.registerClass({
 	constructor(...args) {
 		super(...args);
 
-		this._name_row.connect("changed", this.validate_text.bind(this));
+		this._name_row.connect("changed", () => {
+			this._title_group.title = this._name_row.text || _("Details");
+			this.validate_text(this._name_row);
+		});
 		this._name_row.connect("entry-activated", this.on_apply.bind(this));
 		this._comment_row.connect("changed", this.validate_text.bind(this));
 		this._comment_row.connect("entry-activated", this.on_apply.bind(this));
@@ -201,28 +211,60 @@ export const PropertiesDialog = GObject.registerClass({
 			this.entry.signals.file_saved.connections = [];
 			this.entry = entry;
 			this.load_properties(entry);
+			this._enabled_row.active = true;
+			this._terminal_row.active = false;
 			this._navigation_view.pop_to_page(this._details_page);
 		});
 
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
-		this._clear_icon_row.connect("activated", () => {
-			this.icon_cleared = true;
-			this._clear_icon_row.sensitive = false;
-			this._icon.icon_name = "ignition:application-x-executable-symbolic";
-			this._enabled_row.grab_focus();
-		});
+		this._clear_icon_row.connect("activated", this.clear_icon.bind(this));
 		this._trash_row.connect("activated", () => {
 			this.entry.trash();
 		});
-		this._choose_list_box.connect("row-activated", (_, row) => {
+		this._choose_list_box.connect("row-activated", (wdiget, row) => {
 			this._choose_menu.popdown();
 			switch (row) {
 				case this._choose_app: {
 					this._navigation_view.push(this._app_chooser_page);
 				} break;
 				case this._choose_script: {
-					print("choose script");
+					const accept_button = new Gtk.Button({ label: _("Open") });
+					accept_button.add_css_class("suggested-action")
+					const cancel_button = new Gtk.Button({ label: _("Cancel") });
+					const filter = new Gtk.FileFilter({
+						name: _("Executable Files"),
+						mime_types: ['application/x-executable'],
+					});
+					const fcd = new Gtk.FileChooserDialog({
+						select_multiple: false,
+						modal: true,
+						transient_for: SharedVars.main_window,
+					});
+					fcd.set_current_folder(SharedVars.home_dir);
+					fcd.add_filter(filter);
+					fcd.add_action_widget(accept_button, Gtk.ResponseType.ACCEPT);
+					fcd.add_action_widget(cancel_button, Gtk.ResponseType.CANCEL);
+					fcd.connect("response", (dialog, response) => {
+						fcd.close();
+						if (response === Gtk.ResponseType.ACCEPT) {
+							const file = fcd.get_file();
+							if (!file.query_info(
+								"standard::is-executable",
+								Gio.FileQueryInfoFlags.NONE,
+								null,
+							)) {
+								return;
+							}
+							this._enabled_row.active = true;
+							this._name_row.text = file.get_basename().replace(/\.[^/.]+$/, "");
+							this._comment_row.text = "";
+							this._exec_row.text = file.get_path();
+							this._terminal_row.active = false;
+							this.clear_icon();
+						}
+					});
+					fcd.present();
 				} break;
 			}
 		});

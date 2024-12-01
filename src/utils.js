@@ -34,6 +34,7 @@ export class KeyFileUtils {
 
 
 const home_path = GLib.get_home_dir();
+const home_dir = Gio.File.new_for_path(home_path);
 const autostart_path = (GLib.getenv("HOST_XDG_CONFIG_HOME") || `${home_path}/.config`) + "/autostart/";
 const autostart_dir = Gio.File.new_for_path(autostart_path);
 export class SharedVars {
@@ -43,6 +44,14 @@ export class SharedVars {
 
 	static get autostart_dir() {
 		return autostart_dir;
+	}
+
+	static get home_path() {
+		return home_path;
+	}
+
+	static get home_dir() {
+		return home_dir ;
 	}
 
 	static main_window = null; // set in main

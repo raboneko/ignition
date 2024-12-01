@@ -4,7 +4,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
-import { IconUtils, KeyFileUtils, run_async, Signal } from './utils.js';
+import { IconUtils, KeyFileUtils, run_async, SharedVars, Signal } from './utils.js';
 import { AppRow } from './app_row.js';
 import { AutostartEntry } from './autostart_entry.js';
 
@@ -23,7 +23,7 @@ const host_app_dirs = [
 	),
 	Gio.File.new_for_path(( // user flatpaks
 		GLib.getenv("HOST_XDG_DATA_HOME")
-		|| GLib.get_home_dir()
+		|| SharedVars.home_path
 	) + "/.local/share/flatpak/exports/share/applications"),
 ];
 const dirs_with_enumerators = [];
