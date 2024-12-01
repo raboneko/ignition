@@ -17,6 +17,7 @@ export const PropertiesDialog = GObject.registerClass({
 					"cancel_button",
 					"apply_button",
 					"icon",
+					"title_group",
 					"enabled_row",
 					"list_box",
 						"name_row",
@@ -83,6 +84,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this._terminal_row.active = entry.terminal;
 		this.icon_value = this.entry.icon;
 
+		this._title_group.title = entry.name || _("Details");
 		const paintable = (
 			IconUtils.get_paintable_for_name(entry.icon, 45)
 			|| IconUtils.get_paintable_for_path(entry.icon, 45)
@@ -196,7 +198,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this._app_chooser_page.signals.app_chosen.connect((entry) => {
 			this.icon_cleared = false;
 			this.icon_value = entry.icon;
-			print(this.icon_value)
+			this._title_group.title = entry.name || _("Details");
 			this._navigation_view.pop_to_page(this._details_page);
 			this._enabled_row.active = entry.enabled;
 			this._name_row.text = entry.name;
