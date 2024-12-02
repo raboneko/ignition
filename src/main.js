@@ -93,8 +93,9 @@ export const IgnitionApplication = GObject.registerClass(
 					support_url: "https://matrix.to/#/#warehouse-development:matrix.org",
 					issue_url: "https://github.com/flattool/ignition/issues",
 				};
-				const aboutDialog = new Adw.AboutDialog(aboutParams);
-				aboutDialog.add_link(_("Donate"), "https://ko-fi.com/heliguy")
+				// const aboutDialog = new Adw.AboutDialog(aboutParams);
+				const aboutDialog = Adw.AboutDialog.new_from_appdata("/io/github/flattool/Ignition/appdata", null);
+				aboutDialog.add_link(_("Donate"), "https://ko-fi.com/heliguy");
 				aboutDialog.present(this.active_window);
 			});
 			this.add_action(show_about_action);
