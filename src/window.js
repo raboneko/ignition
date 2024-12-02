@@ -55,18 +55,16 @@ export const IgnitionWindow = GObject.registerClass({
 		this.settings.set_boolean("first-run", false);
 		this._stack.visible_child = this._first_run_status;
 		this._stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
-		this._get_started_button.connect("clicked", () => {
-			this.setup();
-		})
+		this._get_started_button.connect("clicked", this.setup(true).bind(this));
 	}
 
-	setup() {
+	setup(should_load_host_apps) {
 		this._stack.visible_child = this._loading_status;
 		this._stack.transition_type = Gtk.StackTransitionType.NONE;
-		this.load_autostart_entries();
+		this.load_autostart_entries(should_load_host_apps);
 	}
 
-	load_autostart_entries() {
+	load_autostart_entries(should_load_host_apps) {
 		const enumerator = SharedVars.autostart_dir.enumerate_children(
 			'standard::*',
 			Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
@@ -97,11 +95,11 @@ export const IgnitionWindow = GObject.registerClass({
 				this._entries_list_box.append(row);
 				return true; // continue the loop
 			},
-			() => {
-				this.properties_dialog._app_chooser_page.get_host_apps(
-					this.on_load_finish.bind(this)
-				)
-			}
+			(
+				should_load_host_apps
+				? () => { this.properties_dialog._app_chooser_page.get_host_apps(this.on_load_finish.bind(this)) }
+				: this.on_load_finish.bind(this)
+			),
 		);
 	}
 
@@ -120,7 +118,7 @@ export const IgnitionWindow = GObject.registerClass({
 		this._entries_list_box.remove_all();
 		this.entry_rows.length = 0;
 		this.properties_dialog.close();
-		this.setup();
+		this.setup(false);
 		this._toast_overlay.add_toast(new Adw.Toast({
 			title: _("Reloaded due to a change in the folder")
 		}));
@@ -144,7 +142,7 @@ export const IgnitionWindow = GObject.registerClass({
 		if (this.settings.get_boolean("first-run")) {
 			this.on_first_run();
 		} else {
-			this.setup();
+			this.setup(true);
 		}
 
 		this._no_entries_new_button.connect("clicked", this.on_new_entry.bind(this));
