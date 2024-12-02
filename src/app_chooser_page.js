@@ -5,6 +5,7 @@ import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
 import { IconUtils, KeyFileUtils, run_async, SharedVars, Signal } from './utils.js';
+import { EntryRow } from './entry_row.js';
 import { AppRow } from './app_row.js';
 import { AutostartEntry } from './autostart_entry.js';
 
@@ -90,7 +91,7 @@ export const AppChooserPage = GObject.registerClass({
 					`${path}/${info.get_name()}`,
 					GLib.KeyFileFlags.KEEP_TRANSLATIONS,
 				);
-				const row = new AppRow(kf);
+				const row = new EntryRow(entry);
 				row.connect('activated', () => {
 					this.signals.app_chosen.emit(entry);
 				});

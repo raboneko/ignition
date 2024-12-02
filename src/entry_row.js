@@ -1,4 +1,5 @@
 import GObject from 'gi://GObject';
+import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
@@ -24,8 +25,8 @@ export const EntryRow = GObject.registerClass({
 			|| IconUtils.get_paintable_for_name("ignition:application-x-executable-symbolic")
 		);
 
-		this.title = entry.name || "No Name Set";
-		this.subtitle = entry.comment || "No comment set.";
+		this.title = GLib.markup_escape_text(entry.name || _("No Name Set"), -1);
+		this.subtitle = GLib.markup_escape_text(entry.comment || _("No comment set."), -1);
 		if (entry.enabled) {
 			this._enabled_label.label = _("Enabled");
 			this._enabled_label.remove_css_class("warning");
