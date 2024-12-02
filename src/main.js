@@ -77,13 +77,18 @@ export const IgnitionApplication = GObject.registerClass(
 					developer_name: 'Heliguy',
 					version: '0.1.0',
 					developers: [
-						'Heliguy'
+						"Heliguy https://github.com/heliguy4599",
 					],
 					// Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 					translator_credits: _("translator-credits"),
-					copyright: '© 2024 Heliguy'
+					copyright: '© 2024 Heliguy',
+					license_type: Gtk.License.GPL_3_0,
+					website: "https://github.com/flattool/ignition",
+					support_url: "https://matrix.to/#/#warehouse-development:matrix.org",
+					issue_url: "https://github.com/flattool/ignition/issues",
 				};
 				const aboutDialog = new Adw.AboutDialog(aboutParams);
+				aboutDialog.add_link(_("Donate"), "https://ko-fi.com/heliguy")
 				aboutDialog.present(this.active_window);
 			});
 			this.add_action(show_about_action);
