@@ -29,6 +29,7 @@ import { AutostartEntry } from './autostart_entry.js';
 import { EntryRow } from './entry_row.js';
 import { PropertiesDialog } from './properties_dialog.js';
 import { DirWatcher } from './file_watcher.js';
+import { Config } from './const.js';
 
 export const IgnitionWindow = GObject.registerClass({
 	GTypeName: 'IgnitionWindow',
@@ -136,6 +137,10 @@ export const IgnitionWindow = GObject.registerClass({
 	constructor(application) {
 		super({ application });
 		this.settings = Gio.Settings.new("io.github.flattool.Ignition");
+
+		if (Config.PROFILE === "development") {
+			this.add_css_class("devel");
+		}
 
 		this.dir_watch.event.connect(this.reload.bind(this));
 

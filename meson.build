@@ -7,6 +7,7 @@ project('ignition',
 i18n = import('i18n')
 gnome = import('gnome')
 
+profile = get_option('profile')
 
 
 

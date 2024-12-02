@@ -26,6 +26,7 @@ import Adw from 'gi://Adw?version=1';
 import { IgnitionWindow } from './window.js';
 import { SharedVars } from './utils.js';
 import { new_error_toast } from './error_toast.js';
+import { Config } from './const.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -34,6 +35,11 @@ export const IgnitionApplication = GObject.registerClass(
 	class IgnitionApplication extends Adw.Application {
 		constructor() {
 			super({application_id: 'io.github.flattool.Ignition', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
+
+			print("\nConfig:");
+			print(Config.APP_ID);
+			print(Config.VERSION);
+			print(Config.PROFILE);
 
 			const quit_action = new Gio.SimpleAction({name: 'quit'});
 			quit_action.connect('activate', action => {
