@@ -77,24 +77,25 @@ export const IgnitionApplication = GObject.registerClass(
 
 			const show_about_action = new Gio.SimpleAction({name: 'about'});
 			show_about_action.connect('activate', action => {
-				let aboutParams = {
-					application_name: 'ignition',
-					application_icon: 'io.github.flattool.Ignition',
-					developer_name: 'Heliguy',
-					version: '0.1.0',
-					developers: [
-						"Heliguy https://github.com/heliguy4599",
-					],
-					// Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-					translator_credits: _("translator-credits"),
-					copyright: '© 2024 Heliguy',
-					license_type: Gtk.License.GPL_3_0,
-					website: "https://github.com/flattool/ignition",
-					support_url: "https://matrix.to/#/#warehouse-development:matrix.org",
-					issue_url: "https://github.com/flattool/ignition/issues",
-				};
+				// let aboutParams = {
+				// 	application_name: 'ignition',
+				// 	application_icon: 'io.github.flattool.Ignition',
+				// 	developer_name: 'Heliguy',
+				// 	version: '0.1.0',
+				// 	developers: [
+				// 		"Heliguy https://github.com/heliguy4599",
+				// 	],
+				// 	// Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+				// 	translator_credits: _("translator-credits"),
+				// 	copyright: '© 2024 Heliguy',
+				// 	license_type: Gtk.License.GPL_3_0,
+				// 	website: "https://github.com/flattool/ignition",
+				// 	support_url: "https://matrix.to/#/#warehouse-development:matrix.org",
+				// 	issue_url: "https://github.com/flattool/ignition/issues",
+				// };
 				// const aboutDialog = new Adw.AboutDialog(aboutParams);
 				const aboutDialog = Adw.AboutDialog.new_from_appdata("/io/github/flattool/Ignition/appdata", null);
+				aboutDialog.version = Config.VERSION;
 				aboutDialog.add_link(_("Donate"), "https://ko-fi.com/heliguy");
 				aboutDialog.present(this.active_window);
 			});

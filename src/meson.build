@@ -33,6 +33,12 @@ bin_conf.set('resource_path', '/io/github/flattool/Ignition')
 
 bin_conf.set('APP_ID', 'io.github.flattool.Ignition')
 bin_conf.set('PROFILE', profile)
+if get_option('profile') == 'development'
+  vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
+  bin_conf.set('VERSION', meson.project_version() + '.dev-' + vcs_tag)
+else
+  bin_conf.set('VERSION', meson.project_version())
+endif
 
 const_js = configure_file(
   input: 'const.js.in',
