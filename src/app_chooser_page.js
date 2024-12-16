@@ -6,7 +6,6 @@ import Adw from 'gi://Adw';
 
 import { IconUtils, KeyFileUtils, run_async, SharedVars, Signal } from './utils.js';
 import { EntryRow } from './entry_row.js';
-import { AppRow } from './app_row.js';
 import { AutostartEntry } from './autostart_entry.js';
 
 const host_app_dirs = [
@@ -63,6 +62,7 @@ export const AppChooserPage = GObject.registerClass({
 		}
 		this._apps_list_box.remove_all();
 		let index = 0;
+		let total_rows = 0;
 		let dir_with_enumerator = dirs_with_enumerators[index];
 		const iteration = () => {
 			const path = dir_with_enumerator.path;
@@ -84,33 +84,39 @@ export const AppChooserPage = GObject.registerClass({
 				// Skip this iteration if the file is not a .desktop file
 				return true;
 			}
+			const entry = new AutostartEntry(`${path}/${info.get_name()}`);
+			const kf = new GLib.KeyFile();
 			try {
-				const entry = new AutostartEntry(`${path}/${info.get_name()}`);
-				const kf = new GLib.KeyFile();
 				kf.load_from_file(
 					`${path}/${info.get_name()}`,
 					GLib.KeyFileFlags.KEEP_TRANSLATIONS,
 				);
-				const row = new EntryRow(entry);
-				row.connect('activated', () => {
-					this.signals.app_chosen.emit(entry);
-				});
-				this._apps_list_box.append(row);
-			} catch (error) {
-				// Skip desktop entries that couldn't be loaded
-				return true;
-			}
+			} catch (error) { return true; }
+			const hidden = (
+				KeyFileUtils.get_boolean_safe(kf, "Desktop Entry", "Hidden", false)
+				|| KeyFileUtils.get_boolean_safe(kf, "Desktop Entry", "NoDisplay", false)
+			)
+			if (hidden) { return true; }
+			const row = new EntryRow(entry);
+			this._apps_list_box.append(row);
+			row.connect('activated', () => {
+				this.signals.app_chosen.emit(entry);
+			});
+			total_rows += 1;
 			return true;
 		}
 		run_async(
 			iteration,
-			() => { callback() },
+			() => {
+				this.signals.loading_finished.emit(total_rows > 0);
+				callback();
+			},
 		);
 	}
 
 	signals = {
 		app_chosen: new Signal(),
-		loading_failed: new Signal(),
+		loading_finished: new Signal(),
 	}
 
 	constructor(...args) {

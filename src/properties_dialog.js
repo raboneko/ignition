@@ -216,6 +216,10 @@ export const PropertiesDialog = GObject.registerClass({
 			this._navigation_view.pop_to_page(this._details_page);
 		});
 
+		this._app_chooser_page.signals.loading_finished.connect((success) => {
+			this._choose_app.visible = success;
+		});
+
 		this._cancel_button.connect("clicked", () => { this.close() });
 		this._apply_button.connect("clicked", this.on_apply.bind(this));
 		this._clear_icon_row.connect("activated", this.clear_icon.bind(this));

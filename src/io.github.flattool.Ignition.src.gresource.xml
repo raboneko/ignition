@@ -10,7 +10,6 @@
     <file>app_chooser_page.js</file>
     <file>error_toast.js</file>
     <file>file_watcher.js</file>
-    <file>app_row.js</file>
     <file>const.js</file>
   </gresource>
 </gresources>
