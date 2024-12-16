@@ -97,7 +97,7 @@ export const AppChooserPage = GObject.registerClass({
 				|| KeyFileUtils.get_boolean_safe(kf, "Desktop Entry", "NoDisplay", false)
 			)
 			if (hidden) { return true; }
-			const row = new EntryRow(entry);
+			const row = new EntryRow(entry, false);
 			this._apps_list_box.append(row);
 			row.connect('activated', () => {
 				this.signals.app_chosen.emit(entry);

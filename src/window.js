@@ -88,7 +88,7 @@ export const IgnitionWindow = GObject.registerClass({
 					print("  error:", error, "\n\n");
 					return true; // skip this iteration
 				}
-				const row = new EntryRow(entry, { title: "Test" });
+				const row = new EntryRow(entry, true);
 				row.connect("activated", () => {
 					this.properties_dialog.present(row.entry, this);
 				});

@@ -40,10 +40,11 @@ export const EntryRow = GObject.registerClass({
 
 	entry; // Autostart Entry
 
-	constructor(entry, ...args) {
+	constructor(entry, show_enabled_label, ...args) {
 		super(...args);
 
 		entry.signals.file_saved.connect(this.load_details.bind(this));
+		this._enabled_label.visible = show_enabled_label;
 		this.load_details(entry);
 	}
 });
