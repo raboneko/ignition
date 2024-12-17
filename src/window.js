@@ -79,6 +79,10 @@ export const IgnitionWindow = GObject.registerClass({
 					return false;
 				}
 				const path = SharedVars.autostart_path + file.get_name();
+				if (!path.endsWith(".desktop")) {
+					// skip this iteration if a file that isn't a desktop entry is found
+					return true;
+				}
 				let entry;
 				try {
 					entry = new AutostartEntry(path);
@@ -120,9 +124,6 @@ export const IgnitionWindow = GObject.registerClass({
 		this.entry_rows.length = 0;
 		this.properties_dialog.close();
 		this.setup(false);
-		this._toast_overlay.add_toast(new Adw.Toast({
-			title: _("Reloaded due to a change in the folder")
-		}));
 	}
 
 	on_new_entry() {
