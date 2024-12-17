@@ -19,11 +19,10 @@ export const EntryRow = GObject.registerClass({
 		const icon_key = entry.icon
 		// This handles desktop entries that set their icon from a path
 		//   Snap applications do this, so it's quite needed
-		this._prefix_icon.set_from_paintable(
-			IconUtils.get_paintable_for_path(icon_key)
-			|| IconUtils.get_paintable_for_name(icon_key)
-			|| IconUtils.get_paintable_for_name("ignition:application-x-executable-symbolic")
-		);
+		GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+			IconUtils.set_icon(this._prefix_icon, icon_key)
+			return GLib.SOURCE_REMOVE;
+		})
 
 		this.title = GLib.markup_escape_text(entry.name || _("No Name Set"), -1);
 		this.subtitle = GLib.markup_escape_text(entry.comment || _("No comment set."), -1);
@@ -44,7 +43,8 @@ export const EntryRow = GObject.registerClass({
 		super(...args);
 
 		entry.signals.file_saved.connect(this.load_details.bind(this));
+		this.entry = entry;
 		this._enabled_label.visible = show_enabled_label;
-		this.load_details(entry);
+		this.load_details(entry)
 	}
 });

@@ -67,24 +67,24 @@ export class IconUtils {
 			host_icon_theme.add_search_path("/run/host/usr/share/icons");
 			host_icon_theme.add_search_path("/run/host/usr/share/pixmaps");
 			host_icon_theme.add_search_path((GLib.getenv("HOST_XDG_DATA_HOME") || home_path) + "/.local/share/flatpak/exports/share/applications");
+			host_icon_theme.add_search_path((GLib.getenv("HOST_XDG_DATA_HOME") || home_path) + "/.local/share/flatpak/exports/share/icons");
+			host_icon_theme.add_search_path("/var/lib/flatpak/exports/share/applications");
 			host_icon_theme.add_search_path("/var/lib/flatpak/exports/share/icons");
 		}
 		return host_icon_theme;
 	}
 
-	static get_paintable_for_path(path, size=512) {
-		const file = Gio.File.new_for_path(path);
-		if (file.query_exists(null)) {
-			return Gtk.IconPaintable.new_for_file(image_file, size, 1);
+	static set_icon(image, icon_string) {
+		if (!icon_string) {
+			image.icon_name = "ignition:application-x-executable-symbolic"
+		} else if (this.host_icon_theme.has_icon(icon_string)) {
+			image.icon_name = icon_string;
+		} else if (Gio.File.new_for_path(icon_string).query_exists(null)) {
+			image.set_from_file(icon_string);
+		} else {
+			image.icon_name = "ignition:application-x-executable-symbolic"
+			console.log("Icon not found:", icon_string)
 		}
-		return null;
-	}
-
-	static get_paintable_for_name(name, size=512) {
-		if (this.host_icon_theme.has_icon(name)) {
-			return this.host_icon_theme.lookup_icon(name, null, size, 1, null, 0);
-		}
-		return null;
 	}
 }
 

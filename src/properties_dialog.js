@@ -85,17 +85,7 @@ export const PropertiesDialog = GObject.registerClass({
 		this.icon_value = this.entry.icon;
 
 		this._title_group.title = this._name_row.text || _("Details");
-		const paintable = (
-			IconUtils.get_paintable_for_name(entry.icon, 45)
-			|| IconUtils.get_paintable_for_path(entry.icon, 45)
-		);
-		if (paintable !== null) {
-			this._icon.set_from_paintable(paintable);
-			this._clear_icon_group.visible = true;
-		} else {
-			this._icon.icon_name = "ignition:application-x-executable-symbolic";
-			this._clear_icon_group.visible = false;
-		}
+		IconUtils.set_icon(this._icon, entry.icon)
 
 		this._details_page.title = (
 			entry.name !== ""

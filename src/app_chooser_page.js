@@ -103,7 +103,7 @@ export const AppChooserPage = GObject.registerClass({
 				this.signals.app_chosen.emit(entry);
 			});
 			total_rows += 1;
-			return true;
+			return total_rows < 100;
 		}
 		run_async(
 			iteration,
