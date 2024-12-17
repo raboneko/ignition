@@ -42,9 +42,13 @@ export const PropertiesDialog = GObject.registerClass({
 		if (this.is_new_file) {
 			this._trash_group.visible = true;
 			this._trash_row.tooltip_text = "";
+			this._clear_icon_group.visible = true;
+			this._clear_icon_row.tooltip_text = "";
 		} else {
 			this._trash_group.visible = false;
 			this._trash_row.tooltip_text = _("This is a new file")
+			this._clear_icon_group.visible = false;
+			this._clear_icon_row.tooltip_text = _("This is a new file")
 		}
 		if (entry && this.entry) {
 			this.entry.signals.file_saved.disconnect(this.on_file_saved);
@@ -118,7 +122,6 @@ export const PropertiesDialog = GObject.registerClass({
 		this.entry.icon = this.icon_value;
 		this.entry.exec = this._exec_row.text;
 		this.entry.terminal = this._terminal_row.active;
-		print(this.icon_value)
 		if (this.is_new_file) {
 			SharedVars.main_window.dir_watch.sleep();
 		}

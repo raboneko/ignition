@@ -12,6 +12,7 @@ export const EntryRow = GObject.registerClass({
 	InternalChildren: [
 		"prefix_icon",
 		"enabled_label",
+		"suffix_icon",
 	],
 }, class EntryRow extends Adw.ActionRow {
 	load_details(entry) {
