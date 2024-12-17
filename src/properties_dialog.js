@@ -13,6 +13,9 @@ export const PropertiesDialog = GObject.registerClass({
 	InternalChildren: [
 		"toast_overlay",
 			"navigation_view",
+				"choice_page",
+					"new_app_button",
+					"new_script_button",
 				"details_page",
 					"cancel_button",
 					"apply_button",
@@ -144,7 +147,6 @@ export const PropertiesDialog = GObject.registerClass({
 			this._apply_button.sensitive = false;
 			this._apply_button.tooltip_text = _("Please fill in all details");
 		}
-		
 	}
 
 	present(entry, parent_window) {
@@ -196,6 +198,14 @@ export const PropertiesDialog = GObject.registerClass({
 				this.last_toast.dismiss();
 			}
 			this.is_open = false;
+		});
+
+		this._new_script_button.connect("clicked", () => {
+			this._navigation_view.push(this._details_page)
+		});
+
+		this._new_app_button.connect("clicked", () => {
+			this._navigation_view.push(this._app_chooser_page)
 		});
 
 		this._app_chooser_page.signals.app_chosen.connect((entry) => {
