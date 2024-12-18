@@ -69,6 +69,14 @@ export const DetailsPage = GObject.registerClass({
 		}
 	}
 
+	on_trash() {
+		if (this._trash_row.visible && this._trash_row.sensitive) {
+			print("can trash!");
+		} else {
+			print("cannot trash");
+		}
+	}
+
 	auto_entry;
 	invalid_rows = new Set();
 	signals = {

@@ -77,23 +77,6 @@ export const IgnitionApplication = GObject.registerClass(
 
 			const show_about_action = new Gio.SimpleAction({name: 'about'});
 			show_about_action.connect('activate', action => {
-				// let aboutParams = {
-				// 	application_name: 'ignition',
-				// 	application_icon: 'io.github.flattool.Ignition',
-				// 	developer_name: 'Heliguy',
-				// 	version: '0.1.0',
-				// 	developers: [
-				// 		"Heliguy https://github.com/heliguy4599",
-				// 	],
-				// 	// Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-				// 	translator_credits: _("translator-credits"),
-				// 	copyright: '© 2024 Heliguy',
-				// 	license_type: Gtk.License.GPL_3_0,
-				// 	website: "https://github.com/flattool/ignition",
-				// 	support_url: "https://matrix.to/#/#warehouse-development:matrix.org",
-				// 	issue_url: "https://github.com/flattool/ignition/issues",
-				// };
-				// const aboutDialog = new Adw.AboutDialog(aboutParams);
 				const aboutDialog = Adw.AboutDialog.new_from_appdata("/io/github/flattool/Ignition/appdata", null);
 				aboutDialog.version = Config.VERSION;
 				aboutDialog.add_link(_("Donate"), "https://ko-fi.com/heliguy");
@@ -112,6 +95,35 @@ export const IgnitionApplication = GObject.registerClass(
 			});
 			this.add_action(search_action);
 			this.set_accels_for_action('app.search', ['<primary>f']);
+
+			const save_action = new Gio.SimpleAction({name: 'save-edits'});
+			save_action.connect('activate', action => {
+				this.active_window.properties_dialog.save_action();
+			});
+			this.add_action(save_action);
+			this.set_accels_for_action('app.save-edits', ['<primary>s']);
+
+			const trash_action = new Gio.SimpleAction({name: 'trash-entry'});
+			trash_action.connect('activate', action => {
+				this.active_window.properties_dialog.trash_action();
+			});
+			this.add_action(trash_action);
+			this.set_accels_for_action('app.trash-entry', ['BackSpace', 'Delete']);
+
+			// This is a seperate action so it doesn't show up in the shortcuts window
+			const kp_trash_action = new Gio.SimpleAction({name: 'kp-trash-entry'});
+			kp_trash_action.connect('activate', action => {
+				this.active_window.properties_dialog.trash_action();
+			});
+			this.add_action(kp_trash_action);
+			this.set_accels_for_action('app.kp-trash-entry', ['KP_Delete']);
+
+			const new_entry_action = new Gio.SimpleAction({name: 'new-entry'});
+			new_entry_action.connect('activate', action => {
+				this.active_window.on_new_entry();
+			});
+			this.add_action(new_entry_action);
+			this.set_accels_for_action('app.new-entry', ['<primary>n']);
 		}
 
 		vfunc_activate() {

@@ -35,6 +35,7 @@ export const PropertiesDialog = GObject.registerClass({
 	}
 
 	present(auto_entry, ...args) {
+		if (this.is_showing) return;
 		if (auto_entry) {
 			this._navigation_view.animate_transitions = false;
 			this.show_details(auto_entry, false);
@@ -45,7 +46,24 @@ export const PropertiesDialog = GObject.registerClass({
 			this._navigation_view.animate_transitions = true;
 		}
 		super.present(...args);
+		this.is_showing = true;
 	}
+
+	save_action() {
+		if (this._navigation_view.get_visible_page() !== this._details_page) {
+			return;
+		}
+		this._details_page.on_apply();
+	}
+
+	trash_action() {
+		if (this._navigation_view.get_visible_page() !== this._details_page) {
+			return;
+		}
+		this._details_page.on_trash();
+	}
+
+	is_showing = false;
 
 	constructor(...args) {
 		super(...args);
@@ -54,5 +72,6 @@ export const PropertiesDialog = GObject.registerClass({
 		this._new_script_button.connect(`clicked`, this.show_details.bind(this, null, true));
 		this._app_chooser_page.signals.app_chosen.connect((auto_entry) => this.show_details(auto_entry, true));
 		this._details_page.signals.cancel_pressed.connect(() => this.close());
+		this.connect("closed", () => this.is_showing = false);
 	}
 });

@@ -127,6 +127,11 @@ export const IgnitionWindow = GObject.registerClass({
 	}
 
 	on_new_entry() {
+		const current_page = this._stack.get_visible_child();
+		if (
+			current_page === this._loading_status
+			|| current_page === this._first_run_status
+		) return;
 		this.properties_dialog.present(null, this);
 	}
 
