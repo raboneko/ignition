@@ -49,13 +49,33 @@ export const DetailsPage = GObject.registerClass({
 		}
 	}
 
+	validate_row(row) {
+		if (row.text.trim().length > 0) {
+			row.remove_css_class("error");
+			this.invalid_rows.delete(row);
+		} else {
+			row.add_css_class("error");
+			this.invalid_rows.add(row);
+		}
+		this._apply_button.sensitive = this.invalid_rows.size === 0;
+		this._create_row.sensitive = this.invalid_rows.size === 0;
+	}
+
+	on_apply() {
+		if (this._apply_button.sensitive) {
+			print("can apply!");
+		} else {
+			print("cannot apply");
+		}
+	}
+
+	auto_entry;
+	invalid_rows = new Set();
 	signals = {
 		cancel_pressed: new Signal(),
 		apply_pressed: new Signal(),
 		trash_pressed: new Signal(),
 	}
-
-	auto_entry;
 
 	constructor(...args) {
 		super(...args);
@@ -65,6 +85,13 @@ export const DetailsPage = GObject.registerClass({
 
 		// Connections
 		this._cancel_button.connect("clicked", this.signals.cancel_pressed.emit.bind(this.signals.cancel_pressed, null));
+		this._apply_button.connect("clicked", this.on_apply.bind(this));
+		this._create_row.connect("activated", this.on_apply.bind(this));
+		this._name_row.connect("changed", this.validate_row.bind(this));
+		this._name_row.connect("entry-activated", this.on_apply.bind(this));
+		this._comment_row.connect("entry-activated", this.on_apply.bind(this));
+		this._exec_row.connect("changed", this.validate_row.bind(this));
+		this._exec_row.connect("entry-activated", this.on_apply.bind(this));
 		// Allow pressing Escape to close the dialog, when we are
 		//   presented as the first page, instead of a subpage
 		event_controller.connect("key-pressed", (__, keyval) => {
