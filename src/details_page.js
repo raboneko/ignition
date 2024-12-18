@@ -92,7 +92,6 @@ export const DetailsPage = GObject.registerClass({
 		this.auto_entry.comment = this._comment_row.text.trim();
 		this.auto_entry.exec = this._exec_row.text.trim();
 		this.auto_entry.terminal = this._terminal_row.active;
-		SharedVars.main_window._toast_overlay.add_toast(Adw.Toast.new(_("Saved Details")));
 		this.auto_entry.save();
 	}
 
@@ -103,7 +102,6 @@ export const DetailsPage = GObject.registerClass({
 		if (!this._trash_row.sensitive) {
 			return;
 		}
-		SharedVars.main_window._toast_overlay.add_toast(Adw.Toast.new(_("Trashed Entry")));
 		this.auto_entry.trash();
 	}
 

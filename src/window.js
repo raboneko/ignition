@@ -86,6 +86,8 @@ export const IgnitionWindow = GObject.registerClass({
 				let entry;
 				try {
 					entry = new AutostartEntry(path);
+					entry.signals.file_saved.connect(() => this._toast_overlay.add_toast(Adw.Toast.new(_("Saved Details"))));
+					entry.signals.file_trashed.connect(() => this._toast_overlay.add_toast(Adw.Toast.new(_("Trashed Entry"))));
 				} catch (error) {
 					print("\n\nError loading autostart entry from file:");
 					print("  path:", path);
