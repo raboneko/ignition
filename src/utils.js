@@ -76,14 +76,13 @@ export class IconUtils {
 
 	static set_icon(image, icon_string) {
 		if (!icon_string) {
-			image.icon_name = "ignition:application-x-executable-symbolic"
+			image.icon_name = "ignition:application-x-executable-symbolic";
 		} else if (this.host_icon_theme.has_icon(icon_string)) {
 			image.icon_name = icon_string;
 		} else if (Gio.File.new_for_path(icon_string).query_exists(null)) {
 			image.set_from_file(icon_string);
 		} else {
-			image.icon_name = "ignition:application-x-executable-symbolic"
-			console.log("Icon not found:", icon_string)
+			image.icon_name = "ignition:application-x-executable-symbolic";
 		}
 	}
 }

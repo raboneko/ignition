@@ -10,10 +10,12 @@ template $DetailsPage : Adw.NavigationPage {
             show-end-title-buttons: false;
             [start]
             Button cancel_button {
+                visible: bind template.can_pop inverted;
                 label: _("Cancel");
             }
             [end]
             Button apply_button {
+                visible: bind template.can_pop inverted;
                 styles ["suggested-action"]
                 Adw.ButtonContent {
                     icon-name: "ignition:checkmark-symbolic";
@@ -83,12 +85,13 @@ template $DetailsPage : Adw.NavigationPage {
                     Adw.PreferencesGroup action_group {
                         margin-bottom: 10;
                         Adw.ButtonRow create_row {
+                            visible: bind template.can_pop;
                             title: _("Create");
                             start-icon-name: "ignition:list-add-symbolic";
                             styles ["suggested-action"]
                         }
                         Adw.ButtonRow trash_row {
-                            visible: bind create_row.visible inverted;
+                            visible: bind template.can_pop inverted;
                             title: _("Move to Trash");
                             start-icon-name: "ignition:user-trash-symbolic";
                             styles ["destructive-action"]

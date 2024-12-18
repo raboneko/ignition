@@ -93,7 +93,6 @@ export const IgnitionWindow = GObject.registerClass({
 					return true; // skip this iteration
 				}
 				const row = new EntryRow(entry, true);
-				row._suffix_icon.icon_name = "ignition:right-large-symbolic";
 				row.connect("activated", () => {
 					this.properties_dialog.present(row.entry, this);
 				});

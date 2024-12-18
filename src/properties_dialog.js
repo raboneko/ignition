@@ -21,45 +21,25 @@ export const PropertiesDialog = GObject.registerClass({
 				"app_chooser_page",
 	],
 }, class PropertiesDialog extends Adw.Dialog {
-	show_apps() {
-		this._navigation_view.push(this._app_chooser_page);
-	}
-
-	show_details(auto_entry, is_new) {
+	show_details(auto_entry, is_new_file) {
 		try {
-			this._details_page.load_details(auto_entry);
-			if (is_new) {
+			this._details_page.load_details(auto_entry, is_new_file);
+			if (this._navigation_view.get_visible_page() !== this._details_page) {
 				this._navigation_view.push(this._details_page);
-			} else if(this._navigation_view.get_visible_page() !== this._details_page) {
-				this._navigation_view.animate_transitions = false;
-				this._navigation_view.push(this._details_page);
-				this._navigation_view.animate_transitions = true;
 			}
-
-			// this._details_page.load_details(auto_entry);
-			
-			// if ((!is_new) && this._navigation_view.get_visible_page() !== this._details_page) {
-			// 	this._navigation_view.animate_transitions = false;
-			// 	this._navigation_view.push(this._details_page);
-			// 	this._navigation_view.animate_transitions = true;
-			// } else if (is_new) {
-			// 	this._navigation_view.push(this._details_page);
-			// }
-		} catch (error) {
-			this._toast_overlay.add_toast(new_error_toast(
-				SharedVars.main_window,
-				_("Could not load details"),
-				error,
-			));
+		} catch(error) {
+			this._toast_overlay.add_toast(
+				new_error_toast(this, _("Error loading details"), error)
+			)
 		}
 	}
 
-	present(auto_entry=null, ...args) {
+	present(auto_entry, ...args) {
 		if (auto_entry) {
-			// Showing an existing entry
+			this._navigation_view.animate_transitions = false;
 			this.show_details(auto_entry, false);
+			this._navigation_view.animate_transitions = true;
 		} else {
-			// Showing a new entry
 			this._navigation_view.animate_transitions = false;
 			this._navigation_view.pop_to_page(this._choice_page);
 			this._navigation_view.animate_transitions = true;
@@ -70,8 +50,9 @@ export const PropertiesDialog = GObject.registerClass({
 	constructor(...args) {
 		super(...args);
 
-		this._new_app_button.connect(`clicked`, this.show_apps.bind(this));
-		this._new_script_button.connect(`clicked`, this.show_details.bind(this, null));
+		this._new_app_button.connect(`clicked`, () => this._navigation_view.push(this._app_chooser_page));
+		this._new_script_button.connect(`clicked`, this.show_details.bind(this, null, true));
+		this._app_chooser_page.signals.app_chosen.connect((auto_entry) => this.show_details(auto_entry, true));
 		this._details_page.signals.cancel_pressed.connect(() => this.close());
 	}
 });
