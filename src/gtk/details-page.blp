@@ -68,10 +68,9 @@ template $DetailsPage : Adw.NavigationPage {
                         Adw.EntryRow exec_row {
                             title: _("Command or Script");
                             [suffix]
-                            MenuButton choose_button {
-                                popover: choose_menu;
+                            Button choose_button {
                                 icon-name: "ignition:folder-open-symbolic";
-                                tooltip-text: _("Choose an App or Script");
+                                tooltip-text: _("Choose a Script");
                                 valign: center;
                                 styles ["flat"]
                             }
@@ -81,9 +80,15 @@ template $DetailsPage : Adw.NavigationPage {
                             subtitle: _("Show a terminal for this process to run in.");
                         }
                     }
-                    Adw.PreferencesGroup trash_group {
+                    Adw.PreferencesGroup action_group {
                         margin-bottom: 10;
+                        Adw.ButtonRow create_row {
+                            title: _("Create");
+                            start-icon-name: "ignition:list-add-symbolic";
+                            styles ["suggested-action"]
+                        }
                         Adw.ButtonRow trash_row {
+                            visible: bind create_row.visible inverted;
                             title: _("Move to Trash");
                             start-icon-name: "ignition:user-trash-symbolic";
                             styles ["destructive-action"]
@@ -93,23 +98,4 @@ template $DetailsPage : Adw.NavigationPage {
             }
         }
     }
-}
-
-Popover choose_menu {
-	styles ["menu"]
-	ListBox choose_list_box {
-		ListBoxRow choose_app {
-			visible: false;
-			Label {
-				label: _("Choose an App");
-				halign: start;
-			}
-		}
-		ListBoxRow choose_script {
-			Label {
-				label: _("Choose a Script");
-				halign: start;
-			}
-		}
-	}
 }

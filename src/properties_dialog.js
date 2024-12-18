@@ -55,7 +55,6 @@ export const PropertiesDialog = GObject.registerClass({
 	}
 
 	present(auto_entry=null, ...args) {
-		super.present(...args);
 		if (auto_entry) {
 			// Showing an existing entry
 			this.show_details(auto_entry, false);
@@ -65,6 +64,7 @@ export const PropertiesDialog = GObject.registerClass({
 			this._navigation_view.pop_to_page(this._choice_page);
 			this._navigation_view.animate_transitions = true;
 		}
+		super.present(...args);
 	}
 
 	constructor(...args) {

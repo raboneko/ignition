@@ -1,9 +1,10 @@
 import GObject from 'gi://GObject';
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
+import Gdk from 'gi://Gdk';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
-import { Signal } from './utils.js';
+import { IconUtils, Signal } from './utils.js';
 
 export const DetailsPage = GObject.registerClass({
 	GTypeName: 'DetailsPage',
@@ -20,32 +21,63 @@ export const DetailsPage = GObject.registerClass({
 			"exec_row",
 				"choose_button",
 			"terminal_row",
-		"trash_group",
+		"action_group",
+			"create_row",
 			"trash_row",
-		"choose_menu",
-			"choose_list_box",
-				"choose_app",
-				"choose_script",
 	],
 }, class DetailsPage extends Adw.NavigationPage {
 	load_details(auto_entry) {
+		this.auto_entry = auto_entry;
 		const is_new = auto_entry === null;
+
 		this.can_pop = is_new;
 		this._cancel_button.visible = !is_new;
+		this._create_row.visible = is_new;
+		this._apply_button.visible = !is_new;
+
+		if (is_new) {
+			this._icon.icon_name = "ignition:application-x-executable-symbolic";
+			this._title_group.title = _("New Entry");
+			this._name_row.text = "";
+			this._comment_row.text = "";
+			this._exec_row.text = "";
+			this._terminal_row.active = false;
+		} else {
+			IconUtils.set_icon(this._icon, auto_entry.icon);
+			this._title_group.title = auto_entry.name;
+			this._name_row.text = auto_entry.name;
+			this._comment_row.text = auto_entry.comment;
+			this._exec_row.text = auto_entry.exec;
+			this._terminal_row.active = auto_entry.terminal;
+		}
 	}
 
 	signals = {
 		cancel_pressed: new Signal(),
+		apply_pressed: new Signal(),
+		trash_pressed: new Signal(),
 	}
 
-	is_new = false;
 	auto_entry;
 
 	constructor(...args) {
 		super(...args);
 
-		this._cancel_button.connect("clicked", () => {
-			this.signals.cancel_pressed.emit(null);
+		// Extra item creation
+		const event_controller = new Gtk.EventControllerKey();
+
+		// Connections
+		this._cancel_button.connect("clicked", this.signals.cancel_pressed.emit.bind(this.signals.cancel_pressed, null));
+		// Allow pressing Escape to close the dialog, when we are
+		//   presented as the first page, instead of a subpage
+		event_controller.connect("key-pressed", (__, keyval) => {
+			if (keyval === Gdk.KEY_Escape && this._cancel_button.visible) {
+				this.signals.cancel_pressed.emit(null);
+			}
 		});
+
+		// Apply
+		this.add_controller(event_controller);
+
 	}
 });

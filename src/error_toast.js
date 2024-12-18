@@ -15,7 +15,7 @@ export const new_error_toast = (window, _title, message) => {
 	});
 	error_dialog.add_response("copy", _("Copy"));
 	error_dialog.add_response("ok", _("OK"));
-	error_dialog.connect("response", (_, response) => {
+	error_dialog.connect("response", (__, response) => {
 		if (response !== "copy") {
 			return;
 		}
