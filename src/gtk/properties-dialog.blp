@@ -21,8 +21,8 @@ template $PropertiesDialog: Adw.Dialog {
 							homogeneous: true;
 							orientation: vertical;
 							spacing: 12;
+							halign: center;
 							Button new_app_button {
-								halign: center;
 								styles ["pill", "suggested-action"]
 								Adw.ButtonContent {
 									icon-name: "ignition:grid-large-symbolic";
@@ -30,11 +30,10 @@ template $PropertiesDialog: Adw.Dialog {
 								}
 							}
 							Button new_script_button {
-								halign: center;
 								styles ["pill", "suggested-action"]
 								Adw.ButtonContent {
 									icon-name: "ignition:terminal-symbolic";
-									label: _("Add a Script");
+									label: _("Add a Command or Script");
 								}
 							}
 						};
