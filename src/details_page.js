@@ -4,8 +4,9 @@ import Gio from 'gi://Gio';
 import Gdk from 'gi://Gdk';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
-import { IconUtils, Signal } from './utils.js';
+import { IconUtils, SharedVars, Signal } from './utils.js';
 import { AutostartEntry } from './autostart_entry.js';
+import { new_error_toast } from './error_toast.js';
 
 export const DetailsPage = GObject.registerClass({
 	GTypeName: 'DetailsPage',
@@ -80,12 +81,9 @@ export const DetailsPage = GObject.registerClass({
 
 	on_apply() {
 		if (!this._apply_button.sensitive) {
-			print("no sensitive");
 			return;
 		}
 		if (!this.auto_entry) {
-			print("no auto entry")
-			print(this.auto_entry)
 			return;
 		}
 		this.auto_entry.icon = this.icon_key_holder;
@@ -94,13 +92,19 @@ export const DetailsPage = GObject.registerClass({
 		this.auto_entry.comment = this._comment_row.text.trim();
 		this.auto_entry.exec = this._exec_row.text.trim();
 		this.auto_entry.terminal = this._terminal_row.active;
+		SharedVars.main_window._toast_overlay.add_toast(Adw.Toast.new(_("Saved Details")));
 		this.auto_entry.save();
 	}
 
 	on_trash() {
-		if (this._trash_row.visible && this._trash_row.sensitive) {
-			this.auto_entry.trash();
+		if (!this._trash_row.visible) {
+			return;
 		}
+		if (!this._trash_row.sensitive) {
+			return;
+		}
+		SharedVars.main_window._toast_overlay.add_toast(Adw.Toast.new(_("Trashed Entry")));
+		this.auto_entry.trash();
 	}
 
 	// These must be arrow functions for signal disconnect to work
