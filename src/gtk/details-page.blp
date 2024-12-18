@@ -63,12 +63,15 @@ template $DetailsPage : Adw.NavigationPage {
                         styles ["boxed-list"]
                         Adw.EntryRow name_row {
                             title: _("Name");
+                            text: "placeholder";
                         }
                         Adw.EntryRow comment_row {
                             title: _("Comment");
+                            text: "placeholder";
                         }
                         Adw.EntryRow exec_row {
                             title: _("Command or Script");
+                            text: "placeholder";
                             [suffix]
                             Button choose_button {
                                 icon-name: "ignition:folder-open-symbolic";

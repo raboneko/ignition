@@ -50,17 +50,22 @@ export const PropertiesDialog = GObject.registerClass({
 	}
 
 	save_action() {
-		if (this._navigation_view.get_visible_page() !== this._details_page) {
+		if (this._navigation_view.get_visible_page() !== this._details_page || !this.is_showing) {
 			return;
 		}
 		this._details_page.on_apply();
 	}
 
 	trash_action() {
-		if (this._navigation_view.get_visible_page() !== this._details_page) {
+		if (this._navigation_view.get_visible_page() !== this._details_page || !this.is_showing) {
 			return;
 		}
 		this._details_page.on_trash();
+	}
+
+	on_error(title, error) {
+		print(title, error)
+		this._toast_overlay.add_toast(new_error_toast(this, title, error));
 	}
 
 	is_showing = false;
@@ -72,6 +77,8 @@ export const PropertiesDialog = GObject.registerClass({
 		this._new_script_button.connect(`clicked`, this.show_details.bind(this, null, true));
 		this._app_chooser_page.signals.app_chosen.connect((auto_entry) => this.show_details(auto_entry, true));
 		this._details_page.signals.cancel_pressed.connect(() => this.close());
+		this._details_page.signals.save_failed.connect((err) => this.on_error(_("Could not save file"), err));
+		this._details_page.signals.trash_failed.connect((err) => this.on_error(_("Could not trash file"), err));
 		this.connect("closed", () => this.is_showing = false);
 	}
 });
