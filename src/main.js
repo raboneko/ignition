@@ -87,9 +87,9 @@ export const IgnitionApplication = GObject.registerClass(
 			const search_action = new Gio.SimpleAction({name: 'search'});
 			search_action.connect('activate', action => {
 				const dialog = this.active_window.properties_dialog
-				if (dialog.is_open && dialog._app_chooser_page._search_button.sensitive) {
+				if (dialog.is_showing && dialog._app_chooser_page._search_button.sensitive) {
 					dialog._app_chooser_page._search_button.active = !dialog._app_chooser_page._search_button.active;
-				} else if (!dialog.is_open && this.active_window._search_button.sensitive) {
+				} else if (!dialog.is_showing && this.active_window._search_button.sensitive) {
 					this.active_window._search_button.active = !this.active_window._search_button.active;
 				}
 			});
@@ -102,21 +102,6 @@ export const IgnitionApplication = GObject.registerClass(
 			});
 			this.add_action(save_action);
 			this.set_accels_for_action('app.save-edits', ['<primary>s']);
-
-			const trash_action = new Gio.SimpleAction({name: 'trash-entry'});
-			trash_action.connect('activate', action => {
-				this.active_window.properties_dialog.trash_action();
-			});
-			this.add_action(trash_action);
-			this.set_accels_for_action('app.trash-entry', ['BackSpace', 'Delete']);
-
-			// This is a seperate action so it doesn't show up in the shortcuts window
-			const kp_trash_action = new Gio.SimpleAction({name: 'kp-trash-entry'});
-			kp_trash_action.connect('activate', action => {
-				this.active_window.properties_dialog.trash_action();
-			});
-			this.add_action(kp_trash_action);
-			this.set_accels_for_action('app.kp-trash-entry', ['KP_Delete']);
 
 			const new_entry_action = new Gio.SimpleAction({name: 'new-entry'});
 			new_entry_action.connect('activate', action => {
