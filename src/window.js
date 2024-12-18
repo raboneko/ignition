@@ -128,7 +128,7 @@ export const IgnitionWindow = GObject.registerClass({
 	}
 
 	on_new_entry() {
-		this.properties_dialog.present(new AutostartEntry(""), this);
+		this.properties_dialog.present(null, this);
 	}
 
 	settings;

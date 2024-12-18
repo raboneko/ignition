@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/github/flattool/Ignition">
+    <file preprocess="xml-stripblanks" alias="appdata">../data/io.github.flattool.Ignition.metainfo.xml</file>
     <file preprocess="xml-stripblanks">gtk/window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">gtk/entry-row.ui</file>
     <file preprocess="xml-stripblanks">gtk/properties-dialog.ui</file>
     <file preprocess="xml-stripblanks">gtk/app-chooser-page.ui</file>
-    <file preprocess="xml-stripblanks" alias="appdata">../data/io.github.flattool.Ignition.metainfo.xml</file>
+    <file preprocess="xml-stripblanks">gtk/details-page.ui</file>
   </gresource>
   <gresource prefix="/io/github/flattool/Ignition/icons/scalable/actions/">
     <file preprocess="xml-stripblanks" alias="ignition:paper-symbolic.svg">../data/icons/paper-symbolic.svg</file>
@@ -20,5 +21,6 @@
     <file preprocess="xml-stripblanks" alias="ignition:eraser3-symbolic.svg">../data/icons/eraser3-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="ignition:terminal-symbolic.svg">../data/icons/terminal-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="ignition:grid-large-symbolic.svg">../data/icons/grid-large-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="ignition:checkmark-symbolic.svg">../data/icons/checkmark-symbolic.svg</file>
   </gresource>
 </gresources>
