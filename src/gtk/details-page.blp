@@ -17,10 +17,7 @@ template $DetailsPage : Adw.NavigationPage {
             Button apply_button {
                 visible: bind template.can_pop inverted;
                 styles ["suggested-action"]
-                Adw.ButtonContent {
-                    icon-name: "ignition:checkmark-symbolic";
-                    label: _("Apply");
-                }
+                label: _("Apply");
             }
         }
         ScrolledWindow {
