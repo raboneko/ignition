@@ -56,7 +56,7 @@ export const IgnitionWindow = GObject.registerClass({
 		this.settings.set_boolean("first-run", false);
 		this._stack.visible_child = this._first_run_status;
 		this._stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
-		this._get_started_button.connect("clicked", this.setup(true).bind(this));
+		this._get_started_button.connect("clicked", this.setup.bind(this, true));
 	}
 
 	setup(should_load_host_apps) {
