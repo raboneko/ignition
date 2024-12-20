@@ -26,6 +26,7 @@ const host_app_dirs = [
 		|| SharedVars.home_path
 	) + "/.local/share/flatpak/exports/share/applications"),
 ];
+
 const dirs_with_enumerators = [];
 for (const file of host_app_dirs) {
 	if (!file.query_exists(null)) {
