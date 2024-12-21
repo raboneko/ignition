@@ -57,3 +57,12 @@ flatpak install org.flatpak.Builder org.gnome.Sdk//47 org.gnome.Platform//47 org
 # Build and install Ignition
 flatpak run org.flatpak.Builder _build ./build-aux/io.github.flattool.Ignition.json --install --user --force-clean
 ```
+
+### Formatting
+
+Warehouse uses [pre-commit](https://pre-commit.com/) for code formatting.
+- Install using `pip install pre-commit`
+- Run `pre-commit install` in the Warehouse repository root to set up pre-commit for this repo.
+- Run `pre-commit run --all-files` to format all files in the repository.
+
+If you run into a situation where pre-commit is broken, you can use `git commit --no-verfiy` to skip the pre-commit checks.
