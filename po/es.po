@@ -8,65 +8,68 @@ msgstr ""
 "Project-Id-Version: ignition\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-19 23:27-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-12-22 03:41+0000\n"
+"Last-Translator: Tameno <tamenorias@gmail.com>\n"
+"Language-Team: Spanish <https://weblate.fyralabs.com/projects/flattool/"
+"ignition/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.8.1\n"
 
 #: data/io.github.flattool.Ignition.desktop.in:3
 msgid "ignition"
-msgstr ""
+msgstr "ignition"
 
 #: data/io.github.flattool.Ignition.desktop.in:9
 msgid "GTK;"
-msgstr ""
+msgstr "GTK;"
 
 #: data/io.github.flattool.Ignition.metainfo.xml.in:7
 msgid "Ignition"
-msgstr ""
+msgstr "Ignition"
 
 #: data/io.github.flattool.Ignition.metainfo.xml.in:8
 msgid "Create and edit startup apps and scripts"
-msgstr ""
+msgstr "Administra apps y scrips de startup"
 
 #: data/io.github.flattool.Ignition.metainfo.xml.in:10
 msgid "No description"
-msgstr ""
+msgstr "Sin descripción"
 
 #: data/io.github.flattool.Ignition.metainfo.xml.in:60
 msgid "See all your startup items."
-msgstr ""
+msgstr "Ver todos tus artículos de startup."
 
 #: data/io.github.flattool.Ignition.metainfo.xml.in:64
 msgid "View and edit entry details."
-msgstr ""
+msgstr "Ve y edita detalles de los artículos."
 
 #: data/io.github.flattool.Ignition.metainfo.xml.in:68
 msgid "Create a new startup entry."
-msgstr ""
+msgstr "Crea un nuevo artículo de startup."
 
 #: data/io.github.flattool.Ignition.metainfo.xml.in:72
 msgid "See all your startup items, in dark mode."
-msgstr ""
+msgstr "Ve todos tus artículos de startup, en modo oscuro."
 
 #: src/gtk/app-chooser-page.blp:5
 msgid "Choose an App"
-msgstr ""
+msgstr "Elige una aplicación"
 
 #: src/gtk/app-chooser-page.blp:15 src/gtk/window.blp:15
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: src/gtk/app-chooser-page.blp:26
 msgid "Search apps"
-msgstr ""
+msgstr "Buscar aplicaciones"
 
 #: src/gtk/app-chooser-page.blp:48 src/gtk/window.blp:74
 msgid "No Results Found"
-msgstr ""
+msgstr "No se han encontrado resultados"
 
 #: src/gtk/app-chooser-page.blp:49 src/gtk/window.blp:75
 msgid "Try a different search."
@@ -74,19 +77,19 @@ msgstr ""
 
 #: src/gtk/details-page.blp:5
 msgid "Edit Details"
-msgstr ""
+msgstr "Editar Detalles"
 
 #: src/gtk/details-page.blp:14 src/details_page.js:111
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: src/gtk/details-page.blp:20
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: src/gtk/details-page.blp:47 src/error_toast.js:27
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 #: src/gtk/details-page.blp:48
 msgid "Edit details about this entry."
@@ -94,7 +97,7 @@ msgstr ""
 
 #: src/gtk/details-page.blp:53
 msgid "Enable"
-msgstr ""
+msgstr "Activar"
 
 #: src/gtk/details-page.blp:54
 msgid "Enable this entry to be started when you log in."
@@ -102,7 +105,7 @@ msgstr ""
 
 #: src/gtk/details-page.blp:62
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: src/gtk/details-page.blp:66
 msgid "Comment"
