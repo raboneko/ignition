@@ -48,7 +48,7 @@ Examples of behavior that contributes to creating a positive environment include
 
 Community members asked to stop any inappropriate behavior are expected to comply immediately.
 
-We want all participants in the Ignition project to have the best possible experience they can. In order to be clear about what that means, we’ve provided a list of examples of behaviors that are inappropriate for the Warheouse project:
+We want all participants in the Ignition project to have the best possible experience they can. In order to be clear about what that means, we’ve provided a list of examples of behaviors that are inappropriate for the Ignition project:
 
 * Deliberate intimidation, stalking, or following.
 * Sustained disruption of online discussions, talks, or other events. Sustained disruption of events, online discussions, or meetings, including talks and presentations, will not be tolerated. This includes ‘Talking over’ or ‘heckling’ event speakers or influencing crowd actions that cause hostility in event sessions. Sustained disruption also includes drinking alcohol to excess or using recreational drugs to excess, or pushing others to do so.
