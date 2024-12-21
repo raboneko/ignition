@@ -66,7 +66,7 @@ export const AppChooserPage = GObject.registerClass({
 		let total_rows = 0;
 		let dir_with_enumerator = dirs_with_enumerators[index];
 		const iteration = () => {
-			const path = dir_with_enumerator.path;
+			const folder_path = dir_with_enumerator.path;
 			const enumerator = dir_with_enumerator.enumerator;
 			const info = enumerator.next_file(null);
 			if (info === null) {
@@ -85,13 +85,17 @@ export const AppChooserPage = GObject.registerClass({
 				// Skip this iteration if the file is not a .desktop file
 				return true;
 			}
-			const entry = new AutostartEntry(`${path}/${info.get_name()}`);
+			const file_path = `${folder_path}/${info.get_name()}`;
+			let entry;
+			try {
+				entry = new AutostartEntry(file_path);
+			} catch (error) {
+				print("Ignition error: AppChooserPage: Error creating AutostartEntry: " + error);
+				return true;
+			}
 			const kf = new GLib.KeyFile();
 			try {
-				kf.load_from_file(
-					`${path}/${info.get_name()}`,
-					GLib.KeyFileFlags.KEEP_TRANSLATIONS,
-				);
+				kf.load_from_file(file_path, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
 			} catch (error) { return true; }
 			const hidden = (
 				KeyFileUtils.get_boolean_safe(kf, "Desktop Entry", "Hidden", false)

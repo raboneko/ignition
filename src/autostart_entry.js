@@ -29,11 +29,17 @@ export class AutostartEntry {
 	}
 
 	set name(value) {
-		this.keyfile.set_locale_string("Desktop Entry", "Name", this.locale, value);
+		this.keyfile.set_string("Desktop Entry", "Name", value);
+		if (this.locale !== null) {
+			this.keyfile.set_locale_string("Desktop Entry", "Name", this.locale, value);
+		}
 	}
 
 	set comment(value) {
-		this.keyfile.set_locale_string("Desktop Entry", "Comment", this.locale, value);
+		this.keyfile.set_string("Desktop Entry", "Comment", value);
+		if (this.locale !== null) {
+			this.keyfile.set_locale_string("Desktop Entry", "Comment", this.locale, value);
+		}
 	}
 
 	set exec(value) {
@@ -82,7 +88,7 @@ export class AutostartEntry {
 
 	path;
 	keyfile = new GLib.KeyFile({});
-	locale = "en_US";
+	locale = null;
 	signals = {
 		file_saved: new Signal(),
 		file_save_failed: new Signal(),
@@ -103,7 +109,7 @@ export class AutostartEntry {
 				throw new Error("Desktop Entry is not of type Application");
 			}
 			try {
-				this.locale = this.keyfile.get_locale_for_key("Desktop Entry", "Name", null) || "en_US";
+				this.locale = this.keyfile.get_locale_for_key("Desktop Entry", "Name", null);
 			} catch (error) {
 				// Not having a name set is fine
 			}
