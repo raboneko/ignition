@@ -79,6 +79,7 @@ export const IgnitionApplication = GObject.registerClass(
 			show_about_action.connect('activate', action => {
 				const aboutDialog = Adw.AboutDialog.new_from_appdata("/io/github/flattool/Ignition/appdata", null);
 				aboutDialog.version = Config.VERSION;
+				aboutDialog.add_link(_("Translate"), "https://weblate.fyralabs.com/projects/flattool/ignition/");
 				aboutDialog.add_link(_("Donate"), "https://ko-fi.com/heliguy");
 				aboutDialog.present(this.active_window);
 			});
