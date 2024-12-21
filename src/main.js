@@ -19,6 +19,7 @@
  */
 
 import GObject from 'gi://GObject';
+import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
@@ -36,10 +37,19 @@ export const IgnitionApplication = GObject.registerClass(
 		constructor() {
 			super({application_id: 'io.github.flattool.Ignition', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
 
-			print("\nConfig:");
-			print(Config.APP_ID);
-			print(Config.VERSION);
-			print(Config.PROFILE);
+			const gtk_version = `${Gtk.MAJOR_VERSION}.${Gtk.MINOR_VERSION}.${Gtk.MICRO_VERSION}`;
+			const adw_version = `${Adw.MAJOR_VERSION}.${Adw.MINOR_VERSION}.${Adw.MICRO_VERSION}`;
+			const os_string = `${GLib.get_os_info("NAME")} ${GLib.get_os_info("VERSION")}`;
+			const lang = GLib.environ_getenv(GLib.get_environ(), "LANG");
+			const troubleshooting = (
+				`OS: ${os_string}\n`
+				+ `Ignition version: ${Config.VERSION}\n`
+				+ `GTK: ${gtk_version}\n`
+				+ `libadwaita: ${adw_version}\n`
+				+ `App ID: ${Config.APP_ID}\n`
+				+ `Profile: ${Config.PROFILE}\n`
+				+ `Language: ${lang}`
+			);
 
 			const quit_action = new Gio.SimpleAction({name: 'quit'});
 			quit_action.connect('activate', action => {
@@ -79,6 +89,7 @@ export const IgnitionApplication = GObject.registerClass(
 			show_about_action.connect('activate', action => {
 				const aboutDialog = Adw.AboutDialog.new_from_appdata("/io/github/flattool/Ignition/appdata", null);
 				aboutDialog.version = Config.VERSION;
+				aboutDialog.debug_info = troubleshooting;
 				aboutDialog.add_link(_("Translate"), "https://weblate.fyralabs.com/projects/flattool/ignition/");
 				aboutDialog.add_link(_("Donate"), "https://ko-fi.com/heliguy");
 				aboutDialog.present(this.active_window);
