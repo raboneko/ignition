@@ -163,7 +163,7 @@ export const IgnitionWindow = GObject.registerClass({
 		this._entries_list_box.set_sort_func((row1, row2) => {
 			if (
 				(row1.entry.enabled && row2.entry.enabled)
-				|| ((!row1.entry.enabled) && (!row2.entry.enabled)) 
+				|| ((!row1.entry.enabled) && (!row2.entry.enabled))
 			) {
 				return row1.title.toLowerCase() > row2.title.toLowerCase();
 			} else {
