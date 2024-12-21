@@ -83,7 +83,7 @@ export const IgnitionApplication = GObject.registerClass(
 				});
 			});
 			this.add_action(open_folder_action);
-			this.set_accels_for_action('app.open-folder', ['<primary>o']);
+			this.set_accels_for_action('app.open-folder', ['<primary><shift>o']);
 
 			const show_about_action = new Gio.SimpleAction({name: 'about'});
 			show_about_action.connect('activate', action => {
