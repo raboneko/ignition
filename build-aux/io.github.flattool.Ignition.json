@@ -21,9 +21,6 @@
         "--filesystem=/snap:ro",
         "--filesystem=host-os:ro"
     ],
-    "build-options" : {
-        "append-path" : "/usr/lib/sdk/typescript/bin:/usr/lib/sdk/node18/bin"
-    },
     "cleanup" : [
         "/include",
         "/lib/pkgconfig",
