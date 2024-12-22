@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=ignition
+Name=Ignition
 Exec=io.github.flattool.Ignition
 Icon=io.github.flattool.Ignition
 Terminal=false
