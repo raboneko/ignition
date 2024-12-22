@@ -6,7 +6,7 @@ import Adw from 'gi://Adw';
 import { AppChooserPage } from './app_chooser_page.js';
 import { DetailsPage } from './details_page.js';
 import { new_error_toast } from './error_toast.js';
-import { IconUtils, SharedVars } from './utils.js';
+import { IconUtils, SharedVars, Signal } from './utils.js';
 
 export const PropertiesDialog = GObject.registerClass({
 	GTypeName: 'PropertiesDialog',
@@ -68,7 +68,24 @@ export const PropertiesDialog = GObject.registerClass({
 		this._toast_overlay.add_toast(new_error_toast(this, title, error));
 	}
 
+	get_host_apps(callback) {
+		const on_finish = (total_rows, failed_entries) => {
+			if (total_rows === 0) {
+				this._new_app_button.sensitive = false;
+				this._new_app_button.tooltip_text = _("No installed apps found");
+			}
+			if (failed_entries.length > 0) {
+				this.signals.failed_loading_some_apps.emit(failed_entries);
+			}
+			callback();
+		}
+		this._app_chooser_page.get_host_apps(on_finish);
+	}
+
 	is_showing = false;
+	signals = {
+		failed_loading_some_apps: new Signal(),
+	}
 
 	constructor(...args) {
 		super(...args);

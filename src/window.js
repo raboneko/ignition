@@ -30,6 +30,7 @@ import { EntryRow } from './entry_row.js';
 import { PropertiesDialog } from './properties_dialog.js';
 import { DirWatcher } from './file_watcher.js';
 import { Config } from './const.js';
+import { new_error_toast } from './error_toast.js';
 
 export const IgnitionWindow = GObject.registerClass({
 	GTypeName: 'IgnitionWindow',
@@ -104,7 +105,7 @@ export const IgnitionWindow = GObject.registerClass({
 			},
 			(
 				should_load_host_apps
-				? () => { this.properties_dialog._app_chooser_page.get_host_apps(this.on_load_finish.bind(this)) }
+				? () => { this.properties_dialog.get_host_apps(this.on_load_finish.bind(this)) }
 				: this.on_load_finish.bind(this)
 			),
 		);
@@ -191,6 +192,11 @@ export const IgnitionWindow = GObject.registerClass({
 			} else {
 				this._stack.visible_child = this._entries_scrolled_window;
 			}
+		});
+		this.properties_dialog.signals.failed_loading_some_apps.connect((failed_entries) => {
+			this._toast_overlay.add_toast(
+				new_error_toast(this, _("Could not load some apps"), failed_entries.join("\n"))
+			);
 		});
 	}
 });
