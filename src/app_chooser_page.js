@@ -65,6 +65,7 @@ export const AppChooserPage = GObject.registerClass({
 		let index = 0;
 		let total_rows = 0;
 		let dir_with_enumerator = dirs_with_enumerators[index];
+		const failed_entries = [];
 		const iteration = () => {
 			const folder_path = dir_with_enumerator.path;
 			const enumerator = dir_with_enumerator.enumerator;
@@ -89,39 +90,36 @@ export const AppChooserPage = GObject.registerClass({
 			let entry;
 			try {
 				entry = new AutostartEntry(file_path);
+				const hidden = (
+					KeyFileUtils.get_boolean_safe(entry.keyfile, "Desktop Entry", "Hidden", false)
+					|| KeyFileUtils.get_boolean_safe(entry.keyfile, "Desktop Entry", "NoDisplay", false)
+				);
+				if (hidden) {
+					return true;
+				}
 			} catch (error) {
-				print("Ignition error: AppChooserPage: Error creating AutostartEntry: " + error);
+				print("Ignition error: AppChooserPage: Error creating AutostartEntry");
+				print("Path:", file_path);
+				print("Error:", error);
+				failed_entries.push(file_path);
 				return true;
 			}
-			const kf = new GLib.KeyFile();
-			try {
-				kf.load_from_file(file_path, GLib.KeyFileFlags.KEEP_TRANSLATIONS);
-			} catch (error) { return true; }
-			const hidden = (
-				KeyFileUtils.get_boolean_safe(kf, "Desktop Entry", "Hidden", false)
-				|| KeyFileUtils.get_boolean_safe(kf, "Desktop Entry", "NoDisplay", false)
-			)
-			if (hidden) { return true; }
 			const row = new EntryRow(entry, false);
 			this._apps_list_box.append(row);
 			row.connect('activated', () => {
 				this.signals.app_chosen.emit(entry);
 			});
 			total_rows += 1;
-			return total_rows < 100;
+			return true;
 		}
 		run_async(
 			iteration,
-			() => {
-				this.signals.loading_finished.emit(total_rows > 0);
-				callback();
-			},
+			() => callback(total_rows, failed_entries),
 		);
 	}
 
 	signals = {
 		app_chosen: new Signal(),
-		loading_finished: new Signal(),
 	}
 
 	constructor(...args) {
