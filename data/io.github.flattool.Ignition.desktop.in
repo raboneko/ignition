@@ -5,6 +5,6 @@ Icon=io.github.flattool.Ignition
 Terminal=false
 Type=Application
 Categories=Utility;
-Keywords=GTK;
+Keywords=GTK;startup;autostart;login;
 StartupNotify=true
 DBusActivatable=true
