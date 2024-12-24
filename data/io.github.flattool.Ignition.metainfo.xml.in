@@ -56,7 +56,7 @@
 					<li>Desktop entries in unreachable locations no longer cause endless loading</li>
 					<li>Desktop entries with translated values are now properly handled</li>
 					<li>Ignition's desktop entry has proper casing and a comment</li>
-					<li>You can now find Ignition by searching 'autostart' and 'startup' in your menu</li>
+					<li>You can now find Ignition by searching 'autostart', 'startup', and 'login' in your menu</li>
 				</ul>
 			</description>
 		</release>
