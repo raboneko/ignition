@@ -12,7 +12,7 @@
 	</developer>
 
 	<name>Ignition</name>
-	<summary>Create and edit startup apps and scripts</summary>
+	<summary>Manage startup apps and scripts</summary>
 	<description>
 		<p>Ignition provides a simple UI to add, remove, and modify startup entries on your computer. Ignition can add apps, scripts, and arbitrary commands to run at login.</p>
 	</description>
