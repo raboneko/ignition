@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Ignition
+Comment=Manage startup apps and scripts
 Exec=io.github.flattool.Ignition
 Icon=io.github.flattool.Ignition
 Terminal=false
