@@ -49,6 +49,17 @@
 	</screenshots>
 
 	<releases>
+		<release version="1.0.1" date="2024-12-23">
+			<description translate="no">
+				<p>Bug Fixes</p>
+				<ul>
+					<li>Desktop entries in unreachable locations no longer cause endless loading</li>
+					<li>Desktop entries with translated values are now properly handled</li>
+					<li>Ignition's desktop entry has proper casing and a comment</li>
+					<li>You can now find Ignition by searching 'autostart' and 'startup' in your menu</li>
+				</ul>
+			</description>
+		</release>
 		<release version="1.0.0" date="2024-12-20">
 			<description translate="no">
 				<p>Initial Release</p>
