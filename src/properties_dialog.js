@@ -37,10 +37,12 @@ export const PropertiesDialog = GObject.registerClass({
 	present(auto_entry, ...args) {
 		if (this.is_showing) return;
 		if (auto_entry) {
+			this.follows_content_size = true;
 			this._navigation_view.animate_transitions = false;
 			this.show_details(auto_entry, false);
 			this._navigation_view.animate_transitions = true;
 		} else {
+			this.follows_content_size = false;
 			this._navigation_view.animate_transitions = false;
 			this._navigation_view.pop_to_page(this._choice_page);
 			this._navigation_view.animate_transitions = true;
