@@ -13,7 +13,9 @@
 
 ## ⏬ Installation:
 
-Ignition is not currently hosted on any software center. Until then, you can follow the **Installation from Repo Steps** in this document.
+Ignition is now available on Flathub! Visit your software store and search for Ignition, or click this badge.
+
+<a href="https://flathub.org/apps/io.github.flattool.Ignition"><img width='240' alt='Download on Flathub' src='https://flathub.org/api/badge?locale=en'/></a>
 
 ## 🗣️ Translation
 - Translation is hosted with Weblate on Fyra Labs, [click here](https://weblate.fyralabs.com/projects/flattool/ignition/) to contribute
