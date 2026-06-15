@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ignition\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-07 18:34+0000\n"
-"PO-Revision-Date: 2026-02-16 02:04+0000\n"
-"Last-Translator: carpinchitu <maycoemanuelportillo@gmail.com>\n"
+"PO-Revision-Date: 2026-06-15 15:44+0000\n"
+"Last-Translator: FelixNub <felix.rentzhog@outlook.com>\n"
 "Language-Team: Spanish <https://weblate.fyralabs.com/projects/flattool/"
 "ignition/es/>\n"
 "Language: es\n"
@@ -77,16 +77,12 @@ msgid "Search apps"
 msgstr "Buscar aplicaciones"
 
 #: src/pages/apps_list_page.blp:40
-#, fuzzy
-#| msgid "Loading Entries"
 msgid "Loading Apps"
-msgstr "Cargando entradas"
+msgstr "Cargando Aplicaciones"
 
 #: src/pages/apps_list_page.blp:41
-#, fuzzy
-#| msgid "This should only take a moment."
 msgid "This should only take a moment"
-msgstr "Esto solo tomará un momento."
+msgstr "Esto solo debería tomar un momento"
 
 #: src/pages/apps_list_page.blp:63
 msgid "Commands and Scripts"
@@ -109,11 +105,10 @@ msgid "Installed Apps"
 msgstr "Aplicaciones Instaladas"
 
 #: src/pages/apps_list_page.blp:96
-#, fuzzy
-#| msgid "Choose any installed app to run when you log in."
 msgid "Choose any installed apps to run when you log in."
 msgstr ""
-"Elige cualquier aplicación instalada para ejecutarse al iniciar sesión."
+"Elige cualquier de las aplicaciónes instalada para ejecutarse al iniciar "
+"sesión."
 
 #: src/pages/apps_list_page.blp:102
 msgid "Show Hidden Apps"
@@ -172,10 +167,8 @@ msgid "Command or Script"
 msgstr "Comando o Script"
 
 #: src/pages/details_page.blp:124
-#, fuzzy
-#| msgid "Choose a Script"
 msgid "Open Script"
-msgstr "Elige un Script"
+msgstr "Abrir un Script"
 
 #: src/pages/details_page.blp:136
 msgid "Show Terminal"
@@ -201,37 +194,35 @@ msgstr "Nuevo Elemento"
 
 #: src/pages/details_page.ts:159
 msgid "Issues occurred while saving details"
-msgstr ""
+msgstr "Se ha producido un problema al guardar detalles"
 
 #: src/pages/details_page.ts:166
 msgid "Trash Failed. Delete Entry Instead?"
-msgstr ""
+msgstr "Error Al Enviar La Papelera. ¿Borrar Entada En Su Lugar?"
 
 #: src/pages/details_page.ts:167
 msgid ""
 "Instead of moving to the trash, the entry will be permanently deleted. This "
 "is not recoverable."
 msgstr ""
+"En lugar de morver a la papelera, la entrada se eliminará permanentemente. "
+"Este accón es irreversible."
 
 #: src/pages/details_page.ts:168
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: src/pages/details_page.ts:184
-#, fuzzy
-#| msgid "Could not create file"
 msgid "Could not delete entry"
-msgstr "No se ha podido crear el archivo"
+msgstr "No se ha podido borrar la entrada"
 
 #: src/pages/details_page.ts:193
 msgid "Select Script"
-msgstr ""
+msgstr "Seleccionar Script"
 
 #: src/pages/details_page.ts:199
-#, fuzzy
-#| msgid "Could not open folder"
 msgid "Could not open script"
-msgstr "No se pudo abrir la carpeta"
+msgstr "No se pudo abrir el script"
 
 #: src/pages/details_page.ts:212
 #, fuzzy
@@ -245,7 +236,7 @@ msgstr ""
 
 #: src/pages/details_page.ts:222
 msgid "Selected file is not executable"
-msgstr ""
+msgstr "Archivo seleccionado no es ejecutable"
 
 #. eslint-disable-next-line
 #: src/pages/details_page.ts:224
@@ -253,6 +244,8 @@ msgid ""
 "The selected file is not marked as executable. Select a different file or "
 "make this script executable."
 msgstr ""
+"Archivo seleccionado no es marcar como ejecutable. Selecciona un archivo "
+"differento o haz este script ejecutable."
 
 #: src/pages/details_page.ts:234
 msgid "Trash Entry?"
@@ -271,21 +264,19 @@ msgstr "Papelera"
 
 #: src/pages/details_page.ts:281
 msgid "Issues occurred while saving"
-msgstr ""
+msgstr "Problemas ocurrió al guardar"
 
 #: src/pages/details_page.ts:294
-#, fuzzy
-#| msgid "Could not create file"
 msgid "Could not create entry"
-msgstr "No se ha podido crear el archivo"
+msgstr "No se ha podido crear la entrada"
 
 #: src/pages/details_page.ts:302
 msgid "Issues occurred while creating entry"
-msgstr ""
+msgstr "Problemas ocurrió al crear la entrada"
 
 #: src/pages/details_page.ts:313
 msgid "Issues occurred while overriding"
-msgstr ""
+msgstr "Problemas ocurrió al sobreescribir"
 
 #: src/pages/entries_page.blp:52
 msgid "Main Menu"
@@ -348,51 +339,30 @@ msgid "_About Ignition"
 msgstr "_Sobre Ignition"
 
 #: src/shortcuts-dialog.blp:6
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Entries List"
 msgid "Entries List"
 msgstr "Lista de entradas"
 
 #: src/shortcuts-dialog.blp:14
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Search Entries"
 msgid "Search Entries"
 msgstr "Buscar Entradas"
 
 #: src/shortcuts-dialog.blp:20
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Apps List"
 msgid "Apps List"
 msgstr "Lista de aplicaciones"
 
 #: src/shortcuts-dialog.blp:23
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Search Apps"
 msgid "Search Apps"
 msgstr "Buscar Aplicaciones"
 
 #: src/shortcuts-dialog.blp:29
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Details Page"
 msgid "Details Page"
-msgstr "Detalles"
+msgstr "Página de Detalles"
 
 #: src/shortcuts-dialog.blp:32
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Save Edits"
 msgid "Save Edits"
 msgstr "Guardar Cambios"
 
 #: src/shortcuts-dialog.blp:38
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "General"
 msgid "General"
 msgstr "General"
 
@@ -404,16 +374,10 @@ msgid "Open Autostart Folder"
 msgstr "Abrir la carpeta de autoarranque"
 
 #: src/shortcuts-dialog.blp:46
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Show Shortcuts"
 msgid "Show Shortcuts"
-msgstr "Mostrar atajos"
+msgstr "Mostrar Atajos"
 
 #: src/shortcuts-dialog.blp:51
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Quit"
 msgid "Quit"
 msgstr "Salir"
 
@@ -450,7 +414,7 @@ msgstr "Más Información"
 #: src/widgets/entry_row.ts:50
 #, javascript-format
 msgid "Starts after %d seconds"
-msgstr ""
+msgstr "Comienza después de %d segundos"
 
 #: src/widgets/entry_row.ts:52
 msgid "Enabled"
@@ -481,10 +445,8 @@ msgid "Can't find an application?"
 msgstr "¿No encuentras una aplicación?"
 
 #: src/widgets/help_dialog.blp:28
-#, fuzzy
-#| msgid "Ignition might not be able to see some applications on your system"
 msgid "Ignition might not be able to see applications on your system"
-msgstr "Puede que Ignition no pueda ver algunas aplicaciones en tu sistema"
+msgstr "Puede que Ignition no pueda ver aplicaciones en tu sistema"
 
 #: src/widgets/help_dialog.blp:41
 msgid "What is a 'System Entry'?"
@@ -556,14 +518,12 @@ msgid "Try a different search."
 msgstr "Prueba a buscar algo diferente."
 
 #: src/window/main_window.ts:55
-#, fuzzy
-#| msgid "Create"
 msgid "Created"
-msgstr "Crear"
+msgstr "Creado"
 
 #: src/window/main_window.ts:60
 msgid "Removed"
-msgstr ""
+msgstr "Eliminado"
 
 #, fuzzy
 #~| msgid ""
