@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ignition\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-07 18:34+0000\n"
-"PO-Revision-Date: 2026-03-07 14:53+0000\n"
+"PO-Revision-Date: 2026-06-28 15:32+0000\n"
 "Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://weblate.fyralabs.com/projects/flattool/"
 "ignition/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #: data/io.github.flattool.Ignition.desktop.in:2
 #: data/io.github.flattool.Ignition.metainfo.xml.in:14
@@ -167,7 +167,7 @@ msgstr "Příkaz nebo skript"
 
 #: src/pages/details_page.blp:124
 msgid "Open Script"
-msgstr ""
+msgstr "Otevřít skript"
 
 #: src/pages/details_page.blp:136
 msgid "Show Terminal"
@@ -197,47 +197,43 @@ msgstr "Při ukládání podrobností došlo k problémům"
 
 #: src/pages/details_page.ts:166
 msgid "Trash Failed. Delete Entry Instead?"
-msgstr ""
+msgstr "Přesunutí do koše se nezdařilo. Položku namísto toho smazat nevratně?"
 
 #: src/pages/details_page.ts:167
 msgid ""
 "Instead of moving to the trash, the entry will be permanently deleted. This "
 "is not recoverable."
 msgstr ""
+"Namísto přesunutí do koše, položka bude nevratně smazána. Po jejím "
+"provedení, tuto akci nepůjde vzít zpět."
 
 #: src/pages/details_page.ts:168
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #: src/pages/details_page.ts:184
-#, fuzzy
-#| msgid "Could not create entry"
 msgid "Could not delete entry"
-msgstr "Položku nebylo možné vytvořit"
+msgstr "Položku nebylo možné smazat"
 
 #: src/pages/details_page.ts:193
 msgid "Select Script"
-msgstr ""
+msgstr "Vybrat skript"
 
 #: src/pages/details_page.ts:199
-#, fuzzy
-#| msgid "Could not create entry"
 msgid "Could not open script"
-msgstr "Položku nebylo možné vytvořit"
+msgstr "Skript nebylo možné otevřít"
 
 #: src/pages/details_page.ts:212
-#, fuzzy
-#| msgid "Could not create entry"
 msgid "Could not get script path"
-msgstr "Položku nebylo možné vytvořit"
+msgstr "Umístění skriptu nebylo možné otevřít"
 
 #: src/pages/details_page.ts:212
 msgid "The selected file does not have a valid path."
-msgstr ""
+msgstr "Vybraný soubor nemá platný popis umístění."
 
 #: src/pages/details_page.ts:222
 msgid "Selected file is not executable"
-msgstr ""
+msgstr "Vybraný soubor není spustitelný"
 
 #. eslint-disable-next-line
 #: src/pages/details_page.ts:224
@@ -245,6 +241,8 @@ msgid ""
 "The selected file is not marked as executable. Select a different file or "
 "make this script executable."
 msgstr ""
+"Vybraný soubor není označený jako spustitelný. Vyberte jiný nebo původní "
+"skript udělejte spustitelným."
 
 #: src/pages/details_page.ts:234
 msgid "Trash Entry?"
@@ -334,10 +332,8 @@ msgid "_Keyboard Shortcuts"
 msgstr "_Klávesové zkratky"
 
 #: src/pages/entries_page.blp:173
-#, fuzzy
-#| msgid "Ignition"
 msgid "_About Ignition"
-msgstr "Ignition"
+msgstr "O _aplikaci Ignition"
 
 #: src/shortcuts-dialog.blp:6
 msgid "Entries List"
@@ -519,14 +515,12 @@ msgid "Try a different search."
 msgstr "Zkuste hledat jinak."
 
 #: src/window/main_window.ts:55
-#, fuzzy
-#| msgid "Create"
 msgid "Created"
-msgstr "Vytvořit"
+msgstr "Vytvořeno"
 
 #: src/window/main_window.ts:60
 msgid "Removed"
-msgstr ""
+msgstr "Odebráno"
 
 #~ msgid ""
 #~ "To run a script at login, paste its file path here. You can copy the "
