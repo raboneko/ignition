@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ignition\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-07 18:34+0000\n"
-"PO-Revision-Date: 2026-08-22 08:07+0000\n"
+"PO-Revision-Date: 2026-08-22 16:59+0000\n"
 "Last-Translator: NorwayFun <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://weblate.fyralabs.com/projects/flattool/"
 "ignition/ka/>\n"
@@ -82,7 +82,7 @@ msgstr ""
 
 #: src/pages/apps_list_page.blp:63
 msgid "Commands and Scripts"
-msgstr ""
+msgstr "ბრძანებები და სკრიპტები"
 
 #: src/pages/apps_list_page.blp:64
 msgid "Run a command or script when you log in."
@@ -106,7 +106,7 @@ msgstr ""
 
 #: src/pages/apps_list_page.blp:102
 msgid "Show Hidden Apps"
-msgstr ""
+msgstr "დამალული აპების ჩვენება"
 
 #: src/pages/apps_list_page.blp:103
 msgid "Show apps that are hidden from the app menu"
@@ -158,11 +158,11 @@ msgstr "კომენტარი"
 
 #: src/pages/details_page.blp:118
 msgid "Command or Script"
-msgstr ""
+msgstr "ბრძანება, ან სკრიპტი"
 
 #: src/pages/details_page.blp:124
 msgid "Open Script"
-msgstr ""
+msgstr "სკრიპტის გახსნა"
 
 #: src/pages/details_page.blp:136
 msgid "Show Terminal"
@@ -174,7 +174,7 @@ msgstr ""
 
 #: src/pages/details_page.blp:144
 msgid "Seconds of Delay"
-msgstr ""
+msgstr "დაყოვნება წამებში"
 
 #: src/pages/details_page.blp:145
 msgid "Amount of seconds to wait after logging in to run the command or script"
@@ -208,7 +208,7 @@ msgstr ""
 
 #: src/pages/details_page.ts:193
 msgid "Select Script"
-msgstr ""
+msgstr "სკრიპტის არჩევა"
 
 #: src/pages/details_page.ts:199
 msgid "Could not open script"
@@ -269,7 +269,7 @@ msgstr "მთავარი მენიუ"
 
 #: src/pages/entries_page.blp:59
 msgid "Help and information"
-msgstr ""
+msgstr "დახმარება და ინფორმაცია"
 
 #: src/pages/entries_page.blp:73
 msgid "Search entries"
