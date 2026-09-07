@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ignition\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-07 18:34+0000\n"
-"PO-Revision-Date: 2026-09-07 15:02+0000\n"
+"PO-Revision-Date: 2026-09-07 15:20+0000\n"
 "Last-Translator: MucheXD <MucheXD@outlook.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.fyralabs.com/"
 "projects/flattool/ignition/zh_Hans/>\n"
@@ -233,7 +233,7 @@ msgstr "所选文件不可执行"
 msgid ""
 "The selected file is not marked as executable. Select a different file or "
 "make this script executable."
-msgstr ""
+msgstr "所选文件未标记为可执行文件。请选择其他文件，或使此脚本可执行。"
 
 #: src/pages/details_page.ts:234
 msgid "Trash Entry?"
@@ -322,10 +322,8 @@ msgid "_Keyboard Shortcuts"
 msgstr "键盘快捷键(_K)"
 
 #: src/pages/entries_page.blp:173
-#, fuzzy
-#| msgid "Ignition"
 msgid "_About Ignition"
-msgstr "Ignition"
+msgstr "关于 Ignition(_A)"
 
 #: src/shortcuts-dialog.blp:6
 msgid "Entries List"
@@ -499,14 +497,12 @@ msgid "Try a different search."
 msgstr "尝试不同的搜索。"
 
 #: src/window/main_window.ts:55
-#, fuzzy
-#| msgid "Create"
 msgid "Created"
-msgstr "创建"
+msgstr "已创建"
 
 #: src/window/main_window.ts:60
 msgid "Removed"
-msgstr ""
+msgstr "已移除"
 
 #~ msgid ""
 #~ "To run a script at login, paste its file path here. You can copy the "
