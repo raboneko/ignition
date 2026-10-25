@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ignition\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-07 18:34+0000\n"
-"PO-Revision-Date: 2025-05-09 21:46+0000\n"
-"Last-Translator: lucasmz <git@lucasmz.dev>\n"
+"PO-Revision-Date: 2026-10-25 15:46+0000\n"
+"Last-Translator: Lilith 3 <tavaresnicolas157@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.fyralabs.com/projects/"
 "flattool/ignition/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 #: data/io.github.flattool.Ignition.desktop.in:2
 #: data/io.github.flattool.Ignition.metainfo.xml.in:14
@@ -200,21 +200,23 @@ msgstr "Nova Entrada"
 
 #: src/pages/details_page.ts:159
 msgid "Issues occurred while saving details"
-msgstr ""
+msgstr "Problemas ocorreram enquanto salvava detalhes"
 
 #: src/pages/details_page.ts:166
 msgid "Trash Failed. Delete Entry Instead?"
-msgstr ""
+msgstr "O Lixo falhou. Deletar a entrada inves disso?"
 
 #: src/pages/details_page.ts:167
 msgid ""
 "Instead of moving to the trash, the entry will be permanently deleted. This "
 "is not recoverable."
 msgstr ""
+"Inves de mover para o lixo, a entrada vai ser permanentemente. Isso não é "
+"recuperavel."
 
 #: src/pages/details_page.ts:168
 msgid "Delete"
-msgstr ""
+msgstr "Apagar"
 
 #: src/pages/details_page.ts:184
 #, fuzzy
@@ -224,7 +226,7 @@ msgstr "Não foi possível criar o arquivo"
 
 #: src/pages/details_page.ts:193
 msgid "Select Script"
-msgstr ""
+msgstr "Selecionar Script"
 
 #: src/pages/details_page.ts:199
 #, fuzzy
@@ -240,11 +242,11 @@ msgstr "Não foi possível criar o arquivo"
 
 #: src/pages/details_page.ts:212
 msgid "The selected file does not have a valid path."
-msgstr ""
+msgstr "O Arquivo selecionado não tem um caminho válido."
 
 #: src/pages/details_page.ts:222
 msgid "Selected file is not executable"
-msgstr ""
+msgstr "O arquivo selecionado não é executavel"
 
 #. eslint-disable-next-line
 #: src/pages/details_page.ts:224
@@ -252,6 +254,8 @@ msgid ""
 "The selected file is not marked as executable. Select a different file or "
 "make this script executable."
 msgstr ""
+"O Arquivo selecionado não é marcado como executavel. Selecione um arquivo "
+"diferente ou faça desse Script executavel."
 
 #: src/pages/details_page.ts:234
 #, fuzzy
@@ -273,7 +277,7 @@ msgstr "Lixeira"
 
 #: src/pages/details_page.ts:281
 msgid "Issues occurred while saving"
-msgstr ""
+msgstr "Erros ocorreram enquanto salvava"
 
 #: src/pages/details_page.ts:294
 #, fuzzy
@@ -283,11 +287,11 @@ msgstr "Não foi possível criar o arquivo"
 
 #: src/pages/details_page.ts:302
 msgid "Issues occurred while creating entry"
-msgstr ""
+msgstr "Errors ocorreram enquanto criava entrada"
 
 #: src/pages/details_page.ts:313
 msgid "Issues occurred while overriding"
-msgstr ""
+msgstr "Problemas ocorreram enquanto sobrescrevia"
 
 #: src/pages/entries_page.blp:52
 msgid "Main Menu"
@@ -413,9 +417,6 @@ msgid "Show Shortcuts"
 msgstr "Mostrar atalhos do teclado"
 
 #: src/shortcuts-dialog.blp:51
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Quit"
 msgid "Quit"
 msgstr "Sair"
 
@@ -452,7 +453,7 @@ msgstr "Mais informações"
 #: src/widgets/entry_row.ts:50
 #, javascript-format
 msgid "Starts after %d seconds"
-msgstr ""
+msgstr "Iniciando após %d Segundos"
 
 #: src/widgets/entry_row.ts:52
 msgid "Enabled"
@@ -566,7 +567,7 @@ msgstr "Criar"
 
 #: src/window/main_window.ts:60
 msgid "Removed"
-msgstr ""
+msgstr "Removido"
 
 #, fuzzy
 #~| msgid ""
